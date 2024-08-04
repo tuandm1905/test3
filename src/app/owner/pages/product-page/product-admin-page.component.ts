@@ -183,6 +183,7 @@ export class ProductAdminPageComponent {
 	}
 
 	saveItem(data: any) {
+		console.log('data',data);
 		if (this.modalTitle === 'Create Product') {
 
 			this.loading = true;

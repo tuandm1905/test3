@@ -49,9 +49,9 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
 		this.loadUserProfile();
 
 		// Thiết lập interval để gọi API notification mỗi 5 giây
-		this.notificationSubscription = interval(5000).subscribe(() => {
-			this.checkForNotifications();
-		});
+		// this.notificationSubscription = interval(5000).subscribe(() => {
+		// 	this.checkForNotifications();
+		// });
 	}
 
 	ngOnDestroy(): void {

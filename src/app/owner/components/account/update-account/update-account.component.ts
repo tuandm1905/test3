@@ -17,6 +17,7 @@ export class UpdateAccountComponent {
   @Input() isVisible: boolean = false;
   @Output() save = new EventEmitter<any>();
   @Output() close = new EventEmitter<void>();
+  @Input() ownerId: any;
 
   form: FormGroup;
 
@@ -105,6 +106,7 @@ export class UpdateAccountComponent {
 
   submit() {
     // Kiểm tra nếu form không hợp lệ
+    console.log('data',this.form.value)
     if (this.form.invalid) {
       console.log('Data staff chỉnh sửa', this.image);
       this.alertService.fireSmall('error', "Form Staff is invalid");

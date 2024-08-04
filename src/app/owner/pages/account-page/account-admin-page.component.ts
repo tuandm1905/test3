@@ -93,7 +93,7 @@ export class AccountAdminPageComponent {
 	}
 
 	createItem() {
-		this.modalTitle = 'Create Account';
+		this.modalTitle = 'Create New Staff';
 		this.openModal = true;
 		this.typeForm = 1;
 	}
@@ -120,6 +120,7 @@ export class AccountAdminPageComponent {
 	saveItem(data: any) {
 		console.log('data',data?.form)
 		console.log('modalTitle',this.modalTitle)
+		data.form.ownerId = Number(this.ownerId)
 		if (this.modalTitle === 'Create Account') {
 			this.loading = true;
 			this.staffService.createOrUpdateData(data?.form).subscribe((res: any) => {

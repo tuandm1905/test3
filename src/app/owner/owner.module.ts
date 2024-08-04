@@ -262,7 +262,7 @@ const route: Routes = [
 		AddNewDescriptionComponent,
 		DetailDescriptionComponent,
 		UpdateDescriptionComponent,
-  ChatPageComponent
+		ChatPageComponent
 	],
 	imports: [
 		FormsModule,
