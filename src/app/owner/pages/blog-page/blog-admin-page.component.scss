@@ -1,0 +1,215 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 80vw;
+  margin: 30px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h1 {
+  font-size: 36px;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+.header {
+  width: 80vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.create-button {
+  height: 40px;
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 0 20px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.create-button:hover {
+  background-color: #0056b3;
+}
+
+.address-bar {
+  width: 80vw;
+  margin-bottom: 20px;
+  background-color: rgba(0, 123, 255, 0.1);
+  height: 40px;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-left: 20px;
+}
+
+.search-bar {
+  height: 40px;
+  border: solid 1px lightgray;
+  border-radius: 5px;
+  padding: 0 20px;
+  cursor: pointer;
+  width: 20vw;
+}
+
+.tool-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.table-container {
+  width: 80vw;
+  flex-grow: 1;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.table th, .table td {
+  border-left: none;
+  border-right: none;
+  text-align: center;
+}
+
+.table th {
+  background-color: #f2f2f2;
+}
+
+.thumbnail {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.pagination {
+  position: fixed;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.arrow-button, .page-number {
+  background-color: white;
+  color: #007bff;
+  border: solid 1px #007bff;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  margin: 0 5px;
+  transition: 0.3s ease-in-out;
+}
+
+.arrow-button:hover, .page-number:hover {
+  background-color: rgba(0, 123, 255, 0.2);
+}
+
+.icon-button:hover {
+  background-color: #007bff;
+  color: white;
+}
+
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 400px;
+}
+
+.close {
+  float: right;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.align-middle {
+  vertical-align: middle;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%; /* Ensure it takes the full height of the table cell */
+}
+
+.thumbnail {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.nav-tabs .nav-link.active {
+color: #6c5ce7;
+  border-bottom: 2px solid #6c5ce7;
+}
+/* Badge Styles */
+.badge {
+  display: inline-block;
+  padding: 0.3em 0.6em; /* Cùng một padding */
+  font-size: 85%;
+  font-weight: 400;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+  width: 70%; /* Đặt kích thước cố định nếu cần */
+  height: 100%; /* Đặt kích thước cố định nếu cần */
+}
+
+.badge-waiting {
+  color: #000; /* Black text color */
+  background-color: #ffc107; /* Orange background */
+}
+
+.badge-accept {
+  color: #fff;
+  background-color: #1e7e34; /* Green background */
+}
+
+.badge-deny {
+  color: #fff;
+  background-color: #dc3545; /* Red background */
+}
+.table td.content-cell {
+  max-width: 300px; /* Giới hạn chiều rộng tối đa của cột Content */
+  overflow: hidden; /* Ẩn nội dung vượt quá chiều rộng cột */
+  text-overflow: ellipsis; /* Thêm dấu ba chấm (...) khi nội dung quá dài */
+  white-space: nowrap; /* Ngăn nội dung xuống dòng */
+}
+
+.table td.content-cell p {
+  margin: 0; /* Đảm bảo không có margin thừa */
+}

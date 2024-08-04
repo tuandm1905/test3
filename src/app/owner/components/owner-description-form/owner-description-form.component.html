@@ -1,0 +1,64 @@
+<div *ngIf="isVisible" class="modal">
+	<div class="modal-content modal-md">
+		<div class="d-flex justify-content-between">
+			<h2>{{ modalTitle }}</h2>
+			<span class="close-button" (click)="closeModal()">&times;</span>
+		</div>
+		<div class="row" (ngSubmit)="submit()">
+			<!-- Left column - Display Image -->
+			<div class="col-md-6">
+				<div *ngIf="form.controls['ImageLinks'].value" class="text-center">
+					<label class="form-label">Preview Image:</label><br>
+					<img [src]="form.controls['ImageLinks'].value" alt="Description Image"
+						class="img-fluid mx-auto d-block">
+				</div>
+			</div>
+			<div class="col-md-6">
+				<form [formGroup]="form" >
+					<div class="form-group required mb-3">
+						<label for="Title" class="form-label">Name</label>
+						<input type="text" id="Title" class="form-control" placeholder="Enter value"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
+							formControlName="Title" name="Title"
+							(focusout)="commonService.onTrimFocusOutForm(form, 'Title', $event)" />
+						<app-form-error [control]="form.controls['Title']" [message]="'Title is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+					<div class="form-group required mb-3">
+						<label for="Content" class="form-label">Content</label>
+						<textarea rows="5" id="Content" class="form-control" placeholder="Enter value"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Content')}"
+							formControlName="Content" name="Content"
+							(focusout)="commonService.onTrimFocusOutForm(form, 'Content', $event)"></textarea>
+						<app-form-error [control]="form.controls['Content']" [message]="'Content is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+					<div class="form-group required mb-3">
+						<label for="ImageLinks" class="form-label">Image</label>
+						<input type="text" id="ImageLinks" class="form-control" placeholder="Enter value"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'ImageLinks')}"
+							formControlName="ImageLinks" name="ImageLinks"
+							(focusout)="commonService.onTrimFocusOutForm(form, 'ImageLinks', $event)" />
+						<app-form-error [control]="form.controls['ImageLinks']" [message]="'ImageLinks is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+					<!-- Image upload -->
+					<div class="form-group mb-3">
+						<input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+						<button type="button" class="upload-button" (click)="fileInput.click()">Upload Image</button>
+						<button *ngIf="selectedFile" type="button" class="save-button"
+							(click)="uploadImage('descriptions')">Save Image</button>
+					</div>
+
+					<div class="d-flex justify-content-center my-3">
+						<button type="button" (click)="closeModal()" class="btn btn-secondary">{{typeForm == 2 ? 'Close'
+							:
+							'Cancel'}}</button>
+						<button type="submit" (click)="submit()" class="btn btn-success mx-2"
+							*ngIf="typeForm != 2">Save</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

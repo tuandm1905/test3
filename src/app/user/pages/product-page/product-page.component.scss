@@ -1,0 +1,76 @@
+.container {
+   position: relative; // Ensure the container can position elements correctly
+   padding: 20px;
+}
+
+.header {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 20px; // Add margin to separate from product grid
+}
+
+.toggle-button {
+   border: none;
+   background: none;
+   cursor: pointer;
+   font-size: 16px;
+   color: #000;
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+
+.sort-options {
+   position: relative;
+   display: flex;
+   align-items: center;
+   cursor: pointer;
+   gap: 5px;
+   font-size: 16px;
+}
+
+.sort-dropdown {
+   position: absolute;
+   top: 100%;
+   // left: 0;
+   background-color: white;
+   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+   z-index: 10;
+   display: flex;
+   flex-direction: column;
+   align-items: flex-end;
+   width: max-content;
+   right: 0;
+}
+
+.sort-dropdown>div {
+   padding: 10px;
+   cursor: pointer;
+}
+
+.sort-dropdown>div:hover {
+   background-color: #f0f0f0;
+}
+
+.product-grid {
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   gap: 3px;
+   width: 100%;
+}
+
+.product-card {
+   border: 1px solid #fff;
+   text-align: center;
+   transition: border-color 0.3s ease;
+}
+
+.product-card:hover {
+   border-color: #000;
+}
+
+.product-card img {
+   width: 100%;
+   height: auto;
+}

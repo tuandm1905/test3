@@ -1,0 +1,60 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.card-body {
+  padding: 20px;
+}
+
+.table-responsive {
+  max-height: 400px; /* Chiều cao tối đa cho bảng */
+  overflow-y: auto; /* Cho phép cuộn dọc nếu nội dung vượt quá chiều cao */
+  border: 4px solid #ddd; /* Thêm viền cho bảng */
+  border-radius: 5px; /* Bo tròn các góc của bảng */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse; /* Kết hợp các đường viền */
+}
+
+.table th, .table td {
+  border-left: none;
+  border-right: none;
+  text-align: center;
+  padding: 10px;
+  // border-top: -2px;
+}
+
+.table th {
+  background-color: #f8f9fa; /* Màu nền của hàng tiêu đề */
+  color: #333; /* Màu chữ của hàng tiêu đề */
+  position: sticky;
+  top: 0; /* Cố định hàng tiêu đề ở trên cùng */
+  z-index: 1; /* Đảm bảo hàng tiêu đề không bị che khuất */
+  border-bottom: 2px solid #dee2e6; /* Đường viền dưới hàng tiêu đề */
+}
+
+.table td {
+  // border-bottom: 1px solid #dee2e6; /* Đường viền giữa các hàng dữ liệu */
+}
+
+.table thead th {
+  border-top: 1px solid #dee2e6; /* Đường viền trên hàng tiêu đề */
+}
+/* importproduct-detail.component.scss */
+.disabled-row {
+  // background-color: #f8d7da; /* Màu nền cho hàng bị khóa */
+  // color: #721c24; /* Màu chữ cho hàng bị khóa */
+  pointer-events: none; /* Ngăn không cho click vào hàng bị khóa */
+  opacity: 0.5; /* Giảm độ mờ của hàng bị khóa để dễ nhận diện */
+}
+
+.disabled-input {
+  // background-color: #f8d7da; /* Màu nền cho các ô nhập liệu bị khóa */
+  // color: #721c24; /* Màu chữ cho các ô nhập liệu bị khóa */
+  pointer-events: none; /* Ngăn không cho click vào các ô nhập liệu bị khóa */
+}
+

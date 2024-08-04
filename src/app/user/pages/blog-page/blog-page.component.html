@@ -1,0 +1,18 @@
+<app-box-wrapper>
+   <div class="blog-page">
+      <div class="blog-cards">
+         <div class="blog-card" *ngFor="let blog of blogs">
+            <div class="blog-card__image">
+               <img [src]="blog.image" alt="{{blog.title}}">
+            </div>
+            <div class="blog-card__content">
+               <h3>{{blog.title}}</h3>
+               <ul>
+                  <li *ngFor="let point of blog.points">{{point}}</li>
+               </ul>
+               <button class="see-details">See details</button>
+            </div>
+         </div>
+      </div>
+   </div>
+</app-box-wrapper>

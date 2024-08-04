@@ -1,0 +1,119 @@
+<div class="header">
+   <div class="header-1"
+      style="display: flex; justify-content: space-between; align-items: center; background: rgb(238, 239, 239);">
+      <div class="f-header">language</div>
+      <div class="r-header" style="display: flex; gap: .3em; padding: 2px 0 2px 0">
+         <div class="btn-register">
+            <span>Register</span>
+         </div>
+         <div class="btn-login  mr-1">
+            <span>Login</span>
+         </div>
+      </div>
+   </div>
+
+   <div class="header-2 flex bg-black justify-between items-center">
+      <div class="header-2-l flex items-center">
+         <div class="logo">
+            <img src="https://i.pinimg.com/originals/fd/04/c6/fd04c6ff185e1c09843afab339d216b7.jpg" alt="Logo">
+         </div>
+
+         <div class="menu-container lg:flex lg:gap-x-2 ml-4 align-items-center">
+            <div class="relative">
+               <button type="button" class="flex items-center gap-x-1 text-md font-semibold leading-6 text-white"
+                  [attr.aria-expanded]="isMenuOpen ? 'true' : 'false'" (click)="toggleMenu()">
+                  Product
+                  <svg class="h-5 flex-none text-white" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                     <path fill-rule="evenodd"
+                        d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z"
+                        clip-rule="evenodd" />
+                  </svg>
+               </button>
+               <div *ngIf="isMenuOpen"
+                  class="absolute -left-8 top-full z-10 mt-3 w-screen max-w-md overflow-hidden rounded-3xl bg-white shadow-lg ring-1 ring-gray-900/5">
+                  <div class="p-4">
+                     <div
+                        class="group relative flex items-center gap-x-6 rounded-lg p-4 text-md leading-6 hover:bg-gray-50">
+                        <div class="flex-auto">
+                           <a href="#" class="block font-semibold text-gray-900">aaaaaaaaaaaaa<span
+                                 class="absolute inset-0"></span></a>
+                        </div>
+                     </div>
+                     <div
+                        class="group relative flex items-center gap-x-6 rounded-lg p-4 text-md leading-6 hover:bg-gray-50">
+                        <div class="flex-auto">
+                           <a href="#" class="block font-semibold text-gray-900">bbbbbbbbb<span
+                                 class="absolute inset-0"></span></a>
+                        </div>
+                     </div>
+                     <div
+                        class="group relative flex items-center gap-x-6 rounded-lg p-4 text-md leading-6 hover:bg-gray-50">
+                        <div class="flex-auto">
+                           <a href="#" class="block font-semibold text-gray-900">ccccccccccc<span
+                                 class="absolute inset-0"></span></a>
+                        </div>
+                     </div>
+                     <div
+                        class="group relative flex items-center gap-x-6 rounded-lg p-4 text-md leading-6 hover:bg-gray-50">
+                        <div class="flex-auto">
+                           <a href="#" class="block font-semibold text-gray-900">dddddddddddddd<span
+                                 class="absolute inset-0"></span></a>
+                        </div>
+                     </div>
+                     <div
+                        class="group relative flex items-center gap-x-6 rounded-lg p-4 text-md leading-6 hover:bg-gray-50">
+                        <div class="flex-auto">
+                           <a href="#" class="block font-semibold text-gray-900">eeeeeeeeeeee<span
+                                 class="absolute inset-0"></span></a>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <a href="#" class="text-md font-semibold leading-6 text-white">Categories</a>
+            <a href="#" class="text-md font-semibold leading-6 text-white">Brands</a>
+            <a href="#" class="text-md font-semibold leading-6 text-white">Services</a>
+         </div>
+      </div>
+
+      <div class="header-2-r flex items-center gap-4 mr-4">
+
+         <div class="relative flex items-center w-56 h-8 rounded-lg focus-within:shadow-lg bg-white overflow-hidden">
+            <div class="grid place-items-center h-full w-3 text-gray-300">
+               <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+               </svg>
+            </div>
+            <input class="peer h-full w-full outline-none text-sm text-gray-700 pr-2 custom-font-size" type="text"
+               id="search" placeholder="Search.." />
+         </div>
+         <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               class="bi bi-bell-fill text-white" viewBox="0 0 16 16">
+               <path
+                  d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2m.995-14.901a1 1 0 1 0-1.99 0A5 5 0 0 0 3 6c0 1.098-.5 6-2 7h14c-1.5-1-2-5.902-2-7 0-2.42-1.72-4.44-4.005-4.901" />
+            </svg>
+         </div>
+
+         <div (click)="toggleChat()" class="messenger-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               class="bi bi-messenger text-white" viewBox="0 0 16 16">
+               <path
+                  d="M0 7.76C0 3.301 3.493 0 8 0s8 3.301 8 7.76-3.493 7.76-8 7.76c-.81 0-1.586-.107-2.316-.307a.64.64 0 0 0-.427.03l-1.588.702a.64.64 0 0 1-.898-.566l-.044-1.423a.64.64 0 0 0-.215-.456C.956 12.108 0 10.092 0 7.76m5.546-1.459-2.35 3.728c-.225.358.214.761.551.506l2.525-1.916a.48.48 0 0 1 .578-.002l1.869 1.402a1.2 1.2 0 0 0 1.735-.32l2.35-3.728c.226-.358-.214-.761-.551-.506L9.728 7.381a.48.48 0 0 1-.578.002L7.281 5.98a1.2 1.2 0 0 0-1.735.32z" />
+            </svg>
+         </div>
+
+
+         <div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               class="bi bi-bag-fill text-white" viewBox="0 0 16 16">
+               <path
+                  d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4z" />
+            </svg>
+         </div>
+      </div>
+   </div>
+</div>
+<app-chat *ngIf="isChatVisible" (close)="hideChat()"></app-chat>

@@ -1,0 +1,18 @@
+<div class="chat-popup">
+   <div class="chat-header">
+      <div class="chat-title">Chat</div>
+      <button (click)="closeChat()">Close</button>
+   </div>
+   <div class="chat-search">
+      <input type="text" placeholder="Search..." [(ngModel)]="searchQuery" (input)="onSearchChange()" />
+   </div>
+   <div class="chat-body">
+      <div *ngFor="let item of filteredChatItems" class="chat-item">
+         <img [src]="item.img" [alt]="item.name">
+         <div class="chat-details">
+            <div class="chat-name">{{ item.name }}</div>
+            <div class="chat-message">{{ item.message }}</div>
+         </div>
+      </div>
+   </div>
+</div>

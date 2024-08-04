@@ -1,0 +1,111 @@
+.profile {
+   display: flex;
+   justify-content: space-evenly;
+   padding: 3rem 0;
+   background: #f8f8f8;
+}
+
+.profile-user-page {
+   width: 70%;
+   margin: 0;
+   background-color: #fff;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-user-page h2 {
+   font-size: 24px;
+   margin-bottom: 10px;
+}
+
+.profile-user-page p {
+   color: #888;
+   margin-bottom: 20px;
+}
+
+.profile-container {
+   display: flex;
+   justify-content: space-between;
+}
+
+.profile-info {
+   width: 65%;
+}
+
+.profile-picture {
+   width: 30%;
+   text-align: center;
+}
+
+.form-group {
+   margin-bottom: 15px;
+}
+
+.form-group label {
+   display: block;
+   margin-bottom: 5px;
+}
+
+.form-group input[type="text"] {
+   width: 100%;
+   padding: 8px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+}
+
+.form-group input[type="radio"] {
+   margin-right: 5px;
+}
+
+.form-group select {
+   width: 30%;
+   padding: 8px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+   margin-right: 5px;
+}
+
+.form-group a {
+   color: #007bff;
+   cursor: pointer;
+   font-size: 14px;
+   margin-left: 10px;
+}
+
+.save-button {
+   background-color: #000000;
+   color: white;
+   padding: 10px 25px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+}
+
+.avatar-circle {
+   width: 100px;
+   height: 100px;
+   background-color: #ccc;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 40px;
+   color: white;
+   margin: 0 auto 10px auto;
+}
+
+.upload-button {
+   background-color: #7caeee;
+   color: white;
+   padding: 5px 10px;
+   border: none;
+   border-radius: 5px;
+   cursor: pointer;
+
+}
+
+.profile-picture p {
+   color: #888;
+   font-size: 12px;
+}

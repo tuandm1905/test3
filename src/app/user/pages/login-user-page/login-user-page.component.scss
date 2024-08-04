@@ -1,0 +1,145 @@
+body,
+html {
+   height: 100%;
+   margin: 0;
+   font-family: Arial, sans-serif;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.login-wrapper {
+   display: flex;
+   justify-content: center;
+   // align-items: center;
+   height: 100%;
+   width: 100%;
+}
+
+.login-container {
+   // text-align: center;
+   padding: 40px;
+   width: 100%;
+   max-width: 540px;
+}
+
+h2 {
+   color: #000000;
+   font-size: 28px;
+   font-weight: normal;
+   line-height: 32px;
+   margin-top: 0;
+   margin-bottom: 12px;
+   text-align: left;
+}
+
+.login-owner {
+   display: flex;
+   align-items: center;
+   gap: 0.5rem;
+   padding-bottom: 40px;
+   cursor: pointer;
+}
+
+.login-owner:hover {
+   font-weight: 500;
+}
+
+
+
+.input-group {
+   margin-bottom: 20px;
+   position: relative;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+   width: 100%;
+   padding: 15px;
+   font-size: 16px;
+   border: 1px solid #7e7e7e;
+   border-radius: 10px !important;
+   box-sizing: border-box;
+   outline: none;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+.input-group:focus-within input[type="password"],
+.input-group:focus-within input[type="text"] {
+   border-color: #000;
+}
+
+.password-group {
+   position: relative;
+}
+
+.input-icon {
+   position: absolute;
+   top: 50%;
+   right: 15px;
+   transform: translateY(-50%);
+   cursor: pointer;
+   color: #7e7e7e;
+}
+
+.toggle-password {
+   color: inherit;
+}
+
+.toggle-password:hover {
+   color: #000;
+}
+
+.acc {
+   display: flex;
+   padding-bottom: 40px;
+}
+
+.not-acc {
+   width: 100%;
+   cursor: pointer;
+}
+
+.not-acc:hover {
+   font-weight: 500;
+}
+
+.forgot-password-button {
+   background: none;
+   border: none;
+   color: #545454;
+   text-decoration: none;
+   cursor: pointer;
+   font-size: 16px;
+   display: block;
+   text-align: right;
+   width: 100%;
+   padding: 0;
+   font-weight: 500;
+}
+
+.forgot-password-button:hover {
+   text-decoration: underline;
+}
+
+.continue-button {
+   background-color: #000;
+   color: #fff;
+   border: none;
+   border-radius: 25px;
+   padding: 10px 20px;
+   font-weight: 500;
+   font-size: 16px;
+   cursor: pointer;
+   transition: background-color 0.3s;
+   float: right;
+}
+
+.continue-button:hover {
+   background-color: #fff;
+   color: #000;
+   border: 1px solid #000;
+}

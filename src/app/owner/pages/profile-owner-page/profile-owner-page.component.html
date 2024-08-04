@@ -1,0 +1,136 @@
+<div class="card w-100">
+	<div class="card-body w-100">
+		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
+		<div class="d-md-flex justify-content-between">
+			<h2 class="my-2">My Account</h2>
+			<p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+		</div>
+	</div>
+
+	<div class="card-body w-100">
+		<ul class="nav nav-tabs my-3" id="campain-tabs--link" role="tablist">
+			<li class="nav-item pointer font-weight-bold" *ngFor="let item of tabLinks">
+				<a class="nav-link" [ngClass]="{ 'active': tabType == item.id}" data-toggle="tab" role="tab"
+					(click)="changeTab(item.id)">{{item.name}}</a>
+			</li>
+		</ul>
+
+		<form *ngIf="tabType == 'profile'" [formGroup]="form" (ngSubmit)="submit()">
+			<div class="row">
+				<!-- Phần nhập liệu cho Account -->
+				<div class="col-md-6">
+					<!-- Hiển thị ảnh xem trước -->
+					<div class="img-fluid">
+						<div *ngIf="image" class="text-center w-100">
+							<img [src]="image" alt="Profile Image" class=" mx-auto d-block w-100 h-100">
+						</div>
+						<div *ngIf="!image" class="text-center w-100">
+							<img src="/assets/images/default-avatar.png" alt="Profile Image" class=" w-100 h-100 mx-auto d-block">
+						</div>
+					</div>
+					
+					<div class="form-group my-3 d-flex justify-content-center">
+						<input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+						<button type="button" class="btn btn-info mx-2" (click)="fileInput.click()">Upload
+							Image</button>
+						<button *ngIf="selectedFile" type="button" class="save-button btn btn-info mx-2"
+							(click)="uploadImage('profile-staff')">Save Image</button>
+					</div>
+
+				</div>
+				<!-- Nhập Full Name cho Account -->
+				<div class="col-md-6">
+					<div class="form-group required mb-3">
+						<label for="fullname" class="form-label">Full Name</label>
+						<input type="text" id="fullname" class="form-control"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'fullname')}"
+							formControlName="fullname" name="fullname"
+							(focusout)="commonService.onTrimFocusOutForm(form, 'fullname', $event)">
+						<app-form-error [control]="form.controls['fullname']" [message]="'Full Name is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+
+					<!-- Nhập Email cho Account -->
+					<div class="form-group required mb-3">
+						<label for="email" class="form-label">Email</label>
+						<input type="text" id="email" class="form-control"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'email')}"
+							formControlName="email" name="email"
+							(focusout)="commonService.onTrimFocusOutForm(form, 'email', $event)" readonly>
+						<!-- <app-form-error [control]="form.controls['email']" [message]="'Email is required!'"
+							[validation]="'required'"></app-form-error> -->
+					</div>
+
+
+
+					<!-- Nhập số điện thoại cho Account -->
+					<div class="form-group required mb-3">
+						<label for="phone" class="form-label">Phone</label>
+						<input type="text" id="phone" class="form-control" placeholder="Enter value"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'phone')}"
+							formControlName="phone" name="phone">
+						<app-form-error [control]="form.controls['phone']" [message]="'Phone is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+					<div class="form-group required mb-3">
+						<label for="address" class="form-label">Address</label>
+						<input type="text" id="address" class="form-control" placeholder="Enter value"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'address')}"
+							formControlName="address" name="address">
+						<app-form-error [control]="form.controls['address']" [message]="'address is required!'"
+							[validation]="'required'"></app-form-error>
+					</div>
+				</div>
+			</div>
+
+			<!-- Tải lên ảnh -->
+
+			<!-- Nút Save và Cancel -->
+			<div class="d-flex justify-content-center my-3">
+				<button type="submit" class="btn btn-success mx-2">Save</button>
+			</div>
+		</form>
+		<form *ngIf="tabType == 'password'" [formGroup]="formPassword" (ngSubmit)="submitPassword()">
+			<div class="d-md-flex justify-content-center">
+				<div class="w-100" style="max-width: 500px;">
+					<div class="form-group required mb-3">
+						<label for="oldPassword" class="form-label">Old password</label>
+						<input type="password" id="oldPassword" class="form-control"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(formPassword ,'oldPassword')}"
+							formControlName="oldPassword" name="oldPassword"
+							(focusout)="commonService.onTrimFocusOutForm(formPassword ,'oldPassword', $event)">
+						<app-form-error [control]="formPassword.controls['oldPassword']"
+							[message]="'Old Password is required!'" [validation]="'required'"></app-form-error>
+					</div>
+					<div class="form-group required mb-3">
+						<label for="newPassword" class="form-label">New password</label>
+						<input type="password" id="newPassword" class="form-control"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(formPassword ,'newPassword')}"
+							formControlName="newPassword" name="newPassword" (change)="changeValue($event)"
+							(focusout)="commonService.onTrimFocusOutForm(formPassword ,'newPassword', $event)">
+						<app-form-error [control]="formPassword.controls['newPassword']"
+							[message]="'New Password is required!'" [validation]="'required'"></app-form-error>
+					</div>
+					<div class="form-group required mb-3">
+						<label for="Confirm" class="form-label">Confirm password</label>
+						<input type="password" id="Confirm" class="form-control" (change)="changeValue($event)"
+							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(formPassword ,'confirmPassword')}"
+							formControlName="confirmPassword" name="confirmPassword"
+							(focusout)="commonService.onTrimFocusOutForm(formPassword ,'confirmPassword', $event)">
+						<app-form-error [control]="formPassword.controls['confirmPassword']"
+							[message]="'Confirm Password is required!'" [validation]="'required'"></app-form-error>
+						<div class="alert-error" *ngIf="messageError">
+							<span class="text-danger" role="text-danger">
+								{{ messageError }}
+							</span>
+						</div>
+					</div>
+					<div class="d-flex justify-content-center my-3">
+						<button type="submit" class="btn btn-success mx-2">Change password</button>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+</div>
+<app-loading [loading]="loading"></app-loading>

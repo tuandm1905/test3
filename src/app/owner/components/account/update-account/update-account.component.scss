@@ -1,0 +1,216 @@
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+  }
+  
+  .modal-content {
+	background-color: #fefefe;
+	margin: 15% auto;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 40%;
+  }
+  
+  .close-button {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+  }
+  
+  .close-button:hover,
+  .close-button:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+  }
+  
+  .form-group {
+	margin-bottom: 1em;
+  }
+  
+  .form-group label {
+	display: block;
+	margin-bottom: 0.5em;
+  }
+  
+  .form-group input,
+  .form-group textarea {
+	width: 100%;
+	padding: 0.5em;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+  }
+
+//   ::ng-deep .ng-select.ng-invalid.ng-touched, .ng-select.is-invalid {
+//     .ng-select-container{
+//         border-color: red !important;
+//     }
+// }
+  
+.image-preview {
+    display: flex;
+    justify-content: center; /* Canh giữa theo chiều ngang */
+    align-items: center; /* Canh giữa theo chiều dọc */
+    height: 200px; /* Điều chỉnh chiều cao theo ý muốn */
+}
+
+.image-preview img {
+    max-width: 100%;
+    max-height: 100%; /* Đảm bảo ảnh không vượt quá chiều cao của container */
+}
+
+.upload-button {
+	background-color: #7caeee;
+	color: white;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
+  .save-button {
+	background-color: #7caeee;
+	color: white;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
+  }
+  .profile {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 3rem 0;
+	background: #f8f8f8;
+	margin-top: 4.8%;
+ }
+ 
+ .profile-user-page {
+	width: 80%;
+	margin: 0;
+	background-color: #fff;
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+ 
+ .profile-user-page h2 {
+	font-size: 24px;
+	margin-bottom: 10px;
+ }
+ 
+ .profile-user-page p {
+	color: #888;
+	margin-bottom: 20px;
+ }
+ 
+ .profile-container {
+	display: flex;
+	justify-content: space-between;
+ }
+ 
+ .profile-info {
+	width: 65%;
+ }
+ 
+ .profile-picture {
+	width: 30%;
+	text-align: center;
+ }
+ 
+ .form-group {
+	margin-bottom: 15px;
+ }
+ 
+ .form-group label {
+	display: block;
+	margin-bottom: 5px;
+ }
+ 
+ .form-group input[type="text"],
+ .form-group input[type="date"],
+ .form-group select {
+	width: 100%;
+	padding: 8px;
+	border: 1px solid #ddd;
+	border-radius: 5px;
+	box-sizing: border-box;
+ }
+ 
+ .form-group input[type="radio"] {
+	margin-right: 5px;
+ }
+ 
+ .form-group a {
+	color: #007bff;
+	cursor: pointer;
+	font-size: 14px;
+	margin-left: 10px;
+ }
+ 
+ .save-button {
+	background-color: #000000;
+	color: white;
+	padding: 10px 25px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+ }
+ 
+ .avatar-circle {
+	width: 100px;
+	height: 100px;
+	background-color: #ccc;
+	border-radius: 50%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 40px;
+	color: white;
+	margin: 0 auto 10px auto;
+	overflow: hidden;
+	position: relative;
+ }
+ 
+ .avatar-img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	position: absolute;
+	top: 0;
+	left: 0;
+ }
+ 
+ .upload-button {
+	background-color: #7caeee;
+	color: white;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+ }
+ 
+ .save-button {
+	background-color: #7caeee;
+	color: white;
+	padding: 5px 10px;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	margin-left: 5px;
+ }
+ 
+ .profile-picture p {
+	color: #888;
+	font-size: 12px;
+ }

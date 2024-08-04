@@ -1,0 +1,50 @@
+<div class="card w-full border-0">
+	<div class="card-body w-full">
+		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
+		<div class="header">
+			<h2 class="title">View Dashboard</h2>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="container">
+			<!-- Top 5 Section -->
+			<div class="top-5-section shadow-sm">
+				<!-- HTML -->
+				<div class="header">
+					<h2 class="title">Top 5 Product</h2>
+					<a href="/owner/product" class="view-all">View All</a>
+				</div>
+
+				<div class="flow-root">
+					<ul role="list" class="divide-y divide-gray-200">
+						<li class="py-2 sm:py-3 flex items-center space-x-3" *ngFor="let item of top5Statistics">
+							<div class="flex-shrink-0">
+								<img class="avatar" [src]="item.image" alt="{{item.name}}">
+							</div>
+							<div class="flex-1 min-w-0">
+								<p class="text-xs font-medium text-gray-900 truncate">{{item.name}}</p>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+			<!-- Dashboard Section -->
+			<div class="dashboard-section">
+				<div class="grid-container">
+					<!-- <div class="dashboard-item" *ngFor="let item of dashboardItems"> -->
+						<div class="dashboard-item" *ngFor="let item of filteredDashboardItems()">
+						<div [ngClass]="item.class" class="item-content">
+							<h6 class="item-title">{{ item.title }}</h6>
+							<p class="item-description">{{ item.description }}</p>
+							<!-- <div class="item-value">{{ item.value }}</div> -->
+							<div class="item-value">{{ item.formattedValue || item.value }}</div>
+							<a [href]="item.link" class="btn-link">See Details</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<app-loading [loading]="loading"></app-loading>

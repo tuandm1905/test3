@@ -1,0 +1,10 @@
+<ng-container *ngIf="paging && paging.total > 0">
+	<div class="paging-style  d-flex justify-content-between align-items-center mt-5">
+		<div class="total-items">{{title}}: <strong>{{paging.total}}</strong><span>{{endTitle}}</span></div>
+		<div class="pagingd-fmex justify-content-end">
+			<ngb-pagination [collectionSize]="paging.total" [(page)]="paging.page" [maxSize]="5"
+				[pageSize]="paging.pageSize" [rotate]="true" [boundaryLinks]="true" (pageChange)="changed($event)"
+				[class]="paging.class? paging.class : defaultClass"></ngb-pagination>
+		</div>
+	</div>
+</ng-container>

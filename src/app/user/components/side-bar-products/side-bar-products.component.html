@@ -1,0 +1,103 @@
+<div class="sidebar">
+   <div class="cate-1">
+      <div class="collapsible-header pb-1">
+         <span>category1</span>
+      </div>
+      <div class="collapsible-header pb-1">
+         <span>category2</span>
+      </div>
+      <div class="collapsible-header pb-1">
+         <span>category3</span>
+      </div>
+      <div class="collapsible-header pb-1">
+         <span>category4</span>
+      </div>
+   </div>
+   <hr class="mt-2 mb-2">
+
+   <div class="cate-1">
+      <div (click)="toggleBrandOptions()" class="collapsible-header pb-1">
+         Brands <span [ngClass]="{'rotate': showBrandOptions}"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+               height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+               <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+            </svg></span>
+      </div>
+      <ul *ngIf="showBrandOptions">
+         <li>
+            <input type="checkbox" id="brandAdidas">
+            <label for="brandAdidas">Adidas</label>
+         </li>
+         <li>
+            <input type="checkbox" id="brandNike">
+            <label for="brandNike">Nike</label>
+         </li>
+         <li>
+            <input type="checkbox" id="brandReebok">
+            <label for="brandReebok">Reebok</label>
+         </li>
+         <li>
+            <input type="checkbox" id="brandNewBalance">
+            <label for="brandNewBalance">New Balance</label>
+         </li>
+      </ul>
+   </div>
+   <hr class="mt-2 mb-2">
+
+   <div class="cate-1">
+      <div (click)="togglePriceOptions()" class="collapsible-header pb-1">
+         Price <span [ngClass]="{'rotate': showPriceOptions}"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+               height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+               <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+            </svg></span>
+      </div>
+      <ul *ngIf="showPriceOptions">
+         <li>
+            <input type="checkbox" id="priceUnder50">
+            <label for="priceUnder50">Under S$50</label>
+         </li>
+         <li>
+            <input type="checkbox" id="price50to100">
+            <label for="price50to100">S$50 - S$100</label>
+         </li>
+         <li>
+            <input type="checkbox" id="price101to199">
+            <label for="price101to199">S$101 - S$199</label>
+         </li>
+         <li>
+            <input type="checkbox" id="priceOver200">
+            <label for="priceOver200">Over S$200</label>
+         </li>
+      </ul>
+   </div>
+   <hr class="mt-2 mb-2">
+
+   <div class="cate-1">
+      <div (click)="toggleSizeOptions()" class="collapsible-header pb-1">
+         Size <span [ngClass]="{'rotate': showSizeOptions}"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+               height="16" fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+               <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+            </svg></span>
+      </div>
+      <ul *ngIf="showSizeOptions">
+         <li>
+            <input type="checkbox" id="size37">
+            <label for="size37">37</label>
+         </li>
+         <li>
+            <input type="checkbox" id="size38">
+            <label for="size38">38</label>
+         </li>
+         <li>
+            <input type="checkbox" id="size39">
+            <label for="size39">39</label>
+         </li>
+         <li>
+            <input type="checkbox" id="size40to44">
+            <label for="size40to44">40-44</label>
+         </li>
+      </ul>
+   </div>
+</div>

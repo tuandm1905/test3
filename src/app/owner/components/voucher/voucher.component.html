@@ -1,0 +1,102 @@
+<div *ngIf="isVisible" class="modal">
+	<div class="modal-content modal-sm">
+		<div class="d-flex justify-content-between">
+			<h2>{{ modalTitle }}</h2>
+			<span class="close-button" (click)="closeModal()">&times;</span>
+		</div>
+		<form [formGroup]="form" (ngSubmit)="submit()">
+			<div class="row">
+				<div class="form-group required mb-3 col-md-6 ">
+					<label for="name" class="form-label">Voucher ID</label>
+					<input type="text" id="name" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'name')}"
+						formControlName="voucherId" name="name"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'voucherId', $event)" />
+					<app-form-error [control]="form.controls['voucherId']" [message]="'voucher Id is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+
+				<div class="form-group required mb-3 col-md-6 ">
+					<label for="quantity" class="form-label">Quantity</label>
+					<input type="number" id="quantity" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'quantity')}"
+						formControlName="quantity" name="quantity"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'quantity', $event)" />
+					<app-form-error [control]="form.controls['quantity']" [message]="'Quantity is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+				<div class="form-group required mb-3 col-md-6 ">
+					<label for="Price" class="form-label">Price</label>
+					<input type="number" id="Price" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'price')}"
+						formControlName="price" name="price"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'price', $event)" />
+					<app-form-error [control]="form.controls['price']" [message]="'Price is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+
+				<!-- <div class="form-group required mb-3">
+					<label for="ban" class="form-label">Delete</label>
+					<ng-select [items]="isBans" bindLabel="name" bindValue="id"
+						placeholder="Choose value" formControlName="isdelete"></ng-select>
+					<app-form-error [control]="form.controls['isdelete']" [message]="'Delete status is required!'"
+						[validation]="'required'"></app-form-error>
+				</div> -->
+
+				<div class="form-group required mb-3 col-md-6">
+					<label for="startDate" class="form-label">Start Date</label>
+					<input type="datetime-local" id="startDate" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'startDate')}"
+						formControlName="startDate" name="startDate"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'startDate', $event)" />
+					<app-form-error [control]="form.controls['startDate']" [message]="'Start Date is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+				<div class="form-group required col-md-6 mb-3">
+					<label for="endDate" class="form-label">End Date</label>
+					<input type="datetime-local" id="endDate" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'endDate')}"
+						formControlName="endDate" name="endDate"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'endDate', $event)" />
+					<app-form-error [control]="form.controls['endDate']" [message]="'End Date is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+				
+				
+				<!-- <div class="form-group required mb-3 col-md-6 ">
+					<label for="startDate" class="form-label">Start Date</label>
+					<input type="date" id="startDate" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'startDate')}"
+						formControlName="startDate" name="startDate"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'startDate', $event)" />
+					<app-form-error [control]="form.controls['startDate']" [message]="'Start Date is required!'"
+						[validation]="'required'"></app-form-error>
+				</div> -->
+
+				<!-- <div class="form-group required col-md-6  mb-3">
+					<label for="endDate" class="form-label">End Date</label>
+					<input type="date" id="endDate" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'endDate')}"
+						formControlName="endDate" name="endDate"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'endDate', $event)" />
+					<app-form-error [control]="form.controls['endDate']" [message]="'end Date is required!'"
+						[validation]="'required'"></app-form-error>
+				</div> -->
+
+				<!-- <div class="form-group required  mb-3">
+					<label for="owners" class="form-label">Owner</label>
+					<ng-select [items]="owners" bindLabel="fullname" bindValue="ownerId"
+						formControlName="ownerId"></ng-select>
+					<app-form-error [control]="form.controls['ownerId']" [message]="'Owner id is required!'"
+						[validation]="'required'"></app-form-error>
+				</div> -->
+
+			</div>
+			<div class="d-flex justify-content-center my-3">
+				<button type="button" (click)="closeModal()" class="btn btn-secondary">{{typeForm == 2 ? 'Close' :
+					'Cancel'}}</button>
+				<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm != 2">Save</button>
+			</div>
+		</form>
+	</div>
+</div>

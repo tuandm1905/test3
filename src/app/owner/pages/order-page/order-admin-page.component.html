@@ -1,0 +1,539 @@
+<div class="card w-100">
+	<div class="card-body w-100">
+		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
+		<div class="d-md-flex justify-content-between">
+			<h2 class="my-2">View All Orders</h2>
+		</div>
+		<div class="">
+			<form [formGroup]="formSearch" (ngSubmit)="search()">
+				<div class="row mb-5 align-items-end">
+				  <div class="col-md-3 col-xs-12">
+					<label class="form-label">Order Code: </label>
+					<input formControlName="name" type="text" class="form-control" placeholder="" />
+				  </div>
+				  <div class="col-md-6 col-xs-12 justify-content-between align-items-center">
+					<div class="filter-btn d-flex gap-3">
+					  <button autofocus type="submit" class="btn btn-primary"><i class="fa fa-search"></i> Search</button>
+					  <button type="button" class="btn btn-secondary" (click)="resetSearchForm()">
+						<i class="fa fa-sync"></i> Reset
+					  </button>
+					</div>
+				  </div>
+				</div>
+			  </form>
+			  
+
+			<ul class="nav nav-tabs mt-3" id="campain-tabs--link" role="tablist">
+				<li class="nav-item pointer font-weight-bold" *ngFor="let item of tabLinks">
+					<a class="nav-link" [ngClass]="{ 'active': tabType == item.id}" data-toggle="tab" role="tab"
+						(click)="changeTab(item.id)">{{item.name}}</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+
+	<ng-container *ngIf="tabType == 'all'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="width: 10%;">Required Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Shipped Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataList?.length > 0">
+							<tr *ngFor="let item of dataList; index as i">
+								<td class="text-center align-middle">{{ (paging.page - 1) * paging.pageSize + i + 1 }}
+								</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.requiredDate">
+											<strong>Hours:</strong> {{ item.requiredDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.requiredDate">
+											<strong>Day:</strong> {{ item.requiredDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.shippedDate">
+											<strong>Hours:</strong> {{ item.shippedDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.shippedDate">
+											<strong>Day:</strong> {{ item.shippedDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataList?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+		</div>
+		<app-detail-order [order]="selected" [modalTitle]="modalTitle" [isVisible]="openModal"
+			(close)="closeModal()"></app-detail-order>
+	</ng-container>
+
+	<ng-container *ngIf="tabType == 'pending'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">Actions</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataList?.length > 0">
+							<tr *ngFor="let item of dataList; index as i">
+								<td class="text-center align-middle">{{ (pagingPending.page - 1) *
+									pagingPending.pageSize + i + 1 }}</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<div class="button-group">
+										<button class="btn btn-secondary me-2"
+											(click)="updateOrderStatus(item.orderId, 2)">
+											Approve
+										</button>
+										<button class="btn btn-danger" (click)="updateOrderStatus(item.orderId, 5)">
+											Reject
+										</button>
+									</div>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataListPending?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="pagingPending" (changePaged)="pageChangedPending($event)"></app-pagination>
+		</div>
+		<app-detail-order [order]="selected" [modalTitle]="modalTitle" [isVisible]="openModal"
+			(close)="closeModal()"></app-detail-order>
+	</ng-container>
+
+	<ng-container *ngIf="tabType == 'processing'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="width: 10%;">Required Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">Actions</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataList?.length > 0">
+							<tr *ngFor="let item of dataList; index as i">
+								<td class="text-center align-middle">{{ (pagingProcessing.page - 1) *
+									pagingProcessing.pageSize + i + 1 }}</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.requiredDate">
+											<strong>Hours:</strong> {{ item.requiredDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.requiredDate">
+											<strong>Day:</strong> {{ item.requiredDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<div class="button-group">
+										<button class="btn btn-success me-2"
+											(click)="updateOrderStatus(item.orderId, 3)">
+											Success
+										</button>
+										<button class="btn btn-warning me-2"
+											(click)="updateOrderStatus(item.orderId, 4)">
+											Failed
+										</button>
+									</div>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataListProcessing?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="pagingProcessing" (changePaged)="pageChangedProcessing($event)"></app-pagination>
+		</div>
+		<app-detail-order [order]="selected" [modalTitle]="modalTitle" [isVisible]="openModal"
+			(close)="closeModal()"></app-detail-order>
+	</ng-container>
+
+	<ng-container *ngIf="tabType == 'completed'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="width: 10%;">Required Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Shipped Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataListCompleted?.length > 0">
+							<tr *ngFor="let item of dataListCompleted; index as i">
+								<td class="text-center align-middle">{{ (pagingCompleted.page - 1) *
+									pagingCompleted.pageSize + i + 1 }}</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.requiredDate">
+											<strong>Hours:</strong> {{ item.requiredDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.requiredDate">
+											<strong>Day:</strong> {{ item.requiredDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.shippedDate">
+											<strong>Hours:</strong> {{ item.shippedDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.shippedDate">
+											<strong>Day:</strong> {{ item.shippedDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataListCompleted?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="pagingCompleted" (changePaged)="pageChangedCompleted($event)"></app-pagination>
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="tabType == 'rejected'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="width: 10%;">Required Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Shipped Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataListRejected?.length > 0">
+							<tr *ngFor="let item of dataListRejected; index as i">
+								<td class="text-center align-middle">{{ (pagingRejected.page - 1) *
+									pagingRejected.pageSize + i + 1 }}</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.requiredDate">
+											<strong>Hours:</strong> {{ item.requiredDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.requiredDate">
+											<strong>Day:</strong> {{ item.requiredDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.shippedDate">
+											<strong>Hours:</strong> {{ item.shippedDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.shippedDate">
+											<strong>Day:</strong> {{ item.shippedDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataListRejected?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="pagingRejected" (changePaged)="pageChangedRejected($event)"></app-pagination>
+		</div>
+	</ng-container>
+
+	<ng-container *ngIf="tabType == 'cancelled'">
+		<div class="card-body">
+			<div class="table-responsive">
+				<table class="table">
+					<thead>
+						<tr>
+							<th class="text-center align-middle" style="width: 5%;">STT</th>
+							<th class="text-center align-middle" style="min-width: 80px;">Code Order</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Full Name</th>
+							<th class="text-center align-middle" style="width: 10%;">Order Date</th>
+							<th class="text-center align-middle" style="width: 10%;">Required Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Shipped Date</th>
+							<th class="text-center align-middle" style="min-width: 100px;">Quantity</th>
+							<th class="text-center align-middle" style="width: 10%;">Total Price</th>
+							<th class="text-center align-middle" style="width: 10%;">Status</th>
+							<th class="text-center align-middle" style="width: 10%;">View</th>
+						</tr>
+					</thead>
+					<tbody>
+						<ng-container *ngIf="dataListCancelled?.length > 0">
+							<tr *ngFor="let item of dataListCancelled; index as i">
+								<td class="text-center align-middle">{{ (pagingCancelled.page - 1) *
+									pagingCancelled.pageSize + i + 1 }}</td>
+								<td class="text-center align-middle">{{ item.codeOrder }}</td>
+								<td class="text-center align-middle">{{ item.fullName }}</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.orderDate">
+											<strong>Hours:</strong> {{ item.orderDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.orderDate">
+											<strong>Day:</strong> {{ item.orderDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.requiredDate">
+											<strong>Hours:</strong> {{ item.requiredDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.requiredDate">
+											<strong>Day:</strong> {{ item.requiredDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">
+									<ul class="date-list">
+										<li *ngIf="item.shippedDate">
+											<strong>Hours:</strong> {{ item.shippedDate | date: 'HH:mm' }}
+										</li>
+										<li *ngIf="item.shippedDate">
+											<strong>Day:</strong> {{ item.shippedDate | date: 'dd/MM/yyyy' }}
+										</li>
+									</ul>
+								</td>
+								<td class="text-center align-middle">{{ item.quantity }}</td>
+								<td class="text-center align-middle">{{ item.totalPrice }}</td>
+								<td class="text-center align-middle">
+									<span *ngIf="item.statusId === 1" class="btn btn-primary me-2">Pending</span>
+									<span *ngIf="item.statusId === 2" class="btn btn-secondary me-2">Processing</span>
+									<span *ngIf="item.statusId === 3" class="btn btn-success me-2">Completed</span>
+									<span *ngIf="item.statusId === 4" class="btn btn-warning me-2">Rejected</span>
+									<span *ngIf="item.statusId === 5" class="btn btn-danger me-2">Cancelled</span>
+								</td>
+								<td class="text-center align-middle">
+									<button mat-menu-item class="icon-button btn btn-outline-success me-2"
+										(click)="viewItem(item.orderId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+								</td>
+							</tr>
+						</ng-container>
+						<ng-container *ngIf="dataListCancelled?.length <= 0">
+							<tr>
+								<td colspan="10">No data</td>
+							</tr>
+						</ng-container>
+					</tbody>
+				</table>
+			</div>
+			<app-pagination [paging]="pagingCancelled" (changePaged)="pageChangedCancelled($event)"></app-pagination>
+		</div>
+	</ng-container>
+</div>
+<app-loading [loading]="loading"></app-loading>
+<app-detail-order [order]="selected" [modalTitle]="modalTitle" [isVisible]="openModal"
+	(close)="closeModal()"></app-detail-order>

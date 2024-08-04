@@ -1,0 +1,76 @@
+<div *ngIf="isVisible" class="modal">
+	<div class="modal-content">
+		<div class="d-flex justify-content-between">
+			<h2>{{ modalTitle }}</h2>
+			<span class="close-button" (click)="closeModal()">&times;</span>
+		</div>
+		<div class="row">
+			<div class="col-md-6">
+				<div class="image-section">
+					<img [src]="data.image" alt="IMAGE" />
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="content-section">
+					<h1>{{data.title}}</h1>
+					<p>{{data.content}}</p>
+					<!-- <button (click)="contactUs()">NHẬN TƯ VẤN NGAY</button> -->
+				</div>
+				<!-- <div class="form-group col-md-6  required mb-3">
+					<label for="Title" class="form-label">Title</label>
+					<input type="text" id="Title" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
+						formControlName="Title" name="Title"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'Title', $event)" />
+				</div> -->
+
+				<!-- <div class="form-group col-md-6  required mb-3">
+					<label for="Service" class="form-label ">Service</label>
+					<input type="text" id="Service" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Service')}"
+						formControlName="Service" name="Service"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'Service', $event)" />
+					
+				</div>
+				<div class="form-group col-md-6  required mb-3">
+					<label for="OwnerId" class="form-label ">Owners</label>
+					<input type="text" id="OwnerId" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'OwnerId')}"
+						formControlName="OwnerId" name="OwnerId"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'OwnerId', $event)" />
+					
+				</div>
+				<div class="form-group col-md-6  required mb-3">
+					<label for="StatusPostId" class="form-label ">Status</label>
+					<input type="text" id="StatusPostId" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'StatusPostId')}"
+						formControlName="StatusPostId" name="StatusPostId"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'StatusPostId', $event)" />
+					
+				</div>
+				<div class="form-group col-12  required mb-3">
+					<label for="Image" class="form-label ">Image URL</label>
+					<input type="text" id="Image" class="form-control" placeholder="Enter value"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Image')}"
+						formControlName="Image" name="Image">
+					
+				</div>
+				<div class="form-group col-12  required mb-3">
+					<label for="Content" class="form-label">Content</label>
+					<textarea type="text" id="Content" class="form-control" placeholder="Enter value" rows="3"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Content')}"
+						formControlName="Content" name="name"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'Content', $event)">
+						</textarea>
+					<app-form-error [control]="form.controls['Content']" [message]="'Content is required!'"
+						[validation]="'required'"></app-form-error>
+				</div> -->
+			</div>
+			<!-- <div class="d-flex justify-content-center my-3">
+				<button type="button" (click)="closeModal()" class="btn btn-secondary">{{typeForm == 2 ? 'Close' :
+					'Cancel'}}</button>
+				<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm != 2">Save</button>
+			</div> -->
+		</div>
+	</div>
+</div>

@@ -1,0 +1,100 @@
+<div class="card w-100">
+	<div class="card-body w-100">
+		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
+
+		<div class="d-md-flex justify-content-between">
+			<h2 class="my-2">View All Voucher</h2>
+			<button class="btn btn-success my-2" (click)="createItem()">Create New Voucher</button>
+		</div>
+		<!-- <div class="">
+            <form [formGroup]="formSearch" (ngSubmit)="search()">
+                <div class="row mb-5 align-items-end">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="form-label">Service Name: </label>
+                        <input formControlName="name" type="text" class="form-control" placeholder="" />
+                    </div>
+                    <div class="col-md-6 col-xs-12 justify-content-between align-items-center">
+                        <div class="filter-btn d-flex gap-3">
+                            <button autofocus type="submit" class="btn btn-primary"><i class="fa fa-search">
+                                </i> Search</button>
+                            <button type="button" class="btn btn-secondary" (click)="resetSearchForm()">
+                                <i class="fa fa-sync"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div> -->
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th class="text-center align-middle" style="width: 5%;">STT</th>
+						<th class=" align-middle text-nowrap">Voucher ID</th>
+						<th class=" align-middle">Quantity</th>
+						<th class=" align-middle">Price</th>
+						<th class=" align-middle">Time</th>
+						<th class=" align-middle">Quantity Used</th>
+						<th class=" align-middle">Owner</th>
+						<th class="text-center align-middle">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngIf="dataList?.length > 0">
+						<tr *ngFor="let item of dataList, index as i">
+							<td class="text-center align-middle">{{ i + 1 }}</td>
+							<td class="align-middle">{{ item.voucherId }}</td>
+							<td class="align-middle">{{ item.quantity }}</td>
+							<td class="align-middle">{{ item.price }}</td>
+							<td class="align-middle">
+								<ul>
+									<li>Start: {{item.startDate | date: 'dd/MM/yyyy'}}</li>
+									<li>End: {{item.endDate | date: 'dd/MM/yyyy'}}</li>
+								</ul>
+							</td>
+							<td class="align-middle">{{ item.quantityUsed }}</td>
+							<td class="align-middle">{{ item.owner?.fullname || item?.ownerId }}</td>
+							<td class="text-center align-middle">
+								<button mat-icon-button [matMenuTriggerFor]="menu"
+									class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+									<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+								</button>
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item class="icon-button view-button" (click)="viewItem(item.voucherId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+									<button mat-menu-item class="icon-button edit-button" (click)="editItem(item.voucherId)">
+										<i class="fa fa-pencil"></i> Edit
+									</button>
+									<button mat-menu-item class="icon-button delete-button" (click)="deleteItem(item.voucherId)">
+										<i class="fa fa-trash"></i> Delete
+									</button>
+								</mat-menu>
+							</td>
+						</tr>
+					</ng-container>
+					<ng-container *ngIf="dataList?.length <= 0">
+						<tr>
+							<td class="text-center align-middle" colspan="9">No data</td>
+						</tr>
+					</ng-container>
+
+				</tbody>
+			</table>
+		</div>
+		<app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+	</div>
+</div>
+
+<app-voucher-form 
+[data]="selected" 
+[modalTitle]="modalTitle" 
+[typeForm]="typeForm" 
+[owners]="owners"
+[isVisible]="openModal"
+	(save)="saveItem($event)" (close)="closeModal()">
+</app-voucher-form>
+
+<app-loading [loading]="loading"></app-loading>

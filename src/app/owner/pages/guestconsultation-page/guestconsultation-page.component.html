@@ -1,0 +1,244 @@
+<div class="card w-100">
+    <div class="card-body w-100">
+        <app-breadcrum [items]="breadCrumb"></app-breadcrum>
+        <div class="d-md-flex justify-content-between">
+            <h2 class="my-2">View All Guest Consultation</h2>
+        </div>
+        <div class="">
+            <form [formGroup]="formSearch" (ngSubmit)="search()">
+                <div class="row mb-5 align-items-end">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="form-label">Account Name: </label>
+                        <input formControlName="name" type="text" class="form-control" placeholder="" />
+                    </div>
+                    <div class="col-md-6 col-xs-12 justify-content-between align-items-center">
+                        <div class="filter-btn d-flex gap-3">
+                            <button autofocus type="submit" class="btn btn-primary"><i class="fa fa-search"></i>
+                                Search</button>
+                            <button type="button" class="btn btn-secondary" (click)="resetSearchForm()">
+                                <i class="fa fa-sync"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <ul class="nav nav-tabs mt-3" id="campain-tabs--link" role="tablist">
+                <li class="nav-item pointer font-weight-bold" *ngFor="let item of tabLinks">
+                    <a class="nav-link" [ngClass]="{ 'active': tabType == item.id}" data-toggle="tab" role="tab"
+                        (click)="changeTab(item.id)">{{item.name}}</a>
+                </li>
+            </ul>
+
+        </div>
+        <ng-container *ngIf="tabType == 'all'">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle" style="width: 20px;">STT</th>
+                                <th class="text-center align-middle" style="min-width: 80px;">Full Name</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Phone</th>
+                                <th class="text-center align-middle content-column" style="width: 30px;">Content</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Advertisement Title</th>
+                                <th class="text-center align-middle" style="width: 10%;">Status</th>
+                                <th class="text-center align-middle" style="width: 10%;">Action</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="dataList?.length > 0">
+                                <tr *ngFor="let item of dataList; index as i">
+                                    <td class="text-center align-middle">{{ (paging.page - 1) *
+                                        paging.pageSize + i + 1 }}
+                                    </td>
+                                    <td class="text-center align-middle">{{ item.fullname }}</td>
+                                    <td class="text-center align-middle">{{ item.phone }}</td>
+                                    <td class="text-center align-middle content-column">{{ item.content }}</td>
+                                    <td class="text-center align-middle">{{ item.ad.title }}</td>
+                                    <td class="text-center align-middle">
+                                        <span class="text-yellow-500 italic font-bold" *ngIf="item.statusGuestId === 1">Waiting</span>
+                                        <span class="text-green-500 italic font-bold" *ngIf="item.statusGuestId === 2">Completed</span>
+                                        <span class="text-red-500 italic font-bold" *ngIf="item.statusGuestId === 3">Deny</span>
+                                        <!-- <span class="badge badge-waiting"
+                                            *ngIf="!item.statusPostId || (item.statusPostId !== 'accept' && item.statusPostId !== 'deny')">Waiting</span> -->
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <button mat-menu-item class="icon-button btn btn-outline-success me-2"
+                                            (click)="viewItem(item.guestId)">
+                                            <i class="fa fa-eye"></i> View
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="dataList?.length <= 0">
+                                <tr>
+                                    <td colspan="7">No data</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tabType == 'waiting'">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle" style="width: 20px;">STT</th>
+                                <th class="text-center align-middle" style="min-width: 80px;">Full Name</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Phone</th>
+                                <th class="text-center align-middle content-column" style="width: 30px;">Content</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Advertisement Title</th>
+                                <th class="text-center align-middle" style="width: 30px">Status</th>
+                                <th class="text-center align-middle" style="width: 10%;">Change</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="dataListWaiting?.length > 0">
+                                <tr *ngFor="let item of dataListWaiting; index as i">
+                                    <td class="text-center align-middle">{{ (paging.page - 1) *
+                                        paging.pageSize + i + 1 }}
+                                    </td>
+                                    <td class="text-center align-middle">{{ item.fullname }}</td>
+                                    <td class="text-center align-middle">{{ item.phone }}</td>
+                                    <td class="text-center align-middle content-column">{{ item.content }}</td>
+                                    <td class="text-center align-middle">{{ item.advertisementTitle }}</td>
+                                    <td class="text-center align-middle">
+                                        <span *ngIf="item.statusGuestId === 1"
+                                            class="btn btn-primary me-2">Waiting</span>
+                                        <span *ngIf="item.statusGuestId === 2"
+                                            class="btn btn-secondary me-2">Accept</span>
+                                        <span *ngIf="item.statusGuestId === 3" class="btn btn-success me-2">Deny</span>
+                                    </td>
+                                    <td class="text-center align-middle">
+                                        <div class="button-group">
+                                            <button class="btn btn-success me-2"
+                                                (click)="updateGuestStatus(item.guestId,2)">
+                                                Accept
+                                            </button>
+                                            <button class="btn btn-warning me-2"
+                                                (click)="updateGuestStatus(item.guestId,3)">
+                                                Deny
+                                            </button>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="dataListWaiting?.length <= 0">
+                                <tr>
+                                    <td colspan="7">No data</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tabType == 'accept'">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle" style="width: 20px;">STT</th>
+                                <th class="text-center align-middle" style="min-width: 80px;">Full Name</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Phone</th>
+                                <th class="text-center align-middle content-column" style="width: 30px;">Content</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Advertisement Title</th>
+                                <th class="text-center align-middle" style="width: 10%;">Status</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="dataListAccecpt?.length > 0">
+                                <tr *ngFor="let item of dataListAccecpt; index as i">
+                                    <td class="text-center align-middle">{{ (paging.page - 1) *
+                                        paging.pageSize + i + 1 }}
+                                    </td>
+                                    <td class="text-center align-middle">{{ item.fullname }}</td>
+                                    <td class="text-center align-middle">{{ item.phone }}</td>
+                                    <td class="text-center align-middle content-column">{{ item.content }}</td>
+                                    <td class="text-center align-middle">{{ item.advertisementTitle }}</td>
+                                    <td class="text-center align-middle">
+                                        <span *ngIf="item.statusGuestId === 1"
+                                            class="btn btn-primary me-2">Waiting</span>
+                                        <span *ngIf="item.statusGuestId === 2"
+                                            class="btn btn-success me-2">Accept</span>
+                                        <span *ngIf="item.statusGuestId === 3" class="btn btn-warning me-2">Deny</span>
+                                    </td>
+
+
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="dataListAccecpt?.length <= 0">
+                                <tr>
+                                    <td colspan="6">No data</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+            </div>
+        </ng-container>
+        <ng-container *ngIf="tabType == 'deny'">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="text-center align-middle" style="width: 20px;">STT</th>
+                                <th class="text-center align-middle" style="min-width: 80px;">Full Name</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Phone</th>
+                                <th class="text-center align-middle content-column" style="width: 30px;">Content</th>
+                                <th class="text-center align-middle" style="min-width: 100px;">Advertisement Title</th>
+                                <th class="text-center align-middle" style="width: 10%;">Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="dataListDeny?.length > 0">
+                                <tr *ngFor="let item of dataListDeny; index as i">
+                                    <td class="text-center align-middle">{{ (paging.page - 1) *
+                                        paging.pageSize + i + 1 }}
+                                    </td>
+                                    <td class="text-center align-middle">{{ item.fullname }}</td>
+                                    <td class="text-center align-middle">{{ item.phone }}</td>
+                                    <td class="text-center align-middle content-column">{{ item.content }}</td>
+                                    <td class="text-center align-middle">{{ item.advertisementTitle }}</td>
+                                    <td class="text-center align-middle">
+                                        <span *ngIf="item.statusGuestId === 1"
+                                            class="btn btn-primary me-2">Waiting</span>
+                                        <span *ngIf="item.statusGuestId === 2"
+                                            class="btn btn-secondary me-2">Accept</span>
+                                        <span *ngIf="item.statusGuestId === 3" class="btn btn-warning me-2">Deny</span>
+                                    </td>
+
+
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="dataListDeny?.length <= 0">
+                                <tr>
+                                    <td colspan="6">No data</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                </div>
+                <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+            </div>
+        </ng-container>
+    </div>
+    <app-update-consultation [data]="selected" [modalTitle]="modalTitle" [typeForm]="typeForm"
+        [isVisible]="openModal" (save)="saveItem($event)" (close)="closeModal()">
+    </app-update-consultation>
+    <app-loading [loading]="loading"></app-loading>
+</div>

@@ -1,0 +1,120 @@
+<div class="card w-100">
+	<div class="card-body w-100">
+		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
+		<!-- <div class="d-md-flex justify-content-between">
+			<h2 class="my-2">View All Blogs</h2>
+			<button class="btn btn-success my-2" (click)="createItem()">Create New Blog</button>
+		</div> -->
+		<div class="">
+			<form [formGroup]="formSearch" (ngSubmit)="search()">
+				<div class="row mb-5 align-items-end">
+					<div class="col-md-3 col-xs-12">
+						<label class="form-label">Blog Name: </label>
+						<input formControlName="name" type="text" class="form-control" placeholder="" />
+					</div>
+					<div class="col-md-6 col-xs-12 justify-content-between align-items-center">
+						<div class="filter-btn d-flex gap-3">
+							<button autofocus type="submit" class="btn btn-primary"><i class="fa fa-search">
+								</i> Search</button>
+							<button type="button" class="btn btn-secondary" (click)="resetSearchForm()">
+								<i class="fa fa-sync"></i> Reset
+							</button>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div class="card-body">
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<!-- <th><input type="checkbox" (click)="toggleSelectAll()"></th> -->
+						<th class="text-center align-middle" style="min-width: 5%;">STT</th>
+						<th class="text-center align-middle" style="min-width: 80px;">Image</th>
+						<th class="text-center align-middle">Title</th>
+						<th class="text-center align-middle">Content</th>
+						<th class="text-center align-middle">Status</th>
+						<th class="text-center align-middle">Service</th>
+						<th class="text-center align-middle">Owner</th>
+						<th class="text-center align-middle" style="min-width: 10%;">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<ng-container *ngIf="dataList?.length > 0">
+						<tr *ngFor="let item of dataList, index as i">
+							<!-- <td>
+								<input type="checkbox" [(ngModel)]="item.selected">
+							</td> -->
+							<td class="text-center align-middle">{{ (paging.page - 1) * paging.pageSize + i + 1 }}</td>
+							<td class="text-center align-middle">
+								<div class="image-container">
+									<img [src]="item.image" alt="{{ item.name }}" class="thumbnail" width="80"
+										height="80" />
+								</div>
+							</td>
+							<td class="text-center align-middle">{{ item.title }}</td>
+							<td class="text-center align-middle">
+								<p class="text-break">
+									{{ item.content }}
+								</p>
+							</td>
+							<!-- <td class="text-center align-middle">
+								<span >
+									{{item.statusPost?.name || item.statusPostId}}
+								</span>
+							</td> -->
+							<td class="text-center align-middle">
+								<span class="badge badge-waiting" *ngIf="item.statusPostId === 1">Waiting</span>
+								<span class="badge badge-accept" *ngIf="item.statusPostId === 2">Accept</span>
+								<span class="badge badge-deny" *ngIf="item.statusPostId === 3">Deny</span>
+								<!-- <span class="badge badge-waiting"
+									*ngIf="!item.statusPostId || (item.statusPostId !== 'accept' && item.statusPostId !== 'deny')">Waiting</span> -->
+							</td>
+
+
+							<td class="text-center align-middle">{{ item?.serviceName || item.serviceId }}</td>
+							<td class="text-center align-middle">{{ item?.ownerName || item.ownerId}}</td>
+							<td class="text-center align-middle">
+
+								<button mat-icon-button [matMenuTriggerFor]="menu"
+									class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+									<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+								</button>
+								<mat-menu #menu="matMenu">
+									<button mat-menu-item class="icon-button view-button" (click)="viewItem(item.adId)">
+										<i class="fa fa-eye"></i> View
+									</button>
+									<button mat-menu-item class="icon-button edit-button" (click)="editItem(item.adId)">
+										<i class="fa fa-pencil"></i> Edit
+									</button>
+									<!-- <button *ngIf="!item.isBan" mat-menu-item class="icon-button delete-button"
+										(click)="updateBan(item.ownerId, true)">
+										<i class="fa fa-lock text-danger"></i> Ban
+									</button>
+									<button *ngIf="item.isBan" mat-menu-item class="icon-button delete-button"
+										(click)="updateBan(item.ownerId, false)">
+										<i class="fa fa-unlock text-success"></i> Unban
+									</button> -->
+								</mat-menu>
+							</td>
+						</tr>
+					</ng-container>
+					<ng-container *ngIf="dataList?.length <= 0">
+						<tr>
+							<td colspan="9">No data</td>
+						</tr>
+					</ng-container>
+
+				</tbody>
+			</table>
+		</div>
+		<app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+	</div>
+</div>
+<app-loading [loading]="loading"></app-loading>
+
+<app-update-blog [data]="selected" [modalTitle]="modalTitle" [typeForm]="typeForm" [isVisible]="openModal"
+	[services]="services" [owners]="owners" (save)="saveItem($event)" (close)="closeModal()">
+</app-update-blog>

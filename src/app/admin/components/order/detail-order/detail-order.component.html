@@ -1,0 +1,19 @@
+<div *ngIf="isVisible" class="modal">
+  <div class="modal-content">
+    <span class="close-button" (click)="closeModal()">&times;</span>
+    <h2>{{ modalTitle }}</h2>
+    <div class="form-group">
+      <label for="name">Name</label>
+      <input type="text" id="name" [(ngModel)]="order.name" name="name" disabled>
+    </div>
+    <div class="form-group">
+      <label for="image">Image URL</label>
+      <input type="text" id="image" [(ngModel)]="order.image" name="image" disabled>
+    </div>
+    <div class="form-group">
+      <label for="content">Content</label>
+      <textarea id="content" [(ngModel)]="order.content" name="content" disabled></textarea>
+    </div>
+    <button class="btn btn-secondary" (click)="closeModal()">Close</button>
+  </div>
+</div>

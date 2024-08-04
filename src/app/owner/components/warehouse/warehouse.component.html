@@ -1,0 +1,62 @@
+<div *ngIf="isVisible" class="modal">
+    <div class="modal-content">
+        <div class="row">
+            <div class="d-flex justify-content-between">
+                <h2 class="modal-title">{{ modalTitle }}</h2>
+                <button class="close-button" (click)="closeModal()">&times;</button>
+            </div>
+            <form [formGroup]="form">
+                <div class="form-group required mb-3">
+                    <label for="ProductSize" class="form-label">ProductSize</label>
+                    <input type="text" id="ProductSize" class="form-control"
+                        [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'ProductSize')}"
+                        formControlName="ProductSize" name="ProductSize"
+                        (focusout)="commonService.onTrimFocusOutForm(form, 'ProductSize', $event)">
+                    <app-form-error [control]="form.controls['ProductSize']" [message]="'ProductSize is required!'"
+                        [validation]="'required'"></app-form-error>
+                </div>
+                <div class="form-group required mb-3">
+                    <label for="Location" class="form-label">Location</label>
+                    <input type="text" id="Location" class="form-control"
+                        [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Location')}"
+                        formControlName="Location" name="Location"
+                        (focusout)="commonService.onTrimFocusOutForm(form, 'Location', $event)">
+                    <app-form-error [control]="form.controls['Location']" [message]="'Location is required!'"
+                        [validation]="'required'"></app-form-error>
+                </div>
+                <div class="d-flex justify-content-center my-3">
+                    <button type="button" (click)="closeModal()" class="btn btn-secondary">{{typeForm == 2 ? 'Close' :
+                        'Cancel'}}</button>
+                    <button type="submit" (click)="submit()" class="btn btn-success mx-2"
+                        *ngIf="typeForm != 2">Save</button>
+                </div>
+            </form>
+        </div>
+        <!-- <form [formGroup]="form" (ngSubmit)="submit()">
+            <div class="form-row">
+                <div class="form-group mb-3">
+                    <label for="ProductSize"><strong>Product Size:</strong></label>
+                    <input type="text" id="ProductSize" class="form-control"
+                        [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'ProductSize')}"
+                        formControlName="ProductSize" name="ProductSize"
+                        (focusout)="commonService.onTrimFocusOutForm(form, 'ProductSize', $event)" />
+                    <app-form-error [control]="form.controls['ProductSize']"
+                        [message]="'Product Size is required!'" [validation]="'required'"></app-form-error>
+                </div>
+				<div class="form-group mb-3">
+                    <label for="Location"><strong>Location:</strong></label>
+                    <input type="text" id="Location" class="form-control"
+                        [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Location')}"
+                        formControlName="Location" name="Location"
+                        (focusout)="commonService.onTrimFocusOutForm(form, 'Location', $event)" />
+                    <app-form-error [control]="form.controls['Location']"
+                        [message]="'Location is required!'" [validation]="'required'"></app-form-error>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center my-3">
+                <button type="button" (click)="closeModal()" class="btn btn-secondary">Cancel</button>
+                <button type="submit" class="btn btn-success mx-2">Save</button>
+            </div>
+        </form> -->
+    </div>
+</div>

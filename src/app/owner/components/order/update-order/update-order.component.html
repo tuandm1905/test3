@@ -1,0 +1,22 @@
+<div *ngIf="isVisible" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{ modalTitle }}</h5>
+      <button type="button" class="close" (click)="handleClose()">
+        <span>&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <!-- Add form fields to display/edit order details here -->
+      <div class="form-group">
+        <label for="orderName">Order Name 123po12p3jp12jop</label>
+        <input type="text" class="form-control" id="orderName" [(ngModel)]="order.name">
+      </div>
+      <!-- Add other fields as necessary -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" (click)="handleClose()">Close</button>
+      <button type="button" class="btn btn-primary" (click)="handleSave()">Save changes</button>
+    </div>
+  </div>
+</div>

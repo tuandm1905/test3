@@ -1,0 +1,220 @@
+<div *ngIf="isVisible" class="modal">
+  <div class="modal-content">
+    <div class="d-flex justify-content-between">
+      <!-- <h2>{{ modalTitle }}</h2> -->
+      <div class="order-details">
+        <div class="order-header">
+          <!-- <a href="#" class="back-link" (click)="closeModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-chevron-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+            </svg> BACK
+          </a> -->
+          <button type="button" class="back-link" (click)="closeModal()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+              class="bi bi-chevron-left" viewBox="0 0 16 16">
+              <path fill-rule="evenodd"
+                d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0" />
+            </svg> BACK
+          </button>
+          <div>
+            <span class="order-id">CODE ORDERS: {{ order.codeOrder }}</span>
+            <span class="ewYlfp">|</span>
+            <span class="order-status text-red-500">Completed</span>
+          </div>
+        </div>
+        <div class="progress-container">
+          <div class="progress-step done">
+            <div class="step-icon">📄</div>
+            <div class="step-label">Đơn Hàng Đã Đặt</div>
+          </div>
+          <div class="progress-step done">
+            <div class="step-icon">🚚</div>
+            <div class="step-label">Đã Giao Cho ĐVVC</div>
+          </div>
+          <div class="progress-step current">
+            <div class="step-icon">📦</div>
+            <div class="step-label">Chờ Giao Hàng</div>
+          </div>
+          <div class="progress-step">
+            <div class="step-icon">⭐</div>
+            <div class="step-label">Đánh Giá</div>
+          </div>
+        </div>
+        <div class="TWLNg9">
+          <div class="qJkRlY"></div>
+        </div>
+        <div class="sZoQ_a">
+          <div>Delivery Address</div>
+        </div>
+        <div class="address">
+          <div class="address-section">
+            <div class="info">
+              <span class="name">{{ order.fullName }}</span>
+              <div class="mt-2">
+                <p>{{ order.phone }}</p>
+                <p>{{ order.address }}</p>
+              </div>
+
+
+            </div>
+
+          </div>
+          <div class="tracking-section">
+            <ng-container *ngIf="order">
+              <div *ngIf="order.statusId === 3" class="tracking-item done">
+                 <div class="tracking-time">{{ formatDate(order.shippedDate) }}</div>
+                 <div class="tracking-info">
+                    <strong>Delivered</strong>
+                    <p>Successful delivery. Receiver: {{ order.fullName }}.</p>
+                 </div>
+              </div>
+              <div *ngIf="order.statusId === 2 || order.statusId === 3" class="tracking-item done">
+                 <div class="tracking-time">{{ formatDate(order.requiredDate) }}</div>
+                 <div class="tracking-info">
+                    <strong>Delivering</strong>
+                    <p>Orders will be delivered soon, please pay attention to your phone.</p>
+                 </div>
+              </div>
+              <div *ngIf="order.statusId === 1 || order.statusId === 2 || order.statusId === 3"
+                 class="tracking-item done">
+                 <div class="tracking-time">{{ formatDate(order.orderDate) }}</div>
+                 <div class="tracking-info">
+                    <strong>Ordered</strong>
+                    <p>Wait for the shop to confirm the order.</p>
+                 </div>
+              </div>
+           </ng-container>
+          </div>
+        </div>
+        <!-- <div class="order-header">
+          <div>
+             <span class="shop-name">{{ order.shopName }}</span>
+             <button class="btn-view-shop">Xem Shop</button>
+          </div>
+       </div> -->
+       <!-- <div class="order-product" *ngFor="let item of orderDetails">
+
+       </div> -->
+       <div class="pb-2 message">
+        <div class="note">Note: </div>
+        <div style="font-size: 12px; ;">{{order.note}}</div>
+     </div>
+     <div class="wGEXn5">
+        <div class="kW3VDc">
+           <div class="Vg5MF2"><span>Merchandise Subtotal</span></div>
+           <div class="Tfejtu">
+              <div>{{ getMerchandiseSubtotal() | currency }}</div>
+           </div>
+        </div>
+        <div class="kW3VDc">
+           <div class="Vg5MF2"><span>Voucher Discount</span></div>
+           <div class="Tfejtu">
+              <div>- {{ order.voucherPrice | currency}}</div>
+           </div>
+        </div>
+        <div class="kW3VDc WKCLpC">
+           <div class="Vg5MF2 oKK6bX"><span>Total Payment</span></div>
+           <div class="Tfejtu">
+              <div class="PUZuMi">{{ order.totalPrice | currency}}</div>
+           </div>
+        </div>
+        <div class="kW3VDc">
+           <div class="Vg5MF2"><span>Payment methods</span></div>
+           <div class="Tfejtu">
+              <div>Ship COD</div>
+           </div>
+        </div>
+     </div>
+      </div>
+    </div>
+    <!-- <form [formGroup]="form">
+      <div class="row">
+        <div class="form-group col-md-6 required mb-3">
+          <label for="codeOrder" class="form-label">Code Order</label>
+          <input type="text" id="codeOrder" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'codeOrder')}" formControlName="codeOrder"
+            name="codeOrder" (focusout)="commonService.onTrimFocusOutForm(form, 'codeOrder', $event)" />
+          <app-form-error [control]="form.controls['codeOrder']" [message]="'Code Order is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+
+        <div class="form-group col-md-6 required mb-3">
+          <label for="fullName" class="form-label">Full Name</label>
+          <input type="text" id="fullName" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'fullName')}" formControlName="fullName"
+            name="fullName" (focusout)="commonService.onTrimFocusOutForm(form, 'fullName', $event)" />
+          <app-form-error [control]="form.controls['fullName']" [message]="'Full Name is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+
+        <div class="form-group col-md-6 required mb-3">
+          <label for="address" class="form-label">Address</label>
+          <input type="text" id="address" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'address')}" formControlName="address"
+            name="address" (focusout)="commonService.onTrimFocusOutForm(form, 'address', $event)" />
+          <app-form-error [control]="form.controls['address']" [message]="'Address is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+
+        <div class="form-group col-md-6 required mb-3">
+          <label for="statusName" class="form-label">Status</label>
+          <input type="text" id="statusName" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'statusName')}" formControlName="statusName"
+            name="statusName" (focusout)="commonService.onTrimFocusOutForm(form, 'statusName', $event)" />
+          <app-form-error [control]="form.controls['statusName']" [message]="'Order Date is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+
+
+          <div class="form-group col-md-6 required mb-3">
+            <label for="orderDate" class="form-label">Order Date</label>
+            <input type="datetime-local" id="orderDate" class="form-control"
+              [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'orderDate')}" formControlName="orderDate"
+              name="orderDate" (focusout)="commonService.onTrimFocusOutForm(form, 'orderDate', $event)" />
+            <app-form-error [control]="form.controls['orderDate']" [message]="'Order Date is required!'"
+              [validation]="'required'"></app-form-error>
+          </div>
+        
+          <div class="form-group col-md-6 mb-3">
+            <label for="requiredDate" class="form-label">Required Date</label>
+            <input type="datetime-local" id="requiredDate" class="form-control"
+              [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'requiredDate')}"
+              formControlName="requiredDate" name="requiredDate"
+              (focusout)="commonService.onTrimFocusOutForm(form, 'requiredDate', $event)" />
+            <app-form-error [control]="form.controls['requiredDate']" [message]="'Required Date is optional'"
+              [validation]="'optional'"></app-form-error>
+          </div>
+        
+          <div class="form-group col-md-6 mb-3">
+            <label for="shippedDate" class="form-label">Shipped Date</label>
+            <input type="datetime-local" id="shippedDate" class="form-control"
+              [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'shippedDate')}"
+              formControlName="shippedDate" name="shippedDate"
+              (focusout)="commonService.onTrimFocusOutForm(form, 'shippedDate', $event)" />
+            <app-form-error [control]="form.controls['shippedDate']" [message]="'Shipped Date is optional'"
+              [validation]="'optional'"></app-form-error>
+          </div>
+        
+        <div class="form-group col-md-6 required mb-3">
+          <label for="quantity" class="form-label">Quantity</label>
+          <input type="number" id="quantity" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'quantity')}" formControlName="quantity"
+            name="quantity" (focusout)="commonService.onTrimFocusOutForm(form, 'quantity', $event)" />
+          <app-form-error [control]="form.controls['quantity']" [message]="'Quantity is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+
+        <div class="form-group col-md-6 required mb-3">
+          <label for="totalPrice" class="form-label">Total Price</label>
+          <input type="number" id="totalPrice" class="form-control"
+            [ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'totalPrice')}" formControlName="totalPrice"
+            name="totalPrice" (focusout)="commonService.onTrimFocusOutForm(form, 'totalPrice', $event)" />
+          <app-form-error [control]="form.controls['totalPrice']" [message]="'Total Price is required!'"
+            [validation]="'required'"></app-form-error>
+        </div>
+      </div>
+    </form> -->
+  </div>
+</div>

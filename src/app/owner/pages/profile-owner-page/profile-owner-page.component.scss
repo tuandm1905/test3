@@ -1,0 +1,15 @@
+.img-fluid {
+    border: 1px solid #3f3e3ea1;
+    width: 200px;
+    border-radius: 10px;
+    height: 200px;
+    margin: auto;
+    overflow: hidden; /* Add this line to prevent overflow */
+
+    img {
+        max-width: 100%; /* Add this line to make sure image doesn't exceed container width */
+        max-height: 100%; /* Add this line to make sure image doesn't exceed container height */
+        object-fit: cover; /* This ensures the image covers the entire container */
+        border-radius: 10px;
+    }
+}

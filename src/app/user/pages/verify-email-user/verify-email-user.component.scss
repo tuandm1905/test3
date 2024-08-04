@@ -1,0 +1,88 @@
+.verify-email-container {
+   max-width: 550px;
+   margin: auto;
+   text-align: center;
+   padding: 40px
+}
+
+h1 {
+   color: #000000;
+   font-size: 28px;
+   font-weight: normal;
+   line-height: 32px;
+   margin-top: 0;
+   margin-bottom: 12px;
+   text-align: left;
+
+}
+
+p {
+   font-size: 1em;
+   padding-bottom: 40px;
+   text-align: left;
+}
+
+.form-field {
+   position: relative;
+   margin-bottom: 20px;
+}
+
+.form-field label {
+   position: absolute;
+   top: -10px;
+   left: 15px;
+   background-color: #fff;
+   padding: 0 5px;
+   font-size: 14px;
+   color: #666;
+}
+
+.form-field input {
+   width: 100%;
+   padding: 12px 15px;
+   border: 1px solid #a7a7a7;
+   border-radius: 10px;
+   font-size: 16px;
+   outline: none;
+   box-sizing: border-box;
+}
+
+.form-field input:focus {
+   border-color: #3f51b5;
+   /* This can be changed to match your theme color */
+}
+
+.form-field input::placeholder {
+   color: #aaa;
+}
+
+/* Custom button styles with higher specificity */
+.custom-button.mat-mdc-raised-button:not(:disabled) {
+   background: #000000 !important;
+   color: white !important;
+   border: none;
+   padding: 10px 20px;
+   border-radius: 25px;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+.custom-button.mat-mdc-raised-button:hover:not(:disabled) {
+   background-color: #ffffff !important;
+   color: #000000 !important;
+   border: 1px solid #000000 !important;
+}
+
+.cancel-request {
+   // display: block;
+   margin-top: 10px;
+   text-decoration: none;
+   color: #000000;
+   text-align: left;
+   display: flex;
+   align-items: center;
+}
+
+.cancel-request:hover {
+   text-decoration: underline;
+}

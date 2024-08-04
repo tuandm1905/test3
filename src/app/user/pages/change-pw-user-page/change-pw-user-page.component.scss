@@ -1,0 +1,85 @@
+.profile {
+   display: flex;
+   justify-content: space-evenly;
+   padding: 3rem 0;
+   background: #f8f8f8;
+}
+
+.profile-user-page {
+   width: 70%;
+   margin: 0;
+   background-color: #fff;
+   padding: 20px;
+   border-radius: 10px;
+   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.profile-user-page h2 {
+   font-size: 24px;
+   margin-bottom: 10px;
+}
+
+.profile-user-page p {
+   color: #888;
+   margin-bottom: 20px;
+}
+
+.change-password-container {
+   max-width: 550px;
+   margin: 2rem auto 1rem auto;
+}
+
+.form-group {
+   margin-bottom: 15px;
+   display: flex;
+   justify-content: flex-end;
+   align-items: center;
+}
+
+.form-group label {
+   margin-right: 2rem;
+   font-weight: bold;
+   width: 150px;
+}
+
+.password-input {
+   position: relative;
+   flex-grow: 1;
+}
+
+.password-input input {
+   width: 100%;
+   padding: 10px;
+   border: 1px solid #ddd;
+   border-radius: 5px;
+}
+
+.toggle-password {
+   position: absolute;
+   top: 50%;
+   right: 10px;
+   transform: translateY(-50%);
+   cursor: pointer;
+}
+
+.btn-confirm {
+   display: flex;
+   justify-content: center;
+   margin-left: -19%;
+}
+
+.confirm-button {
+   padding: 10px;
+   border: none;
+   border-radius: 5px;
+   background-color: #000000;
+   color: #ffffff;
+   font-weight: bold;
+   cursor: pointer;
+}
+
+.confirm-button:disabled {
+   background-color: #f8d7da;
+   cursor: not-allowed;
+   color: #000000;
+}

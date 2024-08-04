@@ -1,0 +1,95 @@
+<div class="card w-100">
+    <div class="card-body w-100">
+        <app-breadcrum [items]="breadCrumb"></app-breadcrum>
+        <div class="d-md-flex justify-content-between">
+            <h2 class="my-2">View All Orders</h2>
+        </div>
+        <div class="">
+            <form [formGroup]="formSearch" (ngSubmit)="search()">
+                <div class="row mb-5 align-items-end">
+                    <div class="col-md-3 col-xs-12">
+                        <label class="form-label">Order Code: </label>
+                        <input formControlName="name" type="text" class="form-control" placeholder="" />
+                    </div>
+                    <div class="col-md-6 col-xs-12 justify-content-between align-items-center">
+                        <div class="filter-btn d-flex gap-3">
+                            <button autofocus type="submit" class="btn btn-primary">
+                                <i class="fa fa-search"></i> Search
+                            </button>
+                            <button type="button" class="btn btn-secondary" (click)="resetSearchForm()">
+                                <i class="fa fa-sync"></i> Reset
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th class="text-center align-middle" style="width: 5%;">STT</th>
+                            <!-- <th class="text-center align-middle" style="min-width: 10%;">Notification</th>
+                            <th class="text-center align-middle" style="min-width: 10%;">Code Order</th>
+                            <th class="text-center align-middle" style="min-width: 15%;">Full Name</th> -->
+                            <th class="text-center align-middle" style="width: 40%;">Content</th>
+                            <th class="text-center align-middle" style="width: 40%;">Time</th>
+                            <!-- <th class="text-center align-middle" style="width: 10%;">Xem</th>
+                            <th class="text-center align-middle" style="width: 10%;">Action</th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of dataList; index as i">
+                            <td class="text-center align-middle">
+                                {{ (paging.page - 1) * paging.pageSize + i + 1 }}
+                            </td>
+                            <!-- <td class="text-center align-middle">{{ item.notificationId }}</td>
+                            <td class="text-center align-middle">
+                                {{ item.codeOrder }}
+                            </td>
+                            <td class="text-center align-middle">
+                                {{ item.fullName }}
+                            </td> -->
+                            <td class="text-left align-middle content-cell">
+                                <p class="text-break content">{{ item.content }}</p>
+                            </td>
+                            <td class="text-center align-middle">
+                                <ul class="date-list">
+                                    <li *ngIf="item.createDate">
+                                        <strong>Hours:</strong> {{ item.createDate | date: 'HH:mm' }}
+                                    </li>
+                                    <li *ngIf="item.createDate">
+                                        <strong>Day:</strong> {{ item.createDate | date: 'dd/MM/yyyy' }}
+                                    </li>
+                                </ul>
+                            </td>
+                            <!-- <td class="text-center align-middle">
+                                <span *ngIf="item.isRead === false" class="btn btn-primary me-2">
+                                    Unread
+                                </span>
+                                <span *ngIf="item.isRead === true" class="btn btn-secondary me-2">Read</span>
+                            </td>
+                            
+                            <td class="text-center align-middle">
+                                <button mat-menu-item class="icon-button btn btn-outline-success me-2"
+                                    (click)="viewItem(item.id)">
+                                    <i class="fa fa-eye"></i> View
+                                </button>
+                            </td> -->
+                        </tr>
+
+                        <ng-container *ngIf="dataList?.length <= 0">
+                            <tr>
+                                <td colspan="8">No data</td>
+                            </tr>
+                        </ng-container>
+                    </tbody>
+                </table>
+            </div>
+            <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+        </div>
+        <app-detail-order [order]="selected" [modalTitle]="modalTitle" [isVisible]="openModal"
+            (close)="closeModal()"></app-detail-order>
+    </div>
+</div>

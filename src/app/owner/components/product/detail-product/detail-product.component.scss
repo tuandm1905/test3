@@ -1,0 +1,483 @@
+.modal {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: fixed;
+	z-index: 1;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+	background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+	background-color: #fefefe;
+	margin: auto;
+	max-height: 90vh;
+	padding: 20px;
+	border: 1px solid #888;
+	width: 55%;
+}
+
+.close-button {
+	color: #aaa;
+	float: right;
+	font-size: 28px;
+	font-weight: bold;
+}
+
+.close-button:hover,
+.close-button:focus {
+	color: black;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.product-page {
+	display: flex;
+	justify-content: space-between;
+	padding-top: 3%;
+	height: 70vh;
+	overflow-y:scroll ;
+	padding-bottom: 20px;
+}
+
+.product-images {
+	width: 55%;
+}
+
+.main-image {
+	width: 100%;
+	/* Đặt chiều rộng cho container */
+	height: 400px;
+	/* Chiều cao cố định cho container, điều chỉnh tùy theo thiết kế */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	overflow: hidden;
+	/* Ẩn phần dư thừa nếu hình ảnh không vừa */
+}
+
+.main-image img {
+	width: 100%;
+	/* Đặt chiều rộng của ảnh bằng chiều rộng container */
+	height: auto;
+	/* Đặt chiều cao của ảnh bằng chiều cao container */
+	object-fit: contain;
+	/* Ảnh sẽ được cắt để vừa khung, không giữ tỉ lệ gốc */
+	object-position: center;
+	/* Đặt ảnh ở giữa khung */
+}
+
+.thumbnail-wrapper {
+	position: relative;
+	overflow: hidden;
+}
+
+.thumbnail-images {
+	display: flex;
+	gap: 5px;
+	margin-top: 10px;
+	overflow-x: auto;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+}
+
+.thumbnail-images::-webkit-scrollbar {
+	width: 0;
+	height: 0;
+}
+
+.thumbnail-images img {
+	flex: 0 0 auto;
+	width: 100px;
+	height: auto;
+	cursor: pointer;
+}
+
+.scroll-button {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	background-color: rgba(0, 0, 0, 0.5);
+	color: white;
+	border: none;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-size: 18px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1;
+}
+
+.scroll-button.left {
+	left: 0;
+}
+
+.scroll-button.right {
+	right: 0;
+}
+
+.scroll-button:hover {
+	background-color: rgba(0, 0, 0, 0.8);
+}
+
+
+.product-details {
+	padding-left: 5%;
+	width: 50%;
+}
+
+.product-details h1 {
+	font-size: 2em;
+	margin-bottom: 10px;
+}
+
+.rating {
+	display: flex;
+	align-items: center;
+}
+
+.star {
+	font-size: 1.5em;
+	position: relative;
+	display: inline-block;
+	color: #ccc;
+}
+
+.star.full {
+	color: #FFD700;
+}
+
+.star.partial {
+	position: relative;
+	display: inline-block;
+}
+
+.star.partial .partial-star {
+	color: #FFD700;
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+.star.partial .empty-star {
+	color: #ccc;
+}
+
+.price {
+	font-size: 1.5em;
+	color: #333;
+	margin: 10px 0;
+}
+
+.stock-status {
+	display: flex;
+	align-items: center;
+	color: green;
+}
+
+.stock-indicator {
+	font-size: 1.2em;
+	margin-left: 5px;
+}
+
+.description h2 {
+	margin-top: 20px;
+}
+.description {
+	position: relative;
+	max-height: 150px; /* Chiều cao cố định cho phần mô tả rút gọn */
+	overflow: hidden; /* Ẩn phần nội dung vượt quá chiều cao */
+	transition: max-height 0.3s ease; /* Hiệu ứng chuyển đổi khi mở rộng */
+  }
+  .description.full-view {
+	max-height: none; /* Cho phép mở rộng để hiển thị toàn bộ nội dung */
+  }.toggle-button {
+	display: block;
+	margin-top: 10px;
+	background: none;
+	border: none;
+	color: #007bff;
+	cursor: pointer;
+	text-decoration: underline;
+  }
+  
+  .toggle-button:focus {
+	outline: none;
+  }  
+.description p {
+    margin: 0 0 10px; /* Khoảng cách giữa các đoạn văn */
+    font-size: 14px; /* Kích thước chữ phù hợp */
+    line-height: 1.5; /* Đảm bảo khoảng cách dòng dễ đọc */
+}
+
+
+
+.size-selection {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+}
+
+.size-selection {
+	margin-top: 20px;
+	display: flex;
+	align-items: flex-start;
+
+	.size-options {
+		display: flex;
+		flex-wrap: wrap;
+		margin-top: 10px;
+	}
+
+	.size-option {
+		display: inline-block;
+		margin-right: 10px;
+		margin-bottom: 10px;
+		width: 3rem;
+		height: 2rem;
+		border: 1px solid #ccc;
+		cursor: default;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: border 0.3s;
+
+		&.selected {
+			border: 2px solid #000;
+		}
+	}
+}
+
+.size-option.selected {
+	border: 2px solid #000;
+}
+
+.size-option.out-of-stock {
+	cursor: not-allowed;
+}
+
+.size-option.out-of-stock .text-strikethrough {
+	text-decoration: line-through;
+	color: #888;
+}
+
+
+
+.color-option {
+	border-radius: 50%;
+}
+
+.quantity-selection {
+	margin-top: 20px;
+	display: flex;
+	align-items: center;
+
+	.quantity-label {
+		margin-right: 10%;
+		font-size: 16px;
+	}
+
+	.qjk232 {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		width: 100%;
+
+		.quantity-controls {
+			display: flex;
+			align-items: center;
+			border: 1px solid #cecdcd;
+
+			button {
+				background-color: #000;
+				color: #fff;
+				border: none;
+				padding: 5px 10px;
+				cursor: pointer;
+				transition: background-color 0.3s ease;
+
+				&:disabled {
+					background-color: #ccc;
+					cursor: not-allowed;
+				}
+			}
+
+			input[type=number] {
+				width: 50px;
+				text-align: center;
+				margin: 0 10px;
+				-webkit-appearance: none;
+				-moz-appearance: textfield;
+			}
+
+			input[type=number]::-webkit-inner-spin-button,
+			input[type=number]::-webkit-outer-spin-button {
+				-webkit-appearance: none;
+				margin: 0;
+			}
+		}
+
+		.qtt {
+			margin-left: 10px;
+		}
+	}
+}
+
+.action-buttons {
+	display: flex; /* Sử dụng flexbox để sắp xếp các phần tử ngang */
+    justify-content: center; /* Căn giữa các nút theo chiều ngang */
+    align-items: center; /* Căn giữa các nút theo chiều dọc */
+    gap: 10px; /* Khoảng cách giữa các nút, điều chỉnh theo nhu cầu */
+    margin-top: 20px; /* Khoảng cách phía trên để tạo không gian */
+}
+
+.action-buttons button {
+	background-color: #000;
+	color: #fff;
+	border: none;
+	padding: 10px 20px;
+	/* Adjusted padding for smaller size */
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+	font-size: 1rem;
+	/* Adjusted font size */
+
+}
+
+.action-buttons button:hover {
+	background-color: #333;
+}
+
+
+.owner {
+	display: flex;
+	align-items: center;
+	padding: 10px;
+	width: 300px;
+}
+
+.owner-avatar {
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	margin-right: 10px;
+}
+
+.owner-details {
+	display: flex;
+	flex-direction: column;
+}
+
+.owner-name {
+	font-size: 16px;
+	font-weight: bold;
+}
+
+.chat-button,
+.shop-button {
+	padding: 8px 16px;
+	margin: 4px 0;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 14px;
+}
+
+.chat-button {
+	background-color: #000000;
+	color: #fff;
+}
+
+.shop-button {
+	background-color: #fff;
+	color: #333;
+	border: 1px solid #ccc;
+}
+
+.review-summary {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 10px 0;
+	font-family: Arial, sans-serif;
+}
+
+.review-count {
+	font-weight: bold;
+	font-size: 18px;
+	cursor: pointer;
+}
+
+.review-rating {
+	display: flex;
+	align-items: center;
+}
+
+.rating-value {
+	font-size: 16px;
+	margin-right: 5px;
+}
+
+.dropdown-icon {
+	font-size: 16px;
+	cursor: pointer;
+}
+
+.review {
+	// padding: 10px 0;
+}
+
+.review-author-date {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.review-author {
+	font-weight: bold;
+	font-size: 16px;
+}
+
+.review-date {
+	color: #888;
+	font-size: 14px;
+}
+
+.review-content {
+	margin-top: 5px;
+}
+
+.review-footer {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	margin-top: 10px;
+	font-size: 12px;
+}
+
+.review-helpful {
+	display: flex;
+	align-items: center;
+}
+
+.thumbs-up,
+.thumbs-down {
+	margin: 0 5px;
+	cursor: pointer;
+}
+
+.review-report a {
+	color: #007bff;
+	text-decoration: none;
+}
+
+.review-report a:hover {
+	text-decoration: underline;
+}

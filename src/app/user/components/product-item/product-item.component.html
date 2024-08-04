@@ -1,0 +1,234 @@
+<!-- <div class="product-page">
+   <div class="product-images">
+      <div class="main-image">
+         <img src="https://th.bing.com/th/id/OIP.9ju2WsyWpDRJlNqYRNLYFwHaFP?rs=1&pid=ImgDetMain"
+            alt="Main product image">
+      </div>
+      <div class="thumbnail-images">
+         <img
+            src="https://www.snipes.pt/dw/image/v2/BDCB_PRD/on/demandware.static/-/Sites-snse-master-eu/default/dw4a58495d/2175072_P2.jpg?sw=450&sh=450&sm=fit&sfrm=png"
+            alt="Thumbnail image 1">
+         <img
+            src="https://www.snipes.pt/dw/image/v2/BDCB_PRD/on/demandware.static/-/Sites-snse-master-eu/default/dw4018418e/2175072_P1.jpg?sw=450&sh=450&sm=fit&sfrm=png"
+            alt="Thumbnail image 2">
+         <img src="https://th.bing.com/th/id/OIP.Im6X7CXBijCztG7HXSXHnAAAAA?rs=1&pid=ImgDetMain"
+            alt="Thumbnail image 3">
+         <img src="https://th.bing.com/th/id/OIP.Im6X7CXBijCztG7HXSXHnAAAAA?rs=1&pid=ImgDetMain"
+            alt="Thumbnail image 4">
+      </div>
+      <hr class="mt-5 mb-5">
+      <div class="owner">
+         <img class="owner-avatar" src="https://th.bing.com/th/id/OIP.ZP-E8ZFH11wb1XSm0dn-5wHaJQ?rs=1&pid=ImgDetMain"
+            alt="Owner Avatar">
+         <div class="owner-details">
+            <div class="owner-name">Luân ĐM </div>
+            <div class="owner-actions flex gap-2">
+               <button class="chat-button">Chat Ngay</button>
+               <button class="shop-button">Xem Shop</button>
+            </div>
+         </div>
+      </div>
+      <hr class="mt-5 mb-5">
+      <div class="review-summary">
+         <span class="review-count" (click)="toggleReviews()">Reviews (2)</span>
+         <button (click)="toggleReviews()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+               class="bi bi-chevron-down" viewBox="0 0 16 16">
+               <path fill-rule="evenodd"
+                  d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+            </svg>
+         </button>
+      </div>
+      <hr class="mt-5 mb-2">
+      <div *ngIf="showReviews">
+         <div class="review">
+            <div class="review-author-date">
+               <span class="review-author">huyentt</span>
+               <span class="review-date">May 19, 2024</span>
+            </div>
+            <div class="review-content">
+               quá đẹp luônn á
+            </div>
+         </div>
+         <hr class="mt-2 mb-2">
+         <div class="review">
+            <div class="review-author-date">
+               <span class="review-author">tuandm</span>
+               <span class="review-date">May 19, 2024</span>
+            </div>
+            <div class="review-content">
+               Em vui muốn rớt nước mắt luôn😍😱 Cảm ơn chị Thơm vì đánh giá 5 sao! thật mừng vì Quần lót của Boxerman
+               đã
+               'fit' đúng gu thẩm mỹ của chị và anh nhà mình. 😄 Hy vọng rằng nó sẽ giữ vững 'địa vị' của mình và tiếp
+               tục
+               làm cho anh nhà chị Thơm cảm thấy thoải mái và 'phù hợp' trong suốt ngày dài sử dụng 💋💝
+            </div>
+         </div>
+      </div>
+
+   </div>
+
+   <div class="product-details">
+      <h1>Sports Shoes</h1>
+      <div class="rating">
+         <span>★★★★☆</span>
+         <span>4.5/5</span>
+      </div>
+      <div class="price">$150</div>
+      <div class="stock-status"><span class="mr-1">In Stock</span> <svg xmlns="http://www.w3.org/2000/svg" width="18"
+            height="18" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+            <path
+               d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
+         </svg></div>
+      <div class="description">
+         <h2>Description</h2>
+         <p>
+            The road is your runway. Get ready to take flight in the most comfortable shoes. Back with extra bounce
+            which is perfect for running. Whether you’re sprinting everyday miles or on your long run, feel the spring
+            in your step with the same cushioned support as its predecessor.
+         </p>
+      </div>
+
+      <div class="size-selection">
+         <h3>Size</h3>
+         <div class="size-options">
+            <button class="size-option">40</button>
+            <button class="size-option">41</button>
+            <button class="size-option">42</button>
+            <button class="size-option">43</button>
+            <button class="size-option">44</button>
+            <button class="size-option">45</button>
+         </div>
+      </div>
+      <div class="action-buttons">
+         <button class="add-to-cart">Add to cart</button>
+         <button class="find-in-store">Buy Now</button>
+      </div>
+
+      <div class="size-chart">
+      </div>
+
+
+   </div>
+</div> -->
+
+<div *ngIf="productId">
+   <!-- <h2>Product Detail for Product ID: {{productId}}</h2>
+   Add product detail display here -->
+   <div class="product-page">
+      <div class="product-images">
+         <div class="main-image">
+            <img src="https://th.bing.com/th/id/OIP.9ju2WsyWpDRJlNqYRNLYFwHaFP?rs=1&pid=ImgDetMain"
+               alt="Main product image">
+         </div>
+         <div class="thumbnail-images">
+            <img
+               src="https://www.snipes.pt/dw/image/v2/BDCB_PRD/on/demandware.static/-/Sites-snse-master-eu/default/dw4a58495d/2175072_P2.jpg?sw=450&sh=450&sm=fit&sfrm=png"
+               alt="Thumbnail image 1">
+            <img
+               src="https://www.snipes.pt/dw/image/v2/BDCB_PRD/on/demandware.static/-/Sites-snse-master-eu/default/dw4018418e/2175072_P1.jpg?sw=450&sh=450&sm=fit&sfrm=png"
+               alt="Thumbnail image 2">
+            <img src="https://th.bing.com/th/id/OIP.Im6X7CXBijCztG7HXSXHnAAAAA?rs=1&pid=ImgDetMain"
+               alt="Thumbnail image 3">
+            <img src="https://th.bing.com/th/id/OIP.Im6X7CXBijCztG7HXSXHnAAAAA?rs=1&pid=ImgDetMain"
+               alt="Thumbnail image 4">
+         </div>
+         <hr class="mt-5 mb-5">
+         <div class="owner">
+            <img class="owner-avatar" src="https://th.bing.com/th/id/OIP.ZP-E8ZFH11wb1XSm0dn-5wHaJQ?rs=1&pid=ImgDetMain"
+               alt="Owner Avatar">
+            <div class="owner-details">
+               <div class="owner-name">Luân ĐM </div>
+               <div class="owner-actions flex gap-2">
+                  <button class="chat-button">Chat Ngay</button>
+                  <button class="shop-button">Xem Shop</button>
+               </div>
+            </div>
+         </div>
+         <hr class="mt-5 mb-5">
+         <div class="review-summary">
+            <span class="review-count" (click)="toggleReviews()">Reviews (2)</span>
+            <button (click)="toggleReviews()">
+               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor"
+                  class="bi bi-chevron-down" viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                     d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708" />
+               </svg>
+            </button>
+         </div>
+         <hr class="mt-5 mb-2">
+         <div *ngIf="showReviews">
+            <div class="review">
+               <div class="review-author-date">
+                  <span class="review-author">huyentt</span>
+                  <span class="review-date">May 19, 2024</span>
+               </div>
+               <div class="review-content">
+                  quá đẹp luônn á
+               </div>
+            </div>
+            <hr class="mt-2 mb-2">
+            <div class="review">
+               <div class="review-author-date">
+                  <span class="review-author">tuandm</span>
+                  <span class="review-date">May 19, 2024</span>
+               </div>
+               <div class="review-content">
+                  Em vui muốn rớt nước mắt luôn😍😱 Cảm ơn chị Thơm vì đánh giá 5 sao! thật mừng vì Quần lót của
+                  Boxerman
+                  đã
+                  'fit' đúng gu thẩm mỹ của chị và anh nhà mình. 😄 Hy vọng rằng nó sẽ giữ vững 'địa vị' của mình và
+                  tiếp
+                  tục
+                  làm cho anh nhà chị Thơm cảm thấy thoải mái và 'phù hợp' trong suốt ngày dài sử dụng 💋💝
+               </div>
+            </div>
+         </div>
+
+      </div>
+
+      <div class="product-details">
+         <h1>Sports Shoes</h1>
+         <div class="rating">
+            <span>★★★★☆</span>
+            <span>4.5/5</span>
+         </div>
+         <div class="price">$150</div>
+         <div class="stock-status"><span class="mr-1">In Stock</span> <svg xmlns="http://www.w3.org/2000/svg" width="18"
+               height="18" fill="currentColor" class="bi bi-check2" viewBox="0 0 16 16">
+               <path
+                  d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0" />
+            </svg></div>
+         <div class="description">
+            <h2>Description</h2>
+            <p>
+               The road is your runway. Get ready to take flight in the most comfortable shoes. Back with extra bounce
+               which is perfect for running. Whether you’re sprinting everyday miles or on your long run, feel the
+               spring
+               in your step with the same cushioned support as its predecessor.
+            </p>
+         </div>
+
+         <div class="size-selection">
+            <h3>Size</h3>
+            <div class="size-options">
+               <button class="size-option">40</button>
+               <button class="size-option">41</button>
+               <button class="size-option">42</button>
+               <button class="size-option">43</button>
+               <button class="size-option">44</button>
+               <button class="size-option">45</button>
+            </div>
+         </div>
+         <div class="action-buttons">
+            <button class="add-to-cart">Add to cart</button>
+            <button class="find-in-store">Buy Now</button>
+         </div>
+
+         <div class="size-chart">
+         </div>
+
+
+      </div>
+   </div>
+</div>

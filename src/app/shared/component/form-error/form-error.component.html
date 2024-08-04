@@ -1,0 +1,8 @@
+<ng-container *ngIf="control.hasError(validation) && (control.dirty || control.touched || submitted)">
+	<div class="alert-error">
+		<span class="text-danger" role="text-danger">
+		  {{ message }}
+		</span>
+	</div>
+  </ng-container>
+  

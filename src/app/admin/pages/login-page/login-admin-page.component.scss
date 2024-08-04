@@ -1,0 +1,120 @@
+/* Các phần tử HTML */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Khung chứa đăng nhập */
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Container đăng nhập */
+.login-container {
+  text-align: left;
+  padding: 40px;
+  width: 100%;
+  max-width: 540px;
+  background-color: #fff;
+  border-radius: 15px; /* Chỉnh sửa độ bo góc ở đây */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Tiêu đề */
+h2 {
+  color: #000000;
+  font-size: 28px;
+  font-weight: normal;
+  line-height: 32px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+/* Liên kết đăng nhập của chủ sở hữu */
+.login-owner {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-bottom: 40px;
+  cursor: pointer;
+}
+
+.login-owner:hover {
+  font-weight: 500;
+}
+
+/* Nhóm ô nhập liệu */
+.input-group {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+/* Các ô nhập liệu */
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+  width: 100%;
+  padding: 15px;
+  font-size: 16px;
+  border: 1px solid #7e7e7e;
+  border-radius: 10px; /* Chỉnh sửa độ bo góc ở đây */
+  box-sizing: border-box;
+  outline: none;
+}
+
+/* Thay đổi màu viền khi ô nhập liệu được chọn */
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus,
+.input-group:focus-within input[type="password"],
+.input-group:focus-within input[type="text"] {
+  border-color: #000;
+}
+
+/* Nhóm ô mật khẩu */
+.password-group {
+  position: relative;
+}
+
+/* Biểu tượng ô nhập liệu */
+.input-icon {
+  position: absolute;
+  top: 50%;
+  right: 15px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #7e7e7e;
+}
+
+/* Nút bấm */
+.mt-4 {
+  margin-top: 20px;
+}
+
+.btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 25px; /* Chỉnh sửa độ bo góc ở đây */
+  padding: 10px 20px;
+  font-weight: 500;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.btn:hover {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #000;
+}

@@ -1,0 +1,47 @@
+<app-box-wrapper>
+   <div class="flex">
+      <div>
+         <app-side-bar-products *ngIf="sidebarVisible"></app-side-bar-products>
+      </div>
+      <div class="container">
+         <div class="header flex justify-content-between align-items-center">
+            <button class="toggle-button flex align-items-center gap-2 fw-medium" (click)="toggleSidebar()">
+               {{ sidebarVisible ? 'Hide Filters' : 'Show Filters' }}
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-sliders"
+                  viewBox="0 0 16 16">
+                  <path fill-rule="evenodd"
+                     d="M11.5 2a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M9.05 3a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0V3zM
+                  4.5 7a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M2.05 8a2.5 2.5 0 0 1 4.9 0H16v1H6.95a2.5 2.5 0 0 1-4.9 0H0V8zm9.45 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m-2.45 1a2.5 2.5 0 0 1 4.9 0H16v1h-2.05a2.5 2.5 0 0 1-4.9 0H0v-1z" />
+               </svg>
+            </button>
+            <div class="sort-options flex" (click)="toggleSortDropdown()">
+               <button class="flex align-items-center gap-2 fw-medium">Sort By
+                  <svg *ngIf="!sortDropdownVisible" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                     fill="currentColor" class="bi bi-chevron-down" viewBox="0 0 16 16">
+                     <path fill-rule="evenodd"
+                        d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                  <svg *ngIf="sortDropdownVisible" xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+                     fill="currentColor" class="bi bi-chevron-up" viewBox="0 0 16 16">
+                     <path fill-rule="evenodd"
+                        d="M1.646 11.354a.5.5 0 0 1 .708 0L8 5.707l5.646 5.647a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1-.708 0l-6 6a.5.5 0 0 1 0 .708z" />
+                  </svg>
+               </button>
+               <div *ngIf="sortDropdownVisible" class="sort-dropdown">
+                  <div (click)="sortProducts('featured')">Featured</div>
+                  <div (click)="sortProducts('newest')">Newest</div>
+                  <div (click)="sortProducts('price-high-low')">Price: High-Low</div>
+                  <div (click)="sortProducts('price-low-high')">Price: Low-High</div>
+               </div>
+            </div>
+         </div>
+         <div class="product-grid">
+            <div class="product-card" *ngFor="let product of products" (click)="goToDetail(product.id)">
+               <img [src]="product.image" alt="{{product.name}}">
+               <div class="pt-3 pb-2">{{product.name}}</div>
+               <div class="pb-3">{{product.price}}</div>
+            </div>
+         </div>
+      </div>
+   </div>
+</app-box-wrapper>

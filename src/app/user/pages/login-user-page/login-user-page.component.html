@@ -1,0 +1,32 @@
+<div class="login-wrapper">
+   <div class="login-container">
+      <h2>Enter your account to join us.</h2>
+      <div class="login-owner">Log in with the store owner channel <svg xmlns="http://www.w3.org/2000/svg" width="16"
+            height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+               d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8" />
+         </svg></div>
+      <form>
+         <div class="input-group">
+            <input type="email" [(ngModel)]="email" name="email" placeholder="Email*" required>
+         </div>
+         <div class="input-group password-group">
+            <input [type]="passwordFieldType" [(ngModel)]="password" name="password" placeholder="Password*" required>
+            <div class="input-icon">
+               <svg class="bi bi-eye toggle-password" (click)="togglePasswordVisibility()"
+                  xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                  <path
+                     d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+               </svg>
+            </div>
+         </div>
+
+      </form>
+      <div class="acc">
+         <div class="not-acc">I don't have a user account yet.</div>
+         <button type="button" class="forgot-password-button" (click)="forgotPassword()">Forgot Password?</button>
+      </div>
+      <button type="submit" class="continue-button">Continue</button>
+   </div>
+</div>

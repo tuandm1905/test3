@@ -1,0 +1,9 @@
+<div class="container-fluid px-0">
+	<app-header-admin ></app-header-admin>
+	<div class="d-flex">
+		<app-sidebar-admin [role]="'OWNER'"></app-sidebar-admin>
+		<div class="container mt-4">
+			<router-outlet></router-outlet>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,236 @@
+.product-page {
+   display: flex;
+   justify-content: space-between;
+   padding: 20px;
+}
+
+.product-images {
+   width: 55%;
+}
+
+.main-image img {
+   width: 100%;
+   height: auto;
+}
+
+.thumbnail-images {
+   display: flex;
+   // justify-content: space-between;
+   gap: 5px;
+   margin-top: 10px;
+}
+
+.thumbnail-images img {
+   width: 10%;
+   height: auto;
+}
+
+.product-details {
+   padding-left: 5%;
+   width: 50%;
+}
+
+.product-details h1 {
+   font-size: 2em;
+   margin-bottom: 10px;
+}
+
+.rating {
+   display: flex;
+   align-items: center;
+}
+
+.rating span {
+   margin-right: 10px;
+}
+
+.price {
+   font-size: 1.5em;
+   color: #333;
+   margin: 10px 0;
+}
+
+.stock-status {
+   display: flex;
+   align-items: center;
+   color: green;
+}
+
+.stock-indicator {
+   font-size: 1.2em;
+   margin-left: 5px;
+}
+
+.description h2 {
+   margin-top: 20px;
+}
+
+.size-selection {
+   margin-top: 20px;
+}
+
+.size-options {
+   display: flex;
+   justify-content: flex-start;
+   margin-top: 10px;
+}
+
+.size-option {
+   display: inline-block;
+   margin-right: 10px;
+   width: 30px;
+   height: 30px;
+   border: 1px solid #ccc;
+   cursor: pointer;
+   display: flex;
+   justify-content: space-around;
+   align-items: center;
+}
+
+.color-option {
+   border-radius: 50%;
+}
+
+.action-buttons {
+   margin-top: 20px;
+}
+
+.action-buttons button {
+   background-color: #000;
+   color: #fff;
+   border: none;
+   padding: 10px 20px;
+   margin-right: 10px;
+   cursor: pointer;
+   transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+   background-color: #333;
+}
+
+.owner {
+   display: flex;
+   align-items: center;
+   padding: 10px;
+   width: 300px;
+}
+
+.owner-avatar {
+   width: 60px;
+   height: 60px;
+   border-radius: 50%;
+   margin-right: 10px;
+}
+
+.owner-details {
+   display: flex;
+   flex-direction: column;
+}
+
+.owner-name {
+   font-size: 16px;
+   font-weight: bold;
+}
+
+.chat-button,
+.shop-button {
+   padding: 8px 16px;
+   margin: 4px 0;
+   border: none;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 14px;
+}
+
+.chat-button {
+   background-color: #000000;
+   color: #fff;
+}
+
+.shop-button {
+   background-color: #fff;
+   color: #333;
+   border: 1px solid #ccc;
+}
+
+.review-summary {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: 10px 0;
+   font-family: Arial, sans-serif;
+}
+
+.review-count {
+   font-weight: bold;
+   font-size: 16px;
+   cursor: pointer;
+}
+
+.review-rating {
+   display: flex;
+   align-items: center;
+}
+
+.rating-value {
+   font-size: 16px;
+   margin-right: 5px;
+}
+
+.dropdown-icon {
+   font-size: 16px;
+   cursor: pointer;
+}
+
+.review {
+   padding: 10px 0;
+}
+
+.review-author-date {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+}
+
+.review-author {
+   font-weight: bold;
+   font-size: 16px;
+}
+
+.review-date {
+   color: #888;
+   font-size: 14px;
+}
+
+.review-content {
+   margin-top: 5px;
+}
+
+.review-footer {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-top: 10px;
+   font-size: 12px;
+}
+
+.review-helpful {
+   display: flex;
+   align-items: center;
+}
+
+.thumbs-up,
+.thumbs-down {
+   margin: 0 5px;
+   cursor: pointer;
+}
+
+.review-report a {
+   color: #007bff;
+   text-decoration: none;
+}
+
+.review-report a:hover {
+   text-decoration: underline;
+}

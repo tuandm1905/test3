@@ -1,0 +1,54 @@
+<div class="profile">
+   <app-sidebar-profile class="flex"></app-sidebar-profile>
+   <div class="profile-user-page">
+      <h2>My Account</h2>
+      <p>Quản lý thông tin hồ sơ để bảo mật tài khoản</p>
+
+      <div class="profile-container">
+         <div class="profile-info">
+            <div class="form-group">
+               <label for="name">Name</label>
+               <input type="text" id="name" value="Tran Thanh Huyen" />
+            </div>
+            <div class="form-group">
+               <label for="email">Email</label>
+               <input type="text" id="email" value="tr*****@gmail.com" readonly />
+            </div>
+            <div class="form-group">
+               <label for="phone">Phone Number</label>
+               <input type="text" id="sdt" value="070xxxxx55" readonly />
+
+            </div>
+            <div class="form-group">
+               <label>Gender</label>
+               <input type="radio" name="gender" value="male" class="" /> Male
+               <input type="radio" name="gender" value="female" /> Female
+            </div>
+            <div class="form-group">
+               <label for="dob">Day of birth</label>
+               <select id="dob-day">
+                  <option value="1">1</option>
+                  <!-- Add more days -->
+               </select>
+               <select id="dob-month">
+                  <option value="1">Tháng 1</option>
+                  <!-- Add more months -->
+               </select>
+               <select id="dob-year">
+                  <option value="1990">1990</option>
+                  <!-- Add more years -->
+               </select>
+            </div>
+            <button class="save-button">Save</button>
+         </div>
+
+         <div class="profile-picture">
+            <div class="avatar">
+               <div class="avatar-circle">T</div>
+            </div>
+            <button class="upload-button">Choose Image</button>
+            <p>Dụng lượng file tối đa 1 MB<br />Định dạng: .JPEG, .PNG</p>
+         </div>
+      </div>
+   </div>
+</div>

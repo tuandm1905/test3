@@ -1,0 +1,59 @@
+<div *ngIf="isVisible" class="modal">
+	<div class="modal-content">
+		<div class="d-flex justify-content-between">
+			<h2>{{ modalTitle }}</h2>
+			<span class="close-button" (click)="closeModal()">&times;</span>
+		</div>
+		<form [formGroup]="form" (ngSubmit)="submit()">
+			<div class="form-group required mb-3">
+				<label for="fullname" class="form-label">Full Name</label>
+				<input type="text" id="fullname" class="form-control"
+					[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'fullname')}"
+					formControlName="fullname" name="fullname"
+					(focusout)="commonService.onTrimFocusOutForm(form, 'fullname', $event)" />
+				<app-form-error [control]="form.controls['fullname']" [message]="'Fullname is required!'"
+					[validation]="'required'"></app-form-error>
+				</div>
+					<div class="form-group required mb-3">
+				<label for="phone" class="form-label">Phone</label>
+				<input type="text" id="phone" class="form-control"
+					[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'phone')}" formControlName="phone"
+					name="phone" (focusout)="commonService.onTrimFocusOutForm(form, 'phone', $event)" />
+				<app-form-error [control]="form.controls['phone']" [message]="'Phone is required!'"
+					[validation]="'required'"></app-form-error>
+				</div>
+				<div class="form-group required mb-3">
+				<label for="advertisementTitle" class="form-label">Advertisement Title</label>
+				<input type="text" id="advertisementTitle" class="form-control"
+					[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'advertisementTitle')}"
+					formControlName="advertisementTitle" name="advertisementTitle"
+					(focusout)="commonService.onTrimFocusOutForm(form, 'advertisementTitle', $event)" />
+				<app-form-error [control]="form.controls['advertisementTitle']"
+					[message]="'Advertisement Title is required!'" [validation]="'required'"></app-form-error>
+				</div>
+				<!-- <div class="form-group required mb-3">
+				<label for="content" class="form-label">Content</label>
+				<input type="text" id="content" class="form-control content-input"
+					[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'content')}"
+					formControlName="content" name="content"
+					(focusout)="commonService.onTrimFocusOutForm(form, 'content', $event)" />
+				<app-form-error [control]="form.controls['content']" [message]="' Content is required!'"
+					[validation]="'required'"></app-form-error>
+				</div> -->
+				<div class="form-group col-12  required mb-3">
+					<label for="content" class="form-label">Content</label>
+					<textarea type="text" id="content" class="form-control" rows="5"
+						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'content')}"
+						formControlName="content" name="name"
+						(focusout)="commonService.onTrimFocusOutForm(form, 'content', $event)">
+						</textarea>
+					<app-form-error [control]="form.controls['content']" [message]="'Content is required!'"
+						[validation]="'required'"></app-form-error>
+				</div>
+			<div class="d-flex justify-content-center my-3">
+				<button type="button" (click)="closeModal()" class="btn btn-secondary">Close</button>
+			</div>
+		</form>
+
+	</div>
+</div>

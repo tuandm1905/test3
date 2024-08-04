@@ -1,0 +1,109 @@
+.card {
+  width: 100%;
+  border: 0;
+}
+
+.card-body {
+  width: 100%;
+  padding: 1rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.5rem; /* Kích thước chữ tiêu đề */
+  font-weight: bold;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); /* Đặt số cột thành 1 cột mặc định */
+  gap: 0.5rem; /* Khoảng cách giữa các ô */
+}
+
+@media (min-width: 576px) {
+  .grid-container {
+    grid-template-columns: repeat(2, 1fr); /* 2 cột cho màn hình nhỏ */
+  }
+}
+
+@media (min-width: 768px) {
+  .grid-container {
+    grid-template-columns: repeat(3, 1fr); /* 3 cột cho màn hình vừa */
+  }
+}
+
+@media (min-width: 992px) {
+  .grid-container {
+    grid-template-columns: repeat(5, 1fr); /* 5 cột cho màn hình lớn */
+  }
+}
+
+/* Dashboard item */
+.dashboard-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative; /* Để sử dụng `::before` và `::after` */
+}
+
+.item-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của ô lưới */
+  padding: 1rem;
+  background-color: #ffffff; /* Màu nền trắng */
+  border: 1px solid #e0e0e0; /* Đường viền xám nhạt */
+  border-radius: 0.5rem; /* Bo tròn các góc */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  aspect-ratio: 1 / 1; /* Đảm bảo tỷ lệ vuông cho box */
+  overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài ô */
+  text-align: center; /* Căn giữa nội dung */
+}
+
+/* Item title styling */
+.item-title {
+  font-size: 1.25rem; /* Kích thước chữ tiêu đề */
+  font-weight: bold;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+  white-space: nowrap; /* Ngăn chặn xuống dòng */
+  overflow: hidden; /* Ẩn phần nội dung bị tràn */
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm nếu nội dung tràn */
+}
+
+/* Item description styling */
+.item-description {
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+  white-space: nowrap; /* Ngăn chặn xuống dòng */
+  overflow: hidden; /* Ẩn phần nội dung bị tràn */
+  text-overflow: ellipsis; /* Hiển thị dấu ba chấm nếu nội dung tràn */
+}
+
+/* Item value styling */
+.item-value {
+  font-size: 3rem; /* Kích thước chữ cho số */
+  font-weight: bold;
+  color: #333; /* Màu chữ trung tính */
+  margin: 1.5rem 0; /* Khoảng cách trên và dưới cho số dài hơn */
+}
+
+/* Button link styling */
+.btn-link {
+  color: #007bff; /* Màu chữ cho nút liên kết */
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 1rem;
+}
+
+.btn-link:hover {
+  color: #0056b3; /* Màu tối hơn khi di chuột qua */
+  text-decoration: underline;
+}
