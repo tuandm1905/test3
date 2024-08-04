@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { AlertService } from "../../helpers/alert.service";
 import { BlogService } from '../../services/blog.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { INIT_PAGING } from '../../helpers/constant';
 import { OwnerService } from '../../services/owner.service';
 import { ServiceService } from '../../services/service.service';
@@ -9,233 +9,172 @@ import { AuthenService } from '../../../admin/services/authen.service';
 import { StaffService } from '../../services/staff.service';
 
 @Component({
-	selector: 'app-blog-admin-page',
-	templateUrl: './blog-admin-page.component.html',
-	styleUrls: ['./blog-admin-page.component.scss']
+  selector: 'app-blog-admin-page',
+  templateUrl: './blog-admin-page.component.html',
+  styleUrls: ['./blog-admin-page.component.scss']
 })
-export class BlogAdminPageComponent {
-	dataList: any = [];
-	selectedBrand: any = null;
-	modalTitle: string = '';
-	ownerId: number | null = null;
-	createModal: boolean = false;
-	showModal: boolean = false;
-	openModal: boolean = false;
-	userType: string = '';
-	pageName: string = 'accounts';
-	paging: any = { ...INIT_PAGING }
-	loading = false;
+export class BlogAdminPageComponent implements OnInit {
+  services: any[] = [];
+  owners: any[] = [];
+  dataList: any[] = []; // Initialize as an empty array
+  selected: any = null;
+  form: FormGroup;
+  ownerId: number | null = null;
+  openModal: boolean = false;
+  modalTitle: string = '';
+  typeForm: number = 0;
+  userType: string = '';
+  paging: any = { ...INIT_PAGING }
+  loading = false;
+  breadCrumb: any = [
+    { label: 'Owner', link: '/' },
+    { label: 'Blog', link: '/owner/blog' }
+  ];
+  formSearch: FormGroup = new FormGroup({
+    id: new FormControl(null),
+    name: new FormControl(null)
+  });
 
-	typeForm = 0;
+  constructor(
+    private fb: FormBuilder,
+    private blogService: BlogService,
+    private alertService: AlertService,
+    private serviceService: ServiceService,
+    private ownerService: OwnerService,
+    private authenService: AuthenService,
+    private staffService: StaffService
+  ) {}
 
-	constructor(
-		private blogService: BlogService,
-		private alertService: AlertService,
-		private serviceService: ServiceService,
-		private ownerService: OwnerService,
-		private authenService: AuthenService,
-		private staffService: StaffService
-	) {
+  ngOnInit(): void {
+    this.form = this.fb.group({
+      Title: ['', Validators.required],
+      services: [null, Validators.required],
+      Image: ['', Validators.required],
+      Content: ['', Validators.required]
+    });
 
-	}
+    const user = this.authenService.getUser();
+    this.userType = user?.userType ?? '';
+    this.ownerId = user?.id ?? null;
 
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Blog',
-			link: '/owner/blog'
-		}
-	];
-	formSearch: any = new FormGroup({
-		id: new FormControl(null),
-		name: new FormControl(null)
-	});
-	ngOnInit(): void {
-		const user = this.authenService.getUser();
-this.userType = user?.userType ?? '';
-this.ownerId = user?.id ?? null;
-
-if (this.userType === 'Staff') {
-    this.staffService.show(user?.id ?? null).subscribe((res: any) => {
+    if (this.userType === 'Staff') {
+      this.staffService.show(user?.id ?? null).subscribe((res: any) => {
         this.ownerId = res?.data?.ownerId;
-        console.log('ID của Owner:', this.ownerId);
-        console.log('Lấy ID của Staff xong lấy OwnerId');
+        this.loadBlogs();
+      });
+    } else {
+      this.loadBlogs();
+    }
 
-        if (this.userType === 'Owner' || this.userType === 'Staff') {
-            console.log('ID này số mấy:', this.ownerId);
-            this.getDataList({
-                searchQuery: null,
-                page: this.paging,
-                pageSize: 10000,
-                ownerId: this.ownerId
-            });
-        }
-    });
-} else {
-    console.log('UserType là:', this.userType);
+    this.loadServices();
+    this.loadOwners();
+  }
+
+  loadBlogs() {
     this.getDataList({
-        searchQuery: null,
-        page: this.paging,
-        pageSize: 10000,
-        ownerId: this.ownerId
+      searchQuery: null,
+      page: this.paging.page,
+      pageSize: this.paging.pageSize,
+      ownerId: this.ownerId
     });
+  }
+
+  loadServices() {
+    this.serviceService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
+      if (res?.data) {
+        this.services = res.data;
+      }
+    });
+  }
+
+  loadOwners() {
+    this.ownerService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
+      if (res?.data) {
+        this.owners = res.data;
+      }
+    });
+  }
+
+  getDataList(params: any) {
+    this.loading = true;
+    this.blogService.getLists({
+      searchQuery: this.formSearch.value.name,
+      page: this.paging.page,
+      pageSize: this.paging.pageSize,
+      ownerId: this.ownerId
+    }).subscribe((res: any) => {
+      this.loading = false;
+      if (res?.data?.length > 0) {
+        this.dataList = res.data;
+        this.paging.total = res.data.length || 0;
+      }
+    });
+  }
+
+  createItem() {
+    this.typeForm = 2; // Chế độ tạo mới
+    this.openModal = true;
+    this.modalTitle = 'Create New Blog';
+    this.form.reset();
+  }
+
+  closeModal() {
+    this.openModal = false;
+    this.typeForm = 0;
+    this.selected = null;
+  }
+
+  search() {
+    this.pageChanged(1);
+  }
+
+  resetSearchForm() {
+    this.formSearch.reset();
+    this.search();
+  }
+
+  saveItem(data: any) {
+    if (!this.form.valid) return;
+
+    this.loading = true;
+    const blogData = {
+      ...this.form.value,
+      AdId: this.selected?.adId || undefined
+    };
+
+    this.blogService.createOrUpdateData(blogData, this.selected?.adId).subscribe((res: any) => {
+      this.loading = false;
+      if (res?.data) {
+        this.alertService.fireSmall('success', res?.message);
+        this.closeModal();
+        this.loadBlogs();
+      } else if (res?.errors) {
+        this.alertService.showListError(res?.errors);
+      } else {
+        this.alertService.fireSmall('error', res?.message || (this.typeForm === 2 ? "Add Blog failed!" : "Update Blog failed!"));
+      }
+    });
+  }
+
+  viewItem(id: number) {
+    const data = this.dataList.find((c: any) => c.adId === id);
+    this.selected = { ...data };
+    this.modalTitle = 'View Blog';
+    this.openModal = true;
+    this.typeForm = 2;
+  }
+
+  editItem(id: number) {
+    const data = this.dataList.find((c: any) => c.adId === id);
+    this.selected = { ...data };
+    this.modalTitle = 'Edit Blog';
+    this.openModal = true;
+    this.typeForm = 3;
+    this.form.patchValue(data);
+  }
+
+  pageChanged(e: any) {
+    this.paging.page = e;
+    this.loadBlogs();
+  }
 }
-	
-	}
-
-	dataListAll = [];
-	getDataList(params: any) {
-		this.loading = true;
-		console.log('data', params);
-		this.blogService.getLists({
-			searchQuery: this.formSearch.value.name,  // Truy vấn tìm kiếm
-			page: 1,              // Số trang
-			pageSize: 10000,         // Kích thước trang
-			ownerId: this.ownerId // ID người dùng
-		}).subscribe((res: any) => {
-			this.loading = false;
-			if (res?.data?.length > 0) {
-				console.info("===========[getDataListBrand] ===========[res] : ", res);
-				this.dataListAll = res?.data;
-				if (this.dataListAll?.length > 0) {
-					let start = (this.paging?.page - 1) * this.paging.pageSize;
-					let end = this.paging?.page * this.paging.pageSize;
-					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
-					console.log('start:',start)
-					console.log('end:',end)
-				}
-				this.paging.total = res?.data?.length || 0;
-				
-			}
-
-		})
-	}
-	// Update dataList based on paging
-	// updateDataList() {
-	// 	if (this.dataListAll?.length > 0) {
-	// 		let start = (this.paging.page - 1) * this.paging.pageSize;
-	// 		let end = this.paging.page * this.paging.pageSize;
-	// 		this.dataList = this.dataListAll.slice(start, end);
-	// 	}
-	// }
-	services = []
-	getServices() {
-		this.serviceService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
-			if (res?.data) {
-				this.services = res?.data || [];
-				console.info("Services data received:", res.data); // Log received data
-			}
-		})
-	}
-	owners = []
-	getOwners() {
-		this.ownerService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
-			if (res?.data) {
-				this.owners = res?.data;
-				console.info("Owners data received:", res.data); // Log received data
-			}
-		})
-	}
-
-	toggleSelectAll() {
-		// const allSelected = this.brands.every(brand => brand.selected);
-		// this.brands.forEach(brand => brand.selected = !allSelected);
-	}
-
-	createItem() {
-		this.modalTitle = 'Create Owner';
-		this.openModal = true;
-		this.typeForm = 1;
-	}
-
-	closeModal() {
-		this.openModal = false;
-		this.typeForm = 0;
-		this.selected = null;
-	}
-
-	search() {
-		this.pageChanged(1);
-		// this.getDataList({ ...this.paging, page: 1, ...this.formSearch.value })
-	}
-
-	resetSearchForm() {
-		this.formSearch.reset();
-		this.search();
-	}
-
-	saveItem(data: any) {
-		if (this.typeForm == 1) {
-			this.loading = true;
-			this.blogService.createOrUpdateData(data?.form).subscribe((res: any) => {
-				this.loading = false;
-				if (res?.data) {
-					this.alertService.fireSmall('success', res?.message);
-					this.closeModal();
-					this.getDataList({ page: 1, pageSize: 10 })
-				} else if (res?.errors) {
-					this.alertService.showListError(res?.errors);
-				} else {
-					this.alertService.fireSmall('error', res?.message || "Add Owner failed!");
-				}
-			})
-		} else {
-			this.loading = true;
-			let dataForm = data?.form;
-			delete (dataForm.password);
-			dataForm.AdId = data.id;
-			this.blogService.createOrUpdateData(dataForm, data.id).subscribe((res: any) => {
-				this.loading = false;
-				if (res?.data) {
-					this.alertService.fireSmall('success', res?.message);
-					this.closeModal();
-					this.getDataList({ page: 1, pageSize: 10 })
-				} else if (res?.errors) {
-					this.alertService.showListError(res?.errors);
-				} else {
-					this.alertService.fireSmall('error', res?.message || "Updated Owner failed!");
-				}
-			})
-		}
-	}
-
-	selected: any;
-	viewItem(id: number) {
-		const data = this.dataList.find((c: any) => c.adId === id);
-		console.log(data);
-		this.selected = { ...data };
-		this.modalTitle = 'View Blog';
-		this.openModal = true;
-		this.typeForm = 2;
-	}
-
-	editItem(id: number) {
-		const data = this.dataList.find((c: any) => c.adId === id);
-		this.selected = { ...data };
-		this.modalTitle = 'Edit Blog';
-		this.openModal = true;
-		this.typeForm = 3;
-
-	}
-
-	pageChanged(e: any) {
-		this.paging.page = e;
-		// this.getDataList({ ...this.paging, ...this.formSearch.value })
-		if (this.dataListAll?.length > 0) {
-			let start = (this.paging?.page - 1) * this.paging.pageSize;
-			let end = this.paging?.page * this.paging.pageSize;
-			if (this.formSearch.value?.name) {
-				let totalSearch = this.dataListAll?.filter((item: any) => item?.title?.toLowerCase()?.includes(this.formSearch.value?.name?.toLowerCase().trim()));
-				this.paging.total = totalSearch?.length || 0;
-				this.dataList = totalSearch?.filter((item: any, index: number) => index >= start && index < end && item?.title?.toLowerCase()?.includes(this.formSearch.value?.name?.toLowerCase().trim()))
-			} else {
-				this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
-			}
-			// this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
-		}
-	}
-}
-

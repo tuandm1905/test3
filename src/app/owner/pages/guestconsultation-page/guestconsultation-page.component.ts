@@ -247,9 +247,9 @@ export class GuestconsultationPageComponent {
 			}
 		})
 	}
-	updateGuestStatus(orderId: number, id: number) {
-		console.log('id guest', orderId, 'id', id);
-		this.guestService.updateStatus(orderId, id).subscribe(
+	updateGuestStatus(orderId: number, status: string) {
+		console.log('id guest', orderId, 'id', status);
+		this.guestService.updateStatus(orderId, status).subscribe(
 			response => {
 				console.log('Guest Consultation status updated successfully');
 				// Hiển thị thông báo cập nhật thành công

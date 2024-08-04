@@ -38,8 +38,8 @@ export class GuestconsultationService {
 		return this.baseApiService.postMethod('Account', params, true);
 	}
 
-	updateStatus(guestId: number, statusGuestId: number) {
-		const url = `GuestConsultation/UpdateStatusGuestConsultationtById?guestId=${guestId}&statusGuestId=${statusGuestId}`;
-		return this.baseApiService.putMethod(url,true);
+	updateStatus(guestId: number, statusGuestId: string) {
+		const url = `GuestConsultation/UpdateStatusGuestConsultationt?guestId=${guestId}&statusGuest=${statusGuestId}`;
+		return this.baseApiService.putMethod(url,{});
 	}
 }

@@ -1,1 +1,49 @@
-<p>chat-page works!</p>
+<div class="card w-100">
+    <div class="card-body w-100">
+        <app-breadcrum [items]="breadCrumb"></app-breadcrum>
+        <div class="d-md-flex justify-content-between">
+            <h2 class="my-2">View Chats</h2>
+        </div>
+    </div>
+    <div class="chat-container">
+        <div class="sidebar">
+            <ul class="people">
+                <li class="person" [class.focus]="selectedPerson === 'Voldemort'" (click)="selectPerson('Voldemort')">
+                    <span class="title">Voldemort</span>
+                    <span class="time">2:50pm</span>
+                    <span class="preview">What are you getting... Oh, oops...</span>
+                </li>
+                <li class="person" [class.focus]="selectedPerson === 'Ron'" (click)="selectPerson('Ron')">
+                    <span class="title">Ron</span>
+                    <span class="time">2:25pm</span>
+                    <span class="preview">Meet me at Hogsmeade and bring...</span>
+                </li>
+                <li class="person" [class.focus]="selectedPerson === 'Hermione'" (click)="selectPerson('Hermione')">
+                    <span class="title">Hermione</span>
+                    <span class="time">2:12pm</span>
+                    <span class="preview">Have you and Ron done your hom...</span>
+                </li>
+            </ul>
+        </div>
+
+        <div class="chatbox">
+            <div class="top-bar">
+                <div class="avatar">
+                    <p>{{selectedPerson?.charAt(0)}}</p>
+                </div>
+                <div class="name">{{selectedPerson}}</div>
+            </div>
+            <div class="middle">
+                <div *ngFor="let message of messages" [ngClass]="message.sender">
+                    <div class="bubble">{{message.content}}</div>
+                </div>
+            </div>
+            <div class="bottom-bar">
+                <div class="chat">
+                    <input [(ngModel)]="messageContent" type="text" placeholder="Type a message..." />
+                    <button type="button" (click)="sendMessage()"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

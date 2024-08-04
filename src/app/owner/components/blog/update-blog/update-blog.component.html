@@ -6,7 +6,7 @@
 		</div>
 		<form [formGroup]="form" (ngSubmit)="submit()">
 			<div class="row">
-				<div class="form-group col-md-6  required mb-3">
+				<div class="form-group col-md-6 required mb-3">
 					<label for="Title" class="form-label">Title</label>
 					<input type="text" id="Title" class="form-control" placeholder="Enter value"
 						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
@@ -17,37 +17,39 @@
 						[validation]="'required'"></app-form-error>
 				</div>
 
-				<div class="form-group col-md-6  required mb-3">
-					<label for="ServiceId" class="form-label ">Service</label>
-					<ng-select [items]="services" bindLabel="services" bindValue="services" placeholder="Choose value"
-						formControlName="services"></ng-select>
+				<div class="form-group col-md-6 required mb-3">
+					<label for="ServiceId" class="form-label">Service</label>
+					<ng-select [items]="services" bindLabel="name" bindValue="id" placeholder="Choose service"
+						formControlName="ServiceId"></ng-select>
+
 					<app-form-error [control]="form.controls['ServiceId']" [message]="'Service is required!'"
 						[validation]="'required'"></app-form-error>
+
 				</div>
-				<div class="form-group col-12  required mb-3">
-					<label for="Image" class="form-label ">Image URL</label>
+				<div class="form-group col-12 required mb-3">
+					<label for="Image" class="form-label">Image URL</label>
 					<input type="text" id="Image" class="form-control" placeholder="Enter value"
 						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Image')}"
 						formControlName="Image" name="Image">
 					<app-form-error [control]="form.controls['Image']" [message]="'Image is required!'"
 						[validation]="'required'"></app-form-error>
 				</div>
-				<div class="form-group col-12  required mb-3">
+				<div class="form-group col-12 required mb-3">
 					<label for="Content" class="form-label">Content</label>
-					<textarea type="text" id="Content" class="form-control" placeholder="Enter value"
-						rows="5"
+					<textarea id="Content" class="form-control" placeholder="Enter value" rows="5"
 						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Content')}"
-						formControlName="Content" name="name"
+						formControlName="Content" name="Content"
 						(focusout)="commonService.onTrimFocusOutForm(form, 'Content', $event)">
-						</textarea>
+			</textarea>
 					<app-form-error [control]="form.controls['Content']" [message]="'Content is required!'"
 						[validation]="'required'"></app-form-error>
 				</div>
 			</div>
 			<div class="d-flex justify-content-center my-3">
-				<button type="button" (click)="closeModal()" class="btn btn-secondary">{{typeForm == 2 ? 'Close' :
-					'Cancel'}}</button>
-				<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm != 2">Save</button>
+				<button type="button" (click)="closeModal()" class="btn btn-secondary">
+					{{ typeForm === 2 ? 'Close' : 'Cancel' }}
+				</button>
+				<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm !== 2">Save</button>
 			</div>
 		</form>
 	</div>

@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
+
+$font: 'Lato', sans-serif;
+
+$primary: #79C7C5;
+$secondary: #A1E2D9;
+$white: #F9FBFF;
+$dark: #777777;
+
+html,
+body {
+    height: 100%;
+    margin: 0;
+    font-family: $font;
+}
+
+.chat-container {
+    display: flex;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 1000px;
+    height: 600px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.sidebar {
+    flex: 3; // Chiếm 30% của tổng chiều rộng
+    display: flex;
+    flex-direction: column;
+    background-color: $secondary;
+    color: $white;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.people {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.person {
+    padding: 10px;
+    border-bottom: 1px solid $white;
+    cursor: pointer;
+    transition: background-color 0.3s;
+
+    &:hover,
+    &.focus {
+        background-color: $primary;
+    }
+}
+
+.title {
+    display: block;
+    font-weight: bold;
+}
+
+.time {
+    float: right;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.preview {
+    font-size: 0.9em;
+    opacity: 0.8;
+}
+
+.chatbox {
+    flex: 7; // Chiếm 70% của tổng chiều rộng
+    display: flex;
+    flex-direction: column;
+    background-color: $white;
+}
+
+.top-bar {
+    background-color: $primary;
+    padding: 10px;
+    color: $white;
+    display: flex;
+    align-items: center;
+}
+
+.avatar {
+    background-color: $secondary;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+}
+
+.icons {
+    margin-left: auto;
+}
+
+.middle {
+    flex: 1;
+    padding: 10px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.bubble {
+    background-color: lighten($dark, 23%);
+    color: $white;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 5px 0;
+    max-width: 60%;
+    word-wrap: break-word; // Ngắt dòng cho tin nhắn dài
+    overflow-wrap: break-word; // Ngắt dòng cho các từ dài không có khoảng trắng
+    white-space: pre-wrap; // Giữ khoảng trắng và ngắt dòng ở nơi cần thiết
+}
+
+.user {
+    align-self: flex-end; // Canh phải cho tin nhắn của user
+
+    .bubble {
+        background-color: $primary;
+        margin-left: auto; // Đẩy bong bóng tin nhắn sang phải
+    }
+}
+
+.bot {
+    align-self: flex-start; // Canh trái cho tin nhắn của bot
+
+    .bubble {
+        background-color: $secondary;
+        margin-right: auto; // Đẩy bong bóng tin nhắn sang trái
+    }
+}
+
+.bottom-bar {
+    padding: 10px;
+    background-color: $primary;
+    display: flex;
+    align-items: center;
+}
+
+.chat {
+    display: flex;
+    align-items: center;
+    width: 100%; // Đảm bảo rằng chat chiếm toàn bộ chiều rộng
+}
+
+.chat input {
+    flex: 1; // Giúp ô nhập chiếm phần lớn không gian có sẵn
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    margin-right: 10px; // Tạo khoảng cách giữa input và button
+    box-sizing: border-box; // Đảm bảo rằng padding không làm thay đổi chiều rộng tổng thể
+}
+
+.chat button {
+    background-color: $secondary;
+    border: none;
+    color: $white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.footer {
+    text-align: center;
+    padding: 10px;
+    background-color: $primary;
+    color: $white;
+}

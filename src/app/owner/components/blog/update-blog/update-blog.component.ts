@@ -1,87 +1,80 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { CommonService } from '../../../helpers/common.service';
 import { AlertService } from '../../../helpers/alert.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-update-blog',
-  templateUrl: './update-blog.component.html',
-  styleUrls: ['./update-blog.component.scss']
+	selector: 'app-update-blog',
+	templateUrl: './update-blog.component.html',
+	styleUrls: ['./update-blog.component.scss']
 })
-export class UpdateBlogComponent {
+export class UpdateBlogComponent implements OnChanges {
 	@Input() data: any;
 	@Input() owners: any;
 	@Input() services: any;
-	@Input() typeForm: any;
+	@Input() typeForm: number = 0;
 	@Input() modalTitle: string = '';
 	@Input() isVisible: boolean = false;
 	@Output() save = new EventEmitter<any>();
 	@Output() close = new EventEmitter<void>();
 
 	statusPost = [
-		{
-			id: 1,
-			name: "Active"
-		},
-		{
-			id: 2,
-			name: "Inactive"
-		}
-	]
+		{ id: 1, name: "Active" },
+		{ id: 2, name: "Inactive" }
+	];
 
-	form = new FormGroup({
+	form: FormGroup = new FormGroup({
 		Title: new FormControl(null, Validators.required),
 		Content: new FormControl(null, Validators.required),
-		Image: new FormControl(null),
+		Image: new FormControl(null, Validators.required),
 		ServiceId: new FormControl(null, Validators.required),
 		StatusPostId: new FormControl(1, Validators.required),
 		OwnerId: new FormControl(null, Validators.required)
 	});
 
+
 	constructor(
 		public commonService: CommonService,
 		private alertService: AlertService
-	) {
-
-	}
+	) { }
 
 	ngOnChanges(): void {
-		//Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
-		//Add '${implements OnChanges}' to the class.
+		console.log('Services:', this.services); // Debug: Kiểm tra dữ liệu services
 		this.form.reset();
-		if (!this.isVisible) {
-			this.form.enable();
-		}
-		console.log('services',this.services)
-		console.log('dâta',this.data)
-		if (this.data && this.typeForm != 1) {
+		if (this.data && this.typeForm !== 1) {
 			this.form.patchValue({
-				Title: this.data?.title,
-				Content: this.data?.content,
-				Image: this.data?.image,
-				ServiceId: this.data?.serviceId,
+				Title: this.data?.title || '',
+				Content: this.data?.content || '',
+				Image: this.data?.image || '',
+				ServiceId: this.data?.serviceId || null,
 				StatusPostId: this.data?.statusPostId || 1,
-				OwnerId: this.data?.ownerId
+				OwnerId: this.data?.ownerId || null
 			});
-			
-			if(this.typeForm == 2) {
+
+			if (this.typeForm === 2) { // View mode
 				this.form.disable();
+			} else { // Edit mode
+				this.form.enable();
 			}
-		} else {
-			console.log(1);
-			this.form.reset();
+		} else { // Create mode
+			this.form.enable();
+			this.form.reset({
+				StatusPostId: 1
+			});
 		}
 	}
+
+
 	submit() {
+		console.log('Form Value:', this.form.value); // Debug: Kiểm tra giá trị form trước khi submit
 		if (this.form.invalid) {
 			this.alertService.fireSmall('error', "Form is invalid");
 			return;
 		}
-		this.save.emit({
-			form: this.form.value,
-			id: this.data?.adId
-		});
+		const formData = { ...this.form.value, AdId: this.data?.adId };
+		this.save.emit(formData);
 	}
+
 
 	closeModal() {
 		this.form.reset();

@@ -80,6 +80,7 @@ import { NotificationPageComponent } from './pages/notification-page/notificatio
 import { AddNewDescriptionComponent } from './components/owner-description-form/add-new-description/add-new-description.component';
 import { DetailDescriptionComponent } from './components/owner-description-form/detail-description/detail-description.component';
 import { UpdateDescriptionComponent } from './components/owner-description-form/update-description/update-description.component';
+import { ChatPageComponent } from './pages/chat-page/chat-page.component';
 
 const route: Routes = [
 	{
@@ -169,6 +170,11 @@ const route: Routes = [
 				path: 'notification',
 				component: NotificationPageComponent,
 				title: 'Manage Notification'
+			},
+			{
+				path: 'chat',
+				component: ChatPageComponent,
+				title: 'Manage Chat'
 			}
 
 		],
@@ -255,7 +261,8 @@ const route: Routes = [
 		NotificationPageComponent,
 		AddNewDescriptionComponent,
 		DetailDescriptionComponent,
-		UpdateDescriptionComponent
+		UpdateDescriptionComponent,
+  ChatPageComponent
 	],
 	imports: [
 		FormsModule,

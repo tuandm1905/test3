@@ -68,6 +68,7 @@ import { staffGuardGuard } from './staff-guard.guard';
 import { GuestconsultationPageComponent } from '../owner/pages/guestconsultation-page/guestconsultation-page.component';
 import { ImportproductPageComponent } from '../owner/pages/importproduct-page/importproduct-page.component';
 import { NotificationPageComponent } from '../owner/pages/notification-page/notification-page.component';
+import { ChatPageComponent } from '../owner/pages/chat-page/chat-page.component';
 
 const route: Routes = [
 	{
@@ -131,6 +132,11 @@ const route: Routes = [
 				path: 'notification',
 				component: NotificationPageComponent,
 				title: 'Manage Notification'
+			},
+			{
+				path: 'chat',
+				component: ChatPageComponent,
+				title: 'Manage Chat'
 			}
 
 
