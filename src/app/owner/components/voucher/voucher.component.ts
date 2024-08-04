@@ -35,9 +35,9 @@ export class VoucherComponent {
 		quantity: new FormControl(null, Validators.required),
 		startDate: new FormControl(null, Validators.required),
 		endDate: new FormControl(null, Validators.required),
-		quantityUsed: new FormControl(null),
+		// quantityUsed: new FormControl(null),
 		ownerId: new FormControl(null),
-		isdelete: new FormControl(false),
+		// isdelete: new FormControl(false),
 	});
 
 	constructor(
@@ -64,9 +64,9 @@ export class VoucherComponent {
 				quantity: this.data?.quantity,
 				startDate: moment(this.data?.startDate).format('YYYY-MM-DDTHH:mm'),
 				endDate: moment(this.data?.endDate).format('YYYY-MM-DDTHH:mm'),
-				quantityUsed: this.data?.quantityUsed,
+				// quantityUsed: this.data?.quantityUsed,
 				ownerId: this.data?.ownerId,
-				isdelete: this.data?.isdelete,
+				// isdelete: this.data?.isdelete,
 			});
 
 			if (this.typeForm == 2) {
