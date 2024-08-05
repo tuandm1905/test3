@@ -1,108 +1,182 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, FormArray, Validators, FormControl } from '@angular/forms';
 import { ProductService } from '../../services/product.service';
 import { AlertService } from '../../helpers/alert.service';
 import { OwnerService } from '../../services/owner.service';
 import { AuthenService } from '../../../admin/services/authen.service';
 import { StaffService } from '../../services/staff.service';
 import { SizeService } from '../../services/size.service';
+import { ImportproductService } from '../../services/importproduct.service';
+import { WarehouseService } from '../../services/warehouse.service';
 
 @Component({
-	selector: 'app-importproduct-detail',
-	templateUrl: './importproduct-detail.component.html',
-	styleUrl: './importproduct-detail.component.scss'
+  selector: 'app-importproduct-detail',
+  templateUrl: './importproduct-detail.component.html',
+  styleUrls: ['./importproduct-detail.component.scss']
 })
-export class ImportproductDetailComponent {
-	ownerId: number | null = null;
-	userType: string = '';
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Import Product Detail',
-			link: '/owner/importproduct-detail'
-		}
-	];
-	constructor(
-		private productService: ProductService,
-		private alertService: AlertService,
-		private ownerService: OwnerService,
-		private authenService: AuthenService,
-		private staffService: StaffService,
-		private sizeService: SizeService
-	) {
+export class ImportproductDetailComponent implements OnInit {
+  ownerId: number | null = null;
+  warehouseId: number | null = null;
+  userType: string = '';
+  form: FormGroup;
+  breadCrumb: any = [
+    {
+      label: 'Owner',
+      link: '/'
+    },
+    {
+      label: 'Import Product Detail',
+      link: '/owner/importproduct-detail'
+    }
+  ];
 
-	}
-	product = [];
-	size = [];
-	products = ['Product 1', 'Product 2', 'Product 3'];
-	sizes = ['Small', 'Medium', 'Large'];
-	rows = Array.from({ length: 10 }, () => ({ product: '', size: '', price: 0, quantity: 0 }));
-	origin: string = '';
+  constructor(
+    private fb: FormBuilder,
+    private productService: ProductService,
+    private alertService: AlertService,
+    private ownerService: OwnerService,
+    private authenService: AuthenService,
+    private staffService: StaffService,
+    private sizeService: SizeService,
+    private importSerivce: ImportproductService,
+    private warehouseSerivce: WarehouseService,
+  ) {
+    this.form = this.fb.group({
+      origin: new FormControl('', Validators.required), // Add origin field to FormGroup
+      rows: this.fb.array([this.createRow()]) // Initialize with one row
+    });
+  }
 
-	ngOnInit(): void {
-		const user = this.authenService.getUser();
-		this.userType = user?.userType ?? '';
-		this.ownerId = user?.id ?? null;
+  ngOnInit(): void {
+    const user = this.authenService.getUser();
+    this.userType = user?.userType ?? '';
+    this.ownerId = user?.id ?? null;
 
-		if (this.userType === 'Staff') {
-			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
-				this.ownerId = res?.data?.ownerId;
-				console.log('ID của Owner:', this.ownerId);
-				console.log('Lấy ID của Staff xong lấy OwnerId');
+    if (this.userType === 'Staff') {
+      this.staffService.show(user?.id ?? null).subscribe((res: any) => {
+        this.ownerId = res?.data?.ownerId;
+        this.getDataRelation(this.ownerId);
+      });
+    } else {
+      this.getDataRelation(this.ownerId);
+    }
+  }
 
-				// Gọi hàm getDataRelation với ownerId đã được cập nhật
-				this.getDataRelation(this.ownerId);
-			});
-		} else {
-			console.log('UserType là:', this.userType);
+  product = [];
+  size = [];
+  getDataRelation(ownerId: number | null) {
+    this.sizeService.getListSize({ page: 1, pageSize: 100, ownerId }).subscribe((res: any) => {
+      if (res?.data) {
+        this.size = res.data;
+      }
+    });
 
-			// Gọi hàm getDataRelation với ownerId mặc định
-			this.getDataRelation(this.ownerId);
-		}
+    this.productService.getLists(ownerId).subscribe((res: any) => {
+      this.product = res;
+    });
+  }
 
-	}
+  createRow(): FormGroup {
+    return this.fb.group({
+      product: new FormControl('', Validators.required),
+      size: new FormControl('', Validators.required),
+      price: [0, [Validators.required, Validators.min(1)]],
+      quantity: [0, [Validators.required, Validators.min(1)]]
+    });
+  }
 
-	getDataRelation(ownerId: number | null) {
-		this.sizeService.getListSize({ page: 1, pageSize: 100, ownerId }).subscribe((res: any) => {
-			if (res?.data) {
-				this.size = res.data.map((item: any) => ({ id: item.id, name: item.name }));
-			}
-		});
+  get rows(): FormArray {
+    return this.form.get('rows') as FormArray;
+  }
 
-		this.productService.getLists(ownerId).subscribe((res: any) => {
-			this.product = res.map((item: any) => ({ id: item.id, name: item.name }));
-		});
-	}
+  addRow() {
+    if (this.isCurrentRowComplete()) {
+      this.rows.push(this.createRow());
+    } else {
+      this.alertService.fireSmall('warning', 'Please complete the current row before adding a new one.');
+    }
+  }
 
-	save() {
-		// Implement save logic here
-		console.log('Data to be saved:', {
-			rows: this.rows,
-			origin: this.origin
-		});
-	}
-	addRow() {
-		this.rows.push({ product: '', size: '', price: 0, quantity: 0 });
-	}
+  removeRow(index: number) {
+    if (this.rows.length > 1) {
+      this.rows.removeAt(index);
+    }
+  }
 
-	removeRow(index: number) {
-		if (this.rows.length > 1) {
-			this.rows.splice(index, 1);
-		}
-	}
+  isRowDisabled(index: number): boolean {
+    if (index === 0) {
+      return false; // Always allow editing for the first row
+    }
+    const prevRow = this.rows.at(index - 1);
+    return !prevRow.valid;
+  }
 
+  isCurrentRowComplete(): boolean {
+    const currentRow = this.rows.at(this.rows.length - 1);
+    return currentRow.valid;
+  }
 
-	isRowDisabled(index: number): boolean {
-		if (index === 0) {
-			return false; // Always allow editing for the first row
-		}
+  save() {
+    console.log('Data to be saved:', this.form.value);
+    if (this.form.valid) {
+      const dataToSave = {
+        importProductDetailDTO: this.form.value.rows.map((row: any) => ({
+          productId: row.product,
+          sizeId: row.size,
+          quantityReceived: row.quantity,
+          unitPrice: row.price
+        })),
+        origin: this.form.value.origin
+      };
 
-		const prevRow = this.rows[index - 1];
-		const isPreviousRowComplete = prevRow.product && prevRow.size;
+      console.log('Data to be saved:', dataToSave);
 
-		return !isPreviousRowComplete;
-	}
+      // Show confirmation dialog before saving
+      this.alertService.fireConfirm(
+        'Confirm Import',
+        'Are you sure you want to import these details?',
+        'warning',
+        'Cancel',
+        'Import'
+      ).then((result) => {
+        if (result.isConfirmed) {
+          // Get warehouseId before calling the API
+          this.warehouseSerivce.getLists(this.ownerId).subscribe((res: any) => {
+            this.warehouseId = res?.data?.warehouseId;
+            
+            if (this.ownerId && this.warehouseId) {
+              this.importSerivce.create(this.ownerId, this.warehouseId, dataToSave.origin, dataToSave.importProductDetailDTO).subscribe(
+                (res: any) => {
+                  if (res?.message.includes('successfully')) {
+                    this.alertService.fireSmall('success', res?.message);
+                    this.resetForm(); // Reset form after successful save
+                  } else if (res?.errors) {
+                    this.alertService.showListError(res?.errors);
+                  } else {
+                    this.alertService.fireSmall('error', res?.message || 'Product update failed!');
+                  }
+                },
+                (error) => {
+                  console.error('Error:', error);
+                  this.alertService.fireSmall('error', 'Failed to save data. Please try again.');
+                }
+              );
+            } else {
+              this.alertService.fireSmall('error', 'Missing Owner ID or Warehouse ID.');
+            }
+          });
+        }
+      });
+    } else {
+      this.alertService.fireSmall('error', 'Please complete all rows before saving.');
+    }
+  }
 
+  resetForm() {
+    // Reset form values to defaults
+    this.form.reset();
+    // Clear old rows and add a new empty row
+    this.rows.clear();
+    this.rows.push(this.createRow());
+  }
 }

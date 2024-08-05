@@ -10,8 +10,9 @@ export class ImportproductService {
   getLists(warehouseId: any) {
 		return this.baseApiService.getMethod('ImportProduct/GetAllImportProduct',{warehouseId});
 	}
-  create(warehouseId: number, origin: string){
-    return this.baseApiService.postMethod(`ImportProduct/CreateImportProduct?warehouseId=${warehouseId}&origin=${origin}`,{})
+  create(ownerId: number, warehouseId: number, origin: string, data:any){
+    return this.baseApiService.postMethod(`ImportProduct/CreateImportProduct?ownerId=${ownerId}&warehouseId=${warehouseId}&origin=${origin}`,data)
+                                        // ImportProduct/CreateImportProduct?ownerId=1&warehouseId=18&origin=H%C3%A0%20N%E1%BB%99i
   }
   getListImportId(id: number){
     return this.baseApiService.getMethod(`ImportProductDetail/GetAllImportProductDetailByImportId?importId=${id}`,{});

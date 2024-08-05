@@ -3,7 +3,6 @@
 		<app-breadcrum [items]="breadCrumb"></app-breadcrum>
 		<div class="d-md-flex justify-content-between">
 			<h2 class="my-2">View All Warehouse</h2>
-			<button class="btn btn-success my-2" (click)="createItem()">Create New Warehouse</button>
 		</div>
 		<div class="">
 			<form [formGroup]="formSearch" (ngSubmit)="search()">
@@ -24,37 +23,29 @@
 					</div>
 				</div>
 			</form>
-
+			<div class="row mb-5">
+				<div class="col-md-3 col-xs-12">
+				  <label class="form-label font-bold text-lg uppercase">Total Quantity:</label>
+				  <span class="font-bold text-lg"> {{ totalQuantity }}</span>
+				</div>
+				<div class="col-md-3 col-xs-12">
+				  <label class="form-label font-bold text-lg uppercase">Total Price:</label>
+				  <span class="font-bold text-lg"> {{ totalPrice | currency }}</span>
+				</div>
+			  </div>
 		</div>
 	</div>
 	<div class="card-body">
-		<!-- <div class="row mb-5">
-			<div class="col-md-3 col-xs-12 w-full">
-				<label class="form-label text-lg block">
-					<strong>Origin:</strong> {{ dataList[0].import.origin }}
-				</label>
-				<div class="form-label text-lg flex items-center space-x-1 mt-2">
-					<strong>Import Date:</strong>
-					<strong class="text-green-500">Hours:</strong>
-					<strong>
-						<span class="text-black">{{ dataList[0].import.importDate | date: 'HH:mm' }}</span>
-					</strong>
-					/
-					<strong class="text-red-500">Day:</strong>
-					<strong>
-						<span class="text-black">{{ dataList[0].import.importDate | date: 'dd-MM-yyyy' }}</span>
-					</strong>
-				</div>
-			</div>
-		</div> -->
 		<div class="table-responsive">
-			<table class="table">
+			<table class="table table-fixed">
 				<thead>
 					<tr>
-						<th class="text-center align-middle" style="width: 5%;">STT</th>
-						<th class="text-center align-middle" style="min-width: 80px;">Product Size</th>
-						<th class="text-center align-middle" style="min-width: 100px;">Location</th>
-						<th class="text-center align-middle" style="width: 10%;">Actions</th>
+						<th class="text-center align-middle fixed-width-stt">STT</th>
+						<th class="text-center align-middle fixed-width-product">Product</th>
+						<th class="text-center align-middle fixed-width-size">Size</th>
+						<th class="text-center align-middle fixed-width-quantity">Quantity</th>
+						<th class="text-center align-middle fixed-width-location">Location</th>
+						<th class="text-center align-middle fixed-width-actions">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -63,30 +54,33 @@
 							<td class="text-center align-middle">
 								{{ (paging.page - 1) * paging.pageSize + i + 1 }}
 							</td>
-							<td class="text-center align-middle">{{ item.productSizeId }}</td>
-							<td class="text-center align-middle">{{ item.location }}</td>
+							<td class="text-center align-middle">{{ item.productName }}</td>
+							<td class="text-center align-middle">{{ item.sizeName }}</td>
+							<td class="text-center align-middle">{{ item.quantity }}</td>
 							<td class="text-center align-middle">
-								<button mat-icon-button [matMenuTriggerFor]="actionsMenu"
-									class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-									<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+								<!-- Sử dụng ngModel để liên kết dữ liệu giữa view và component -->
+								<input *ngIf="editingIndex === i" [(ngModel)]="item.location" class="form-control" />
+								<span *ngIf="editingIndex !== i">{{ item.location }}</span>
+							</td>
+							<td class="text-center align-middle">
+								<button *ngIf="editingIndex !== i" (click)="startEdit(i)"
+									class="btn btn-primary btn-sm">
+									Edit Location
 								</button>
-								<mat-menu #actionsMenu="matMenu">
-									<button mat-menu-item class="view-button" (click)="viewItem(item.productId)">
-										<i class="fa fa-eye"></i> View
-									</button>
-									<button mat-menu-item class="edit-button" (click)="editItem(item.productId)">
-										<i class="fa fa-pencil"></i> Edit
-									</button>
-									<button mat-menu-item class="delete-button" (click)="deleteItem(item.productId)">
-										<i class="fa fa-trash"></i> Delete
-									</button>
-								</mat-menu>
+								<button *ngIf="editingIndex === i" (click)="saveEdit(item.warehouseId)"
+									class="btn btn-success btn-sm">
+									Save
+								</button>
+								<button *ngIf="editingIndex === i" (click)="cancelEdit()"
+									class="btn btn-secondary btn-sm">
+									Cancel
+								</button>
 							</td>
 						</tr>
 					</ng-container>
 					<ng-container *ngIf="dataList?.length <= 0">
 						<tr>
-							<td colspan="4">No data</td>
+							<td colspan="6">No data</td>
 						</tr>
 					</ng-container>
 				</tbody>
@@ -94,9 +88,6 @@
 		</div>
 		<app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
 	</div>
-	<app-warehouse-form [data]="selected" [modalTitle]="modalTitle" [typeForm]="typeForm" [isVisible]="openModal"
-		(save)="saveItem($event)" (close)="closeModal()">
-	</app-warehouse-form>
 </div>
 
 <app-loading [loading]="loading"></app-loading>

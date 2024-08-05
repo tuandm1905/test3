@@ -15,6 +15,11 @@ export class WarehouseService {
 	// searchData(data: any, id: any) {
 	// 	return this.baseApiService.getMethod(`Product/owner/searchs/${id}`, {});
 	// }
+	getListWarehouse(params: any,id?:any) {
+		const { warehouseId, page, pageSize } = params;
+		return this.baseApiService.getMethod(`Warehouse/GetAllWarehouseDetailByWarehouse?warehouseId=${id}&page=${page}&pageSize=${pageSize}`,{});
+										   // Warehouse/GetAllWarehouseDetailByWarehouse?warehouseId=18&page=1&pageSize=1
+	}
 	show(id: any) {
 		return this.baseApiService.getMethod(`Product/${id}`, {});
 	}
@@ -29,5 +34,13 @@ export class WarehouseService {
 
 	deleteData(id: any) {
 		return this.baseApiService.deleteMethod(`Product/${id}`);
+	}
+	updateLocation(formData: any, id?: any) {
+		return this.baseApiService.putMethod(`WarehouseDetail/UpdateWarehouseDetail`, formData, true);
+	}
+	getListSize(params: any) {
+		const { page, pageSize, ownerId} = params;
+		return this.baseApiService.getMethod(`ProductSize/GetAllProductSizes?page=${page}&pageSize=${pageSize}&ownerId=${ownerId}`, true);
+										   // ProductSize/GetAllProductSizes?page=1&pageSize=10&ownerId=1
 	}
 }

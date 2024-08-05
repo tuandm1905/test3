@@ -146,6 +146,7 @@ export class UpdateProductComponent implements OnChanges {
 	}
 
 	async submit() {
+		console.log('data',this.form.value)
 		if (this.form.invalid) {
 			this.form.markAllAsTouched();
 			console.log('Form is invalid:', this.form.errors);

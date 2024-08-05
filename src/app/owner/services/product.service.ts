@@ -50,7 +50,9 @@ export class ProductService {
 	}
 
 	getListSize(params: any) {
-		return this.baseApiService.getMethod('ProductSize/GetAllProductSizes', params);
+		const { page, pageSize, ownerId} = params;
+		return this.baseApiService.getMethod(`ProductSize/GetAllProductSizes?page=${page}&pageSize=${pageSize}&ownerId=${ownerId}`, {});
+										   // ProductSize/GetAllProductSizes?page=1&pageSize=10&ownerId=1
 	}
 	deleteDataSize(id: any) {
 		return this.baseApiService.patchMethod(`ProductSize/DeleteProductSize/${id}`, {});

@@ -8,6 +8,8 @@ import { StaffService } from '../../services/staff.service';
 import { ImportproductService } from '../../services/importproduct.service';
 import { WarehouseService } from '../../services/warehouse.service';
 import { Router } from '@angular/router';
+import { ProductService } from '../../services/product.service';
+import { SizeService } from '../../services/size.service';
 
 @Component({
 	selector: 'app-importproduct-page',
@@ -43,6 +45,8 @@ export class ImportproductPageComponent {
 		private importSerivce: ImportproductService,
 		private warehouseSerivce: WarehouseService,
 		private router: Router,
+		private sizeService: SizeService,
+		private productService: ProductService,
 	) {
 
 	}
@@ -55,16 +59,18 @@ export class ImportproductPageComponent {
 		if (this.userType == 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;
-				// console.log('ID của Onwer', this.ownerId)
-				// console.log('Lấy ID của Staff xong lấy OwnerId')
+				this.getDataList(this.ownerId);
+				// this.getDataRelation(this.ownerId)
 			})
 		} else if (this.userType === 'Owner') {
-			// console.log('UserTyle là Owner', this.userType)
 			this.getDataList(this.ownerId);
+			// this.getDataRelation(this.ownerId)
+			// console.log('UserTyle là Owner', this.userType)
+
 		}
 		// console.log('UserTyle là Owner', this.userType)
 		// console.log('data du lieu', this.ownerId);
-		this.getDataList(this.ownerId);
+
 	}
 	dataListAll = [];
 	getDataList(ownerId: number | null) {
@@ -87,6 +93,19 @@ export class ImportproductPageComponent {
 			});
 		})
 	}
+	Listsize = []
+	Listproduct = []
+	// getDataRelation(ownerId: number | null) {
+	// 	this.sizeService.getListSize({ page: 1, pageSize: 100, ownerId }).subscribe((res: any) => {
+	// 		this.Listsize = res?.data
+	// 	});
+
+	// 	this.productService.getLists(ownerId).subscribe((res: any) => {
+	// 		this.Listproduct = res?.data
+	// 	});
+	// 	console.log('data',this.Listsize,',',this.Listproduct)
+
+	// }
 	closeModal() {
 		this.createModal = false;
 		this.showModal = false;

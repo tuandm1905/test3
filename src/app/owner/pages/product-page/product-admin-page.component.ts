@@ -112,7 +112,7 @@ export class ProductAdminPageComponent {
 
 				// Filter images where isdelete is false
 				this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
-
+				console.log('datâ', this.dataListAll)
 				this.dataList.forEach((item: any) => {
 					item.images = item.images.filter((image: any) => !image.isdelete); // Filter images
 				});
@@ -137,6 +137,7 @@ export class ProductAdminPageComponent {
 		this.descriptionService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
 			if (res?.data) {
 				this.descriptions = res?.data;
+				console.log('data description',this.descriptions)
 			}
 		});
 		this.ownerService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
@@ -183,7 +184,7 @@ export class ProductAdminPageComponent {
 	}
 
 	saveItem(data: any) {
-		console.log('data',data);
+		console.log('data', data);
 		if (this.modalTitle === 'Create Product') {
 
 			this.loading = true;

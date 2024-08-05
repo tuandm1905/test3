@@ -19,10 +19,12 @@ export class StaffService {
 	}
 
 	createOrUpdateData(params: any, id?: any) {
+		const formData = this.baseApiService.setFormData(params);
 		if (id) {
 			return this.baseApiService.putMethod(`Staff/UpdateProfileStaff`, params, true);
 		}
-		return this.baseApiService.postMethod('Staff/CreateStaff', params, true);
+		console.log('data API',params)
+		return this.baseApiService.postMethod('Staff/CreateStaff', formData);
 	}
 	// updateAvatar(image: File, staffId: number) {
 	// 	const formData = new FormData();

@@ -128,8 +128,8 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
 				this.loading = false;
 				this.profileImage = res?.image || '';
 				this.fullname = res?.fullname;
-				console.log('Admin ID:', res?.accountId);
-				console.log('Admin Email:', res?.email);
+				// console.log('Admin ID:', res?.accountId);
+				// console.log('Admin Email:', res?.email);
 			},
 			(error) => {
 				this.loading = false;
@@ -145,8 +145,8 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
 				this.loading = false;
 				this.profileImage = res?.data?.image || '';
 				this.fullname = res?.data?.fullname;
-				console.log('Staff ID:', res?.data?.staffId);
-				console.log('Staff Email:', res?.data?.email);
+				// console.log('Staff ID:', res?.data?.staffId);
+				// console.log('Staff Email:', res?.data?.email);
 			},
 			(error) => {
 				this.loading = false;

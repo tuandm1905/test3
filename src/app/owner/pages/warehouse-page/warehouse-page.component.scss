@@ -168,3 +168,39 @@ html, body {
     max-width: 100%;
     max-height: 100%;
   }
+  .table-fixed {
+    width: 100%;
+    table-layout: fixed;
+  }
+  
+  .fixed-width-stt {
+    width: 5%;
+  }
+  
+  .fixed-width-product {
+    width: 20%; // Adjust as needed
+  }
+  
+  .fixed-width-size {
+    width: 15%; // Adjust as needed
+  }
+  
+  .fixed-width-quantity {
+    width: 15%; // Adjust as needed
+  }
+  
+  .fixed-width-location {
+    width: 20%; // Adjust as needed
+  }
+  
+  .fixed-width-actions {
+    width: 25%; // Adjust as needed to fit buttons
+  }
+  
+  th,
+  td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  

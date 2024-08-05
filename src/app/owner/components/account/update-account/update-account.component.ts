@@ -31,12 +31,12 @@ export class UpdateAccountComponent {
     private http: HttpClient,
   ) {
     this.form = new FormGroup({
-      staffId: new FormControl(null), // Không cần thiết cho create
-      email: new FormControl(null, Validators.required),
-      password: new FormControl(null), // Đặt validator khi cần
-      fullname: new FormControl(null, Validators.required),
-      image: new FormControl(null as string | null, Validators.required),
-      phone: new FormControl(null, Validators.required),
+      staffId: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      fullname: new FormControl('', Validators.required),
+      image: new FormControl('', [Validators.required, Validators.min(0.01)]),
+      phone: new FormControl('', Validators.required),
     });
   }
 
@@ -105,28 +105,30 @@ export class UpdateAccountComponent {
   }
 
   submit() {
-    // Kiểm tra nếu form không hợp lệ
-    console.log('data',this.form.value)
+    // Log the form value for debugging
+    console.log('Form data before processing:', this.form.value);
+
+    // Check if the form is invalid
     if (this.form.invalid) {
-      console.log('Data staff chỉnh sửa', this.image);
-      this.alertService.fireSmall('error', "Form Staff is invalid");
+      console.log('Form is invalid', this.form.errors);
+      this.alertService.fireSmall('error', "Form is invalid");
       return;
     }
 
-    // Lấy dữ liệu từ form
+    // Get the form data
     const formData = { ...this.form.value };
 
-    // Nếu đang trong chế độ tạo mới (typeForm == 1), không gửi staffId
+    // If creating a new account (typeForm === 1), do not include staffId
     if (this.typeForm === 1) {
       delete formData.staffId;
     }
 
-    // Nếu không có thay đổi ở trường password, xóa trường này khỏi dữ liệu gửi đi
+    // If not creating and the password field is empty, remove it from the formData
     if (this.typeForm !== 1 && !formData.password) {
       delete formData.password;
     }
 
-    // Gửi dữ liệu đã xử lý
+    // Emit the processed data
     this.save.emit({
       form: formData,
       id: this.account?.accountId

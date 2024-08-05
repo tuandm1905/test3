@@ -118,49 +118,45 @@ export class AccountAdminPageComponent {
 	}
 
 	saveItem(data: any) {
-		console.log('data',data?.form)
-		console.log('modalTitle',this.modalTitle)
-		data.form.ownerId = Number(this.ownerId)
-		if (this.modalTitle === 'Create Account') {
-			this.loading = true;
-			this.staffService.createOrUpdateData(data?.form).subscribe((res: any) => {
-				this.loading = false;
-				if (res?.message?.includes('successfully')) {
-					this.alertService.fireSmall('success', res?.message);
-					this.closeModal();
-					this.getDataList({ page: 1, pageSize: 10 })
-				} else if (res?.errors) {
-					this.alertService.showListError(res?.errors);
-				} else {
-					this.alertService.fireSmall('error', res?.message || "Add Account failed!");
-				}
-			})
+		console.log('Saving item with data:', data?.form);
+	  
+		data.form.ownerId = Number(this.ownerId);
+		if (this.modalTitle === 'Create New Staff') {
+		  this.loading = true;
+		  this.staffService.createOrUpdateData(data?.form).subscribe((res: any) => {
+			this.loading = false;
+			if (res?.message?.includes('successfully')) {
+			  this.alertService.fireSmall('success', res?.message);
+			  this.closeModal();
+			  this.getDataList({ page: 1, pageSize: 10 });
+			} else if (res?.errors) {
+			  this.alertService.showListError(res?.errors);
+			} else {
+			  this.alertService.fireSmall('error', res?.message || "Add Account failed!");
+			}
+		  });
 		} else {
-			this.loading = true;
-			console.log('id',data.form.staffId);
-			console.log('id',data.form.image);
-			this.staffService.createOrUpdateData(data?.form, data.form.staffId).subscribe((res: any) => {
-				this.loading = false;
-				if (res?.message?.includes('successfully')) {
-					console.log('ảnh staff',data);
-				  this.staffService.updateImage(data.form).subscribe(() => {
-					console.log('update ảnh')
-					this.alertService.fireSmall('success', res?.message);
-					this.closeModal();
-					this.getDataList({ page: 1, pageSize: 10 });
-				  }, error => {
-					this.alertService.fireSmall('error', 'Failed to update avatar');
-				  });
-				} else if (res?.errors) {
-				  this.alertService.showListError(res?.errors);
-				} else {
-				  this.alertService.fireSmall('error', res?.message || "Updated Account failed!");
-				}
+		  this.loading = true;
+		  console.log('Updating staff ID:', data.form.staffId);
+		  this.staffService.createOrUpdateData(data?.form, data.form.staffId).subscribe((res: any) => {
+			this.loading = false;
+			if (res?.message?.includes('successfully')) {
+			  this.staffService.updateImage(data.form).subscribe(() => {
+				this.alertService.fireSmall('success', res?.message);
+				this.closeModal();
+				this.getDataList({ page: 1, pageSize: 10 });
+			  }, error => {
+				this.alertService.fireSmall('error', 'Failed to update avatar');
 			  });
-			  
-		
+			} else if (res?.errors) {
+			  this.alertService.showListError(res?.errors);
+			} else {
+			  this.alertService.fireSmall('error', res?.message || "Updated Account failed!");
+			}
+		  });
 		}
-	}
+	  }
+	  
 
 	selected: any;
 	viewItem(id: number) {

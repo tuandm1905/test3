@@ -83,10 +83,10 @@ export class AccountAdminPageComponent {
 				this.paging.total = res?.length || 0;
 			});
 		} else {
-			console.log('data', params);
+			// console.log('data', params);
 			this.ownerService.getLists({ ...params, pageSize: 100 }).subscribe((res: any) => {
 				this.loading = false;
-				console.log('Owner', res);
+				// console.log('Owner', res);
 				this.dataListAll = res?.data;
 				if (this.dataListAll?.length > 0) {
 					let start = (this.paging?.page - 1) * this.paging.pageSize;
