@@ -48,6 +48,9 @@ export class ProductService {
 	getComments(productId: any) {
 		return this.baseApiService.getMethod(`Comment`, { productId });
 	}
+	replyToComment(commentId : number,data:any) {
+		return this.baseApiService.putMethod(`Comment/reply/${commentId}`,data);
+	}
 
 	getListSize(params: any) {
 		const { page, pageSize, ownerId} = params;

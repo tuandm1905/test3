@@ -1,12 +1,9 @@
 import { Component } from '@angular/core';
 import { INIT_PAGING } from '../../helpers/constant';
 import { AlertService } from '../../helpers/alert.service';
-import { OwnerService } from '../../services/owner.service';
 import { AuthenService } from '../../../admin/services/authen.service';
 import { StaffService } from '../../services/staff.service';
 import { ImportproductService } from '../../services/importproduct.service';
-import { WarehouseService } from '../../services/warehouse.service';
-import { Router } from 'express';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -16,13 +13,13 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ImportDetailComponent {
   dataList: any = [];
+  dataListAll: any = [];
+  editingIndex: number | null = null;
   userType: string = '';
-  pageName: string = 'accounts';
-  paging: any = { ...INIT_PAGING }
+  paging: any = { ...INIT_PAGING };
   loading = false;
   ownerId: number | null = null;
-  currentPage: number = 1;
-  totalPages: number = 5;
+  importId: number | null = null;
   id: number | null = null;
   breadCrumb: any = [
     { label: 'Owner', link: '/' },
@@ -31,47 +28,82 @@ export class ImportDetailComponent {
 
   constructor(
     private alertService: AlertService,
-    private ownerService: OwnerService,
     private authenService: AuthenService,
     private staffService: StaffService,
-    private importSerivce: ImportproductService,
-    private warehouseSerivce: WarehouseService,
+    private importService: ImportproductService,
     private route: ActivatedRoute
-  ) {
-
-  }
+  ) {}
 
   ngOnInit(): void {
+    const user = this.authenService.getUser();
+		this.ownerId = user?.id ?? null;
     this.route.paramMap.subscribe(params => {
-      this.id = Number(params.get('id'));
-      console.log('Received ID:', this.id);
-      // Gọi hàm để lấy dữ liệu dựa trên ID nếu cần
-      this.getDataList(this.id);
+      this.importId = Number(params.get('id'));
+      this.getDataList(this.importId);
     });
   }
-  dataListAll = [];
+
   getDataList(id: number) {
-      this.loading = true;
-      this.importSerivce.getListImportId(id).subscribe((res: any) => {
-        this.loading = false;
-        this.dataListAll = res?.data;
-        if (this.dataListAll?.length > 0) {
-          let start = (this.paging?.page - 1) * this.paging.pageSize;
-          let end = this.paging?.page * this.paging.pageSize;
-          this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
-        }
-        console.log('data', this.dataList);
-        this.paging.total = res?.data.length || 0;
-      });
+    
+    this.loading = true;
+    this.importService.getListImportId(id).subscribe((res: any) => {
+      this.loading = false;
+      this.dataListAll = res?.data;
+      if (this.dataListAll?.length > 0) {
+        this.updateDisplayedData();
+      }
+      this.paging.total = this.dataListAll.length || 0;
+    });
+  }
+
+  updateDisplayedData() {
+    let start = (this.paging.page - 1) * this.paging.pageSize;
+    let end = this.paging.page * this.paging.pageSize;
+    this.dataList = this.dataListAll.slice(start, end);
   }
 
   pageChanged(e: any) {
     this.paging.page = e;
-    // this.getDataList({ ...this.paging, ...this.formSearch.value })
-    if (this.dataListAll?.length > 0) {
-      let start = (this.paging?.page - 1) * this.paging.pageSize;
-      let end = this.paging?.page * this.paging.pageSize;
-      this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+    this.updateDisplayedData();
+  }
+
+  startEdit(index: number) {
+    this.editingIndex = index;
+  }
+
+  saveEdit(item: any) {
+    if (!this.ownerId || !this.importId) {
+      this.alertService.fireSmall('error', 'Missing owner or import ID.');
+      return;
     }
+
+    // Prepare the data for the API request
+    const updateDetails = [
+      {
+        importId: item.importId,
+        productSizeId: item.productSizeId,
+        quantityReceived: item.quantityReceived,
+        unitPrice: item.unitPrice
+      }
+    ];
+
+    this.importService.updateImportProductDetail(this.ownerId, this.importId, updateDetails).subscribe(
+      (res: any) => {
+        this.alertService.fireSmall('success', 'Changes saved successfully!');
+        this.editingIndex = null;
+      },
+      (error) => {
+        console.error('Error saving changes:', error);
+        this.alertService.fireSmall('error', 'Failed to save changes.');
+      }
+    );
+  }
+
+  cancelEdit() {
+    // Optionally refresh the data to reset the changes
+    if (this.id) {
+      this.getDataList(this.id);
+    }
+    this.editingIndex = null;
   }
 }

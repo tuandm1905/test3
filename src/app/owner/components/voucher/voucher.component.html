@@ -7,7 +7,7 @@
 		<form [formGroup]="form" (ngSubmit)="submit()">
 			<div class="row">
 				<div class="form-group required mb-3 col-md-6 ">
-					<label for="name" class="form-label">Voucher ID</label>
+					<label for="name" class="form-label">Voucher Code</label>
 					<input type="text" id="name" class="form-control" placeholder="Enter value"
 						[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'name')}"
 						formControlName="voucherId" name="name"

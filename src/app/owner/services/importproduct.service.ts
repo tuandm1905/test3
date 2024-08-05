@@ -17,4 +17,8 @@ export class ImportproductService {
   getListImportId(id: number){
     return this.baseApiService.getMethod(`ImportProductDetail/GetAllImportProductDetailByImportId?importId=${id}`,{});
   }
+  updateImportProductDetail(ownerId:number, importId:number,data:any){
+    return this.baseApiService.putMethod(`ImportProductDetail/UpdateImportProductDetail?ownerId=${ownerId}&importId=${importId}`,data)
+
+  }
 }

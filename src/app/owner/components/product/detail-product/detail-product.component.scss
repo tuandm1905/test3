@@ -481,3 +481,12 @@
 .review-report a:hover {
 	text-decoration: underline;
 }
+.text-right {
+    text-align: right;
+}
+.review-reply-content.reply-highlight {
+    background-color: #f0f0f0; /* Light gray color */
+    padding: 10px;
+    border-radius: 5px;
+    margin-top: 10px;
+}

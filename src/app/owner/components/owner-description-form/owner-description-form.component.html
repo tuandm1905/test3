@@ -16,7 +16,7 @@
 			<div class="col-md-6">
 				<form [formGroup]="form" >
 					<div class="form-group required mb-3">
-						<label for="Title" class="form-label">Name</label>
+						<label for="Title" class="form-label">Title</label>
 						<input type="text" id="Title" class="form-control" placeholder="Enter value"
 							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
 							formControlName="Title" name="Title"
