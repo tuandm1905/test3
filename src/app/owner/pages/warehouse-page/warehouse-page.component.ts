@@ -61,13 +61,13 @@ export class WarehousePageComponent {
 				console.log('ID của Onwer', this.ownerId)
 				console.log('Lấy ID của Staff xong lấy OwnerId')
 				if (this.userType === 'Owner' || this.userType === 'Staff') {
-					console.log('id này số mấy', this.ownerId);
+					// console.log('id này số mấy', this.ownerId);
 					this.getDataList({ ...this.paging, pageSize: 10000 });
 				}
 			})
 		}
 		else {
-			console.log('UserTyle là Owner', this.userType)
+			// console.log('UserTyle là Owner', this.userType)
 			this.getDataList({ ...this.paging, pageSize: 10000 });
 		};
 		// const user = this.authenService.getUser();

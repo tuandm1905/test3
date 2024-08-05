@@ -111,8 +111,8 @@ export class HeaderAdminComponent implements OnInit, OnDestroy {
 				this.loading = false;
 				this.profileImage = res?.data?.image || '';
 				this.fullname = res?.data?.fullname;
-				console.log('Owner ID:', res?.data?.ownerId);
-				console.log('Owner Email:', res?.data?.email);
+				// console.log('Owner ID:', res?.data?.ownerId);
+				// console.log('Owner Email:', res?.data?.email);
 			},
 			(error) => {
 				this.loading = false;

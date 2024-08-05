@@ -34,7 +34,7 @@
 						<th class="text-center align-middle" style="min-width: 80px;">Origin</th>
 						<th class="text-center align-middle" style="min-width: 10%;">Quantity</th>
 						<th class="text-center align-middle" style="min-width: 10%;">Total Price</th>
-						<th class="text-center align-middle" style="min-width: 10%;">Actions</th>
+						<th class="text-center align-middle" style="width: 10%;">Actions</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -52,18 +52,13 @@
 								</ul>
 							</td>
 							<td class="text-center align-middle">{{ item.origin}}</td>
-							<td class="text-center align-middle"><strong>$</strong>{{ item.quantity}}</td>
+							<td class="text-center align-middle">{{ item.quantity}}</td>
 							<td class="text-center align-middle"><strong>$</strong>{{ item.totalPrice}}</td>
 							<td class="text-center align-middle">
-								<button mat-icon-button [matMenuTriggerFor]="menu"
-									class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-									<i class="fa fa-ellipsis-v" aria-hidden="true"></i>
+								<button mat-menu-item class="btn btn-outline-success me-2"
+									(click)="viewItem(item.importId)">
+									<i class="fa fa-eye"></i> View
 								</button>
-								<mat-menu #menu="matMenu">
-									<button mat-menu-item class="icon-button edit-button" (click)="editItem(item.adId)">
-										<i class="fa fa-pencil"></i> Edit
-									</button>
-								</mat-menu>
 							</td>
 						</tr>
 					</ng-container>

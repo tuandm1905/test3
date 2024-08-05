@@ -81,6 +81,7 @@ import { AddNewDescriptionComponent } from './components/owner-description-form/
 import { DetailDescriptionComponent } from './components/owner-description-form/detail-description/detail-description.component';
 import { UpdateDescriptionComponent } from './components/owner-description-form/update-description/update-description.component';
 import { ChatPageComponent } from './pages/chat-page/chat-page.component';
+import { ImportDetailComponent } from './pages/import-detail/import-detail.component';
 
 const route: Routes = [
 	{
@@ -175,7 +176,10 @@ const route: Routes = [
 				path: 'chat',
 				component: ChatPageComponent,
 				title: 'Manage Chat'
-			}
+			},
+			{ path: 'import-detail/:id', 
+				component: ImportDetailComponent, 
+				title: "Import Detail" },
 
 		],
 
@@ -262,7 +266,8 @@ const route: Routes = [
 		AddNewDescriptionComponent,
 		DetailDescriptionComponent,
 		UpdateDescriptionComponent,
-		ChatPageComponent
+		ChatPageComponent,
+  ImportDetailComponent
 	],
 	imports: [
 		FormsModule,

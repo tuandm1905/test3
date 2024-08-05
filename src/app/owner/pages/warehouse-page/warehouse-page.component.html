@@ -24,9 +24,29 @@
 					</div>
 				</div>
 			</form>
+
 		</div>
 	</div>
 	<div class="card-body">
+		<!-- <div class="row mb-5">
+			<div class="col-md-3 col-xs-12 w-full">
+				<label class="form-label text-lg block">
+					<strong>Origin:</strong> {{ dataList[0].import.origin }}
+				</label>
+				<div class="form-label text-lg flex items-center space-x-1 mt-2">
+					<strong>Import Date:</strong>
+					<strong class="text-green-500">Hours:</strong>
+					<strong>
+						<span class="text-black">{{ dataList[0].import.importDate | date: 'HH:mm' }}</span>
+					</strong>
+					/
+					<strong class="text-red-500">Day:</strong>
+					<strong>
+						<span class="text-black">{{ dataList[0].import.importDate | date: 'dd-MM-yyyy' }}</span>
+					</strong>
+				</div>
+			</div>
+		</div> -->
 		<div class="table-responsive">
 			<table class="table">
 				<thead>
@@ -74,13 +94,8 @@
 		</div>
 		<app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
 	</div>
-	<app-warehouse-form
-		[data]="selected"
-		[modalTitle]="modalTitle"
-		[typeForm]="typeForm"
-		[isVisible]="openModal"
-		(save)="saveItem($event)"
-		(close)="closeModal()">
+	<app-warehouse-form [data]="selected" [modalTitle]="modalTitle" [typeForm]="typeForm" [isVisible]="openModal"
+		(save)="saveItem($event)" (close)="closeModal()">
 	</app-warehouse-form>
 </div>
 

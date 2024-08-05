@@ -88,7 +88,7 @@ export class GuestconsultationPageComponent {
 				});
 			});
 		} else {
-			console.log('UserType là:', this.userType);
+			// console.log('UserType là:', this.userType);
 
 			// Gọi hàm getDataList với ownerId mặc định
 			this.getDataList({
@@ -100,7 +100,7 @@ export class GuestconsultationPageComponent {
 		}
 
 
-		console.log('UserTyle là Owner', this.userType)
+		// console.log('UserTyle là Owner', this.userType)
 
 		// this.ownerId = user?.id ?? null;
 		// this.userType = user?.userType ?? '';
@@ -114,8 +114,8 @@ export class GuestconsultationPageComponent {
 		// 	}
 		// 	);
 		// } else (console.log('UserTyle là Owner',this.userType))
-		console.log('data du lieu', this.ownerId);
-		console.log('userType', this.userType);
+		// console.log('data du lieu', this.ownerId);
+		// console.log('userType', this.userType);
 	}
 	changeTab(type: string) {
 		this.tabType = type;

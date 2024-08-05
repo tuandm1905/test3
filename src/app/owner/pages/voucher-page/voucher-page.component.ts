@@ -55,7 +55,7 @@ export class VoucherPageComponent {
 				console.log('ID của Onwer', this.ownerId)
 				console.log('Lấy ID của Staff xong lấy OwnerId')
 				if (this.userType === 'Owner' || this.userType === 'Staff') {
-					console.log('id này số mấy', this.ownerId);
+					// console.log('id này số mấy', this.ownerId);
 					this.getDataList({
 						searchQuery: null,
 						page: this.paging,
@@ -67,7 +67,7 @@ export class VoucherPageComponent {
 			})
 		}
 		else {
-			console.log('UserTyle là Owner', this.userType)
+			// console.log('UserTyle là Owner', this.userType)
 			this.getDataList({
 				searchQuery: null,
 				page: this.paging,
@@ -97,7 +97,7 @@ export class VoucherPageComponent {
 				if (this.dataListAll?.length > 0) {
 					let start = (this.paging?.page - 1) * this.paging.pageSize;
 					let end = this.paging?.page * this.paging.pageSize;
-					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end && !item.isdelete)
 					console.log('data',this.dataList)
 				}
 				this.paging.total = res?.data?.length || 0;

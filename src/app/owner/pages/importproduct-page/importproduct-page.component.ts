@@ -52,25 +52,25 @@ export class ImportproductPageComponent {
 		const user = this.authenService.getUser();
 		this.ownerId = user?.id ?? null;
 		this.userType = user?.userType ?? '';
-		if (this.userType == 'Staff') (
+		if (this.userType == 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;
-				console.log('ID của Onwer', this.ownerId)
-				console.log('Lấy ID của Staff xong lấy OwnerId')
+				// console.log('ID của Onwer', this.ownerId)
+				// console.log('Lấy ID của Staff xong lấy OwnerId')
 			})
-		); else if (this.userType === 'Owner')
-			(
-				console.log('UserTyle là Owner', this.userType)
-			)
-		console.log('UserTyle là Owner', this.userType)
-		console.log('data du lieu', this.ownerId);
+		} else if (this.userType === 'Owner') {
+			// console.log('UserTyle là Owner', this.userType)
+			this.getDataList(this.ownerId);
+		}
+		// console.log('UserTyle là Owner', this.userType)
+		// console.log('data du lieu', this.ownerId);
 		this.getDataList(this.ownerId);
 	}
 	dataListAll = [];
 	getDataList(ownerId: number | null) {
 		this.warehouseSerivce.getLists(this.ownerId).subscribe((res: any) => {
 			const warehouseId = res?.data?.warehouseId;
-			console.log('ID warehouse', warehouseId);
+			// console.log('ID warehouse', warehouseId);
 
 			this.loading = true;
 			this.importSerivce.getLists(warehouseId).subscribe((res: any) => {
@@ -82,7 +82,7 @@ export class ImportproductPageComponent {
 					let end = this.paging?.page * this.paging.pageSize;
 					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
 				}
-				console.log('data',this.dataList);
+				console.log('data', this.dataList);
 				this.paging.total = res?.data.length || 0;
 			});
 		})
@@ -112,6 +112,16 @@ export class ImportproductPageComponent {
 		this.openModal = true;
 		this.typeForm = 1;
 	}
+	viewItem(id: number) {
+		const data = this.dataList.find((c: any) => c.adId === id);
+		this.selected = { ...data };
+		this.modalTitle = 'View Import Product';
+		this.openModal = true;
+		this.typeForm = 2;
+		this.router.navigate(['/owner/import-detail', id]);
+
+	}
+
 	// saveItem(data: any) {
 
 	// 	this.loading = true;

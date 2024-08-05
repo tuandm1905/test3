@@ -13,4 +13,7 @@ export class ImportproductService {
   create(warehouseId: number, origin: string){
     return this.baseApiService.postMethod(`ImportProduct/CreateImportProduct?warehouseId=${warehouseId}&origin=${origin}`,{})
   }
+  getListImportId(id: number){
+    return this.baseApiService.getMethod(`ImportProductDetail/GetAllImportProductDetailByImportId?importId=${id}`,{});
+  }
 }

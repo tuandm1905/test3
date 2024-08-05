@@ -1,0 +1,65 @@
+<div class="card w-100">
+    <div class="card-body w-100">
+        <app-breadcrum [items]="breadCrumb"></app-breadcrum>
+        <div class="d-md-flex justify-content-between">
+            <h2 class="my-2">List Import Detail</h2>
+        </div>
+
+
+    </div>
+    <div class="card-body">
+        <div class="row mb-5">
+            <div class="col-md-3 col-xs-12 w-full">
+                <label class="form-label text-lg block">
+                    <strong>Origin:</strong> {{ dataList[0].import.origin }}
+                </label>
+                <div class="form-label text-lg flex items-center space-x-1 mt-2">
+                    <strong>Import Date:</strong>
+                    <strong class="text-green-500">Hours:</strong>
+                    <strong>
+                        <span class="text-black">{{ dataList[0].import.importDate | date: 'HH:mm' }}</span>
+                    </strong>
+                    /
+                    <strong class="text-red-500">Day:</strong>
+                    <strong>
+                        <span class="text-black">{{ dataList[0].import.importDate | date: 'dd-MM-yyyy' }}</span>
+                    </strong>
+                </div>
+            </div>
+        </div>
+        <div class="table-responsive">
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th class="text-center align-middle" style="min-width: 5%;">STT</th>
+                        <th class="text-center align-middle" style="min-width: 80px;">Product</th>
+                        <th class="text-center align-middle" style="min-width: 80px;">Size</th>
+                        <th class="text-center align-middle" style="min-width: 10%;">Quantity Received</th>
+                        <th class="text-center align-middle" style="min-width: 10%;">Unit Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="dataList?.length > 0">
+                        <tr *ngFor="let item of dataList, index as i">
+                            <td class="text-center align-middle">{{ (paging.page - 1) * paging.pageSize + i + 1 }}</td>
+                            <td class="text-center align-middle">{{ item.productSize.product.name}}</td>
+                            <td class="text-center align-middle">{{ item.productSize.size.name}}</td>
+                            <td class="text-center align-middle">{{ item.quantityReceived}}</td>
+                            <td class="text-center align-middle"><strong>$</strong>{{ item.unitPrice}}</td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="dataList?.length <= 0">
+                        <tr>
+                            <td colspan="7">No data</td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+        </div>
+        <app-pagination [paging]="paging" (changePaged)="pageChanged($event)"></app-pagination>
+    </div>
+
+
+</div>

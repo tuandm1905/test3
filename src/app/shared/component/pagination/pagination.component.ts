@@ -24,10 +24,10 @@ export class PaginationComponent {
 		paginationClass: 'pagination justify-content-end mb-5 mt-5',
 	}
 
-	ngOnChanges(changes: SimpleChanges): void {
-		console.log('Phân trang đã thay đổi:', this.paging);
+	// ngOnChanges(changes: SimpleChanges): void {
+	// 	console.log('Phân trang đã thay đổi:', this.paging);
 
-	}
+	// }
 
 	changed(e: any) {
 		this.changePaged.emit(e);
