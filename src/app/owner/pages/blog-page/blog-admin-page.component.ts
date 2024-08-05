@@ -14,18 +14,27 @@ import { StaffService } from '../../services/staff.service';
   styleUrls: ['./blog-admin-page.component.scss']
 })
 export class BlogAdminPageComponent implements OnInit {
+
+
+
   services: any[] = [];
-  owners: any[] = [];
-  dataList: any[] = []; // Initialize as an empty array
-  selected: any = null;
   form: FormGroup;
+
+
+  dataList: any = [];
+  selectedBrand: any = null;
   ownerId: number | null = null;
-  openModal: boolean = false;
   modalTitle: string = '';
-  typeForm: number = 0;
   userType: string = '';
-  paging: any = { ...INIT_PAGING }
+
+
+  createModal: boolean = false;
+  showModal: boolean = false;
+  openModal: boolean = false;
+  pageName: string = 'accounts';
   loading = false;
+  paging: any = { ...INIT_PAGING }
+  typeForm = 0;
   breadCrumb: any = [
     { label: 'Owner', link: '/' },
     { label: 'Blog', link: '/owner/blog' }
@@ -43,40 +52,32 @@ export class BlogAdminPageComponent implements OnInit {
     private ownerService: OwnerService,
     private authenService: AuthenService,
     private staffService: StaffService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      Title: ['', Validators.required],
-      services: [null, Validators.required],
-      Image: ['', Validators.required],
-      Content: ['', Validators.required]
-    });
-
     const user = this.authenService.getUser();
     this.userType = user?.userType ?? '';
     this.ownerId = user?.id ?? null;
-
     if (this.userType === 'Staff') {
       this.staffService.show(user?.id ?? null).subscribe((res: any) => {
         this.ownerId = res?.data?.ownerId;
-        this.loadBlogs();
+        this.getDataList({
+          searchQuery: null,
+          page: this.paging.page,
+          pageSize: this.paging.pageSize,
+          ownerId: this.ownerId
+        });
       });
     } else {
-      this.loadBlogs();
+      this.getDataList({
+        searchQuery: null,
+        page: this.paging.page,
+        pageSize: this.paging.pageSize,
+        ownerId: this.ownerId
+      });
     }
 
     this.loadServices();
-    this.loadOwners();
-  }
-
-  loadBlogs() {
-    this.getDataList({
-      searchQuery: null,
-      page: this.paging.page,
-      pageSize: this.paging.pageSize,
-      ownerId: this.ownerId
-    });
   }
 
   loadServices() {
@@ -87,41 +88,37 @@ export class BlogAdminPageComponent implements OnInit {
     });
   }
 
-  loadOwners() {
-    this.ownerService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
-      if (res?.data) {
-        this.owners = res.data;
-      }
-    });
-  }
 
+  dataListAll = [];
   getDataList(params: any) {
     this.loading = true;
     this.blogService.getLists({
       searchQuery: this.formSearch.value.name,
       page: this.paging.page,
-      pageSize: this.paging.pageSize,
+      pageSize: 100,
       ownerId: this.ownerId
     }).subscribe((res: any) => {
       this.loading = false;
-      if (res?.data?.length > 0) {
-        this.dataList = res.data;
+        this.dataListAll = res?.data;
+        console.log('data all',this.dataListAll)
+        if (this.dataListAll?.length > 0) {
+          let start = (this.paging?.page - 1) * this.paging.pageSize;
+          let end = this.paging?.page * this.paging.pageSize;
+          this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
+        }
         this.paging.total = res.data.length || 0;
-      }
     });
   }
 
   createItem() {
-    this.typeForm = 2; // Chế độ tạo mới
+    this.modalTitle = 'Create Owner';
     this.openModal = true;
-    this.modalTitle = 'Create New Blog';
-    this.form.reset();
+    this.typeForm = 1;
   }
 
   closeModal() {
     this.openModal = false;
     this.typeForm = 0;
-    this.selected = null;
   }
 
   search() {
@@ -134,30 +131,49 @@ export class BlogAdminPageComponent implements OnInit {
   }
 
   saveItem(data: any) {
-    if (!this.form.valid) return;
-
-    this.loading = true;
-    const blogData = {
-      ...this.form.value,
-      AdId: this.selected?.adId || undefined
-    };
-
-    this.blogService.createOrUpdateData(blogData, this.selected?.adId).subscribe((res: any) => {
-      this.loading = false;
-      if (res?.data) {
-        this.alertService.fireSmall('success', res?.message);
-        this.closeModal();
-        this.loadBlogs();
-      } else if (res?.errors) {
-        this.alertService.showListError(res?.errors);
-      } else {
-        this.alertService.fireSmall('error', res?.message || (this.typeForm === 2 ? "Add Blog failed!" : "Update Blog failed!"));
-      }
-    });
+    console.log('userType', this.typeForm)
+    if (this.typeForm == 1) {
+      this.loading = true;
+      console.log('data onwerId', data.form.OwnerId)
+      data.form.OwnerId = this.ownerId
+      this.blogService.createOrUpdateData(data?.form).subscribe((res: any) => {
+        this.loading = false;
+        if (res?.data) {
+          this.alertService.fireSmall('success', res?.message);
+          this.closeModal();
+          this.getDataList({ page: 1, pageSize: 10 })
+        } else if (res?.errors) {
+          this.alertService.showListError(res?.errors);
+        } else {
+          this.alertService.fireSmall('error', res?.message || "Add Owner failed!");
+        }
+      })
+    } else if (this.typeForm == 3) {
+      this.loading = true;
+      let dataForm = data?.form;
+      delete (dataForm.password);
+      // dataForm.AdId = data.id;
+      console.log('data', data.form)
+      console.log('data kakáksaksakksa', dataForm)
+      this.blogService.createOrUpdateData(dataForm, data.id).subscribe((res: any) => {
+        this.loading = false;
+        if (res?.data) {
+          this.alertService.fireSmall('success', res?.message);
+          this.closeModal();
+          this.getDataList({ page: 1, pageSize: 10 })
+        } else if (res?.errors) {
+          this.alertService.showListError(res?.errors);
+        } else {
+          this.alertService.fireSmall('error', res?.message || "Updated Owner failed!");
+        }
+      })
+    }
   }
 
+  selected: any;
   viewItem(id: number) {
     const data = this.dataList.find((c: any) => c.adId === id);
+    console.log(data);
     this.selected = { ...data };
     this.modalTitle = 'View Blog';
     this.openModal = true;
@@ -170,11 +186,16 @@ export class BlogAdminPageComponent implements OnInit {
     this.modalTitle = 'Edit Blog';
     this.openModal = true;
     this.typeForm = 3;
-    this.form.patchValue(data);
+
   }
 
   pageChanged(e: any) {
     this.paging.page = e;
-    this.loadBlogs();
+    // this.getDataList({ ...this.paging, ...this.formSearch.value })
+    if (this.dataListAll?.length > 0) {
+      let start = (this.paging?.page - 1) * this.paging.pageSize;
+      let end = this.paging?.page * this.paging.pageSize;
+      this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+    }
   }
 }

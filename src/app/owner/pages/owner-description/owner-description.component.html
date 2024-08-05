@@ -43,7 +43,7 @@
 							<td class="text-center align-middle">{{ (paging.page - 1) * paging.pageSize + i + 1 }}</td>
 							<td class="text-center align-middle">
                                 <div class="image-container" *ngIf="item?.images?.length > 0">
-                                    <img [src]="item?.images[0]" alt="{{ item.name }}" class="thumbnail" width="80"
+                                    <img [src]="item.images[0]?.linkImage" alt="{{ item.name }}" class="thumbnail" width="80"
                                         height="80" />
                                 </div>
                             </td>
@@ -86,14 +86,14 @@
 	
 </div>
 
-<!-- <app-owner-description-form [data]="selected" 
+<app-owner-description-form [data]="selected" 
 	[modalTitle]="modalTitle" 
 	[typeForm]="typeForm" 
 	[isVisible]="openModal" 
 	(save)="saveItem($event)" (close)="closeModal()">
-</app-owner-description-form> -->
+</app-owner-description-form>
 
-<app-add-new-description [modalTitle]="modalTitle"  [isVisible]="showAddNewModal"
+<!-- <app-add-new-description [modalTitle]="modalTitle"  [isVisible]="showAddNewModal"
 	(save)="saveItem($event)" (close)="closeModal()">
-</app-add-new-description>
+</app-add-new-description> -->
 <app-loading [loading]="loading"></app-loading>

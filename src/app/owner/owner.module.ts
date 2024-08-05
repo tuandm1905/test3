@@ -118,7 +118,7 @@ const route: Routes = [
 			{
 				path: 'account',
 				component: AccountAdminPageComponent,
-				title: 'Manage Account Staff'
+				title: 'Manage Staff Account'
 			},
 			{
 				path: 'voucher',
@@ -183,7 +183,7 @@ const route: Routes = [
 	{
 		path: 'auth/register',
 		component: OwnerRegisterComponent,
-		title: 'Register'
+		title: 'Register Owner'
 	},
 	{
 		path: 'auth/login',

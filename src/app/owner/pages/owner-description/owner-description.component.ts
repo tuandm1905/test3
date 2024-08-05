@@ -18,14 +18,20 @@ export class OwnerDescriptionComponent {
 	modalTitle: string = '';
 	openModal: boolean = false;
 	selectedDescription: any = {};
+	form: FormGroup;
 
 	paging: any = { ...INIT_PAGING }
 	loading = false;
 
 	typeForm = 0;
-	showAddNewModal: boolean = false;
-	showDetailModal: boolean = false;
-	showUpdateModal: boolean = false;
+
+	createModal: boolean = false;
+	showModal: boolean = false;
+	formSearch: FormGroup = new FormGroup({
+		id: new FormControl(null),
+		name: new FormControl(null)
+	});
+
 	constructor(
 		private descriptionService: DescriptionService,
 		private alertService: AlertService
@@ -43,15 +49,16 @@ export class OwnerDescriptionComponent {
 		}
 	];
 	ngOnInit(): void {
-		this.getDataListParent(this.paging);
+		this.getDataList(this.paging);
 
 	}
 	dataListAll: any;
-	getDataListParent(params: any) {
+	getDataList(params: any) {
 		this.loading = true;
 		this.descriptionService.getLists({ ...params, pageSize: 10000 }).subscribe((res: any) => {
 			this.loading = false;
 			this.dataListAll = res?.data || [];
+			console.log('dataAll',this.dataListAll)
 			if (this.dataListAll?.length > 0) {
 				let start = (this.paging?.page - 1) * this.paging.pageSize;
 				let end = this.paging?.page * this.paging.pageSize;
@@ -62,9 +69,9 @@ export class OwnerDescriptionComponent {
 	}
 
 	createItem() {
-		this.selectedDescription = {title: '', content: '', image: '', selected: false };
 		this.modalTitle = 'Create Description ';
-		this.showAddNewModal = true;
+		this.openModal = true;
+		this.typeForm = 1;
 	}
 	closeModal() {
 		this.openModal = false;
@@ -77,47 +84,44 @@ export class OwnerDescriptionComponent {
 	}
 	resetSearchForm() {
 		this.formSearch.reset();
-		this.getDataListParent({ ...this.paging, page: 1, ...this.formSearch.value })
+		this.getDataList({ ...this.paging, page: 1, ...this.formSearch.value })
 	}
 	saveItem(data: any) {
-		console.log('TypeForm:', this.typeForm);
-		console.log('Data received in saveItem:', data);
-		
-		let form = data.form;
-		console.log('Form data before validation:', form);
-		if (!form) {
-		  this.alertService.fireSmall('error', 'Dữ liệu không hợp lệ!');
-		  this.loading = false;
-		  return;
+		if (this.typeForm == 1) {
+			this.loading = true;
+			data.form.OwnerId = data.descriptionId;
+			data.form.Isdelete = false;
+			this.descriptionService.createOrUpdateData(data?.form).subscribe((res: any) => {
+				this.loading = false;
+				if (res?.data) {
+					this.alertService.fireSmall('success', res?.message);
+					this.closeModal();
+					this.getDataList({ page: 1, pageSize: 10 })
+				} else if (res?.errors) {
+					this.alertService.showListError(res?.errors);
+				} else {
+					this.alertService.fireSmall('error', res?.message || "Add Service failed!");
+				}
+			})
+		} else  if (data.id) {
+			this.loading = true;
+			let dataForm = data?.form;
+			this.descriptionService.createOrUpdateData(dataForm, data.id).subscribe((res: any) => {
+				this.loading = false;
+				if (res?.data) {
+					this.alertService.fireSmall('success', res?.message);
+					this.closeModal();
+					this.getDataList({ page: 1, pageSize: 10 })
+				} else if (res?.errors) {
+					this.alertService.showListError(res?.errors);
+				} else {
+					this.alertService.fireSmall('error', res?.message || "Updated Service failed!");
+				}
+			})
 		}
-		
-		console.log('Form data before API call:', form);
-	  
-		if (this.typeForm === 1) { // Create
-		  this.loading = true;
-		  this.descriptionService.create(form).subscribe(
-			(res: any) => {
-			  this.loading = false;
-			  console.log('API response:', res);
-			  if (res?.data || res?.message?.includes('successfully')) {
-				this.alertService.fireSmall('success', res?.message);
-				this.closeModal();
-				this.getDataListParent({ page: 1, pageSize: 1000 });
-			  } else if (res?.errors) {
-				this.alertService.showListError(res?.errors);
-			  } else {
-				this.alertService.fireSmall('error', res?.message || "Add Description failed!");
-			  }
-			},
-			(error: any) => {
-			  this.alertService.fireSmall('error', "An error occurred while creating the description.");
-			  this.loading = false;
-			}
-		  );
-		}
-	  }
-	  
-	
+	}
+
+
 
 	selected: any;
 	viewItem(id: number) {
@@ -128,13 +132,11 @@ export class OwnerDescriptionComponent {
 		this.typeForm = 2;
 	}
 	editItem(id: number) {
-
 		const data = this.dataList.find((c: any) => c.descriptionId === id);
-		console.log('data edit', data);
 		this.selected = { ...data };
-		console.log('data selected', this.selected);
 		this.modalTitle = 'Edit Description';
-		this.showAddNewModal = true;
+		this.openModal = true;
+		this.typeForm = 3;
 
 	}
 	deleteItem(id: number) {
@@ -152,7 +154,7 @@ export class OwnerDescriptionComponent {
 						this.loading = false;
 						if (res?.message?.includes('successfully')) {
 							this.alertService.fireSmall('success', res?.message);
-							this.getDataListParent({ page: 1, pageSize: 10 })
+							this.getDataList({ page: 1, pageSize: 10 })
 						} else if (res?.errors) {
 							this.alertService.showListError(res?.errors);
 						} else {
@@ -163,10 +165,7 @@ export class OwnerDescriptionComponent {
 			})
 
 	}
-	formSearch: any = new FormGroup({
-		id: new FormControl(null),
-		name: new FormControl(null)
-	});
+	
 	pageChanged(e: any) {
 		this.paging.page = e;
 		// this.getDataList({ ...this.paging, ...this.formSearch.value })

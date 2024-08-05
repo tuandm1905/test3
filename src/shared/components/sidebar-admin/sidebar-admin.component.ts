@@ -25,7 +25,7 @@ export class SidebarAdminComponent implements OnChanges {
 		{
 			route: "/account",
 			role:['OWNER'],
-			name: "Account Staff"
+			name: "Staff Account"
 		},
 		{
 			route: "/brand",

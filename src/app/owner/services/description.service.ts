@@ -20,18 +20,18 @@ export class DescriptionService {
         return this.baseApiService.getMethod(`Description/GetDescriptionById/${id}`, {});
     }
 
-    UpdateData(data: any, id?: any) {
+    createOrUpdateData(data: any, id?: any) {
+        const formData = this.baseApiService.setFormData(data);
 
         if (id) {
-            return this.baseApiService.putMethod('Description/UpdateDesctiption', data); // Cập nhật URL nếu cần
+            formData.append('DescriptionId', id)
+            return this.baseApiService.putMethod('Description/UpdateDesctiption', formData); 
         }
-    }
-        create(data: any) {
-        return this.baseApiService.postMethod('Description/CreateDesctiption', data);
+        return this.baseApiService.postMethod('Description/CreateDesctiption', formData);
     }
     
 
     deleteData(id: number) {
-        return this.baseApiService.patchMethod(`Description/DeleteDescription/${id}`, {});
+        return this.baseApiService.patchMethod(`Description/DeleteDesctiption/${id}`,true);
     }
 }

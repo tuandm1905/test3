@@ -14,6 +14,7 @@ export class AddNewDescriptionComponent {
   @Input() modalTitle: string = '';
   @Input() categories: any;
   @Input() isVisible: boolean = false;
+  @Input() typeForm: any;
   @Output() save = new EventEmitter<any>();
   @Output() close = new EventEmitter<void>();
 
@@ -83,6 +84,7 @@ export class AddNewDescriptionComponent {
 
   closeModal() {
   this.form.reset();
+  this.isVisible = false;
   this.close.emit();
 }
 }

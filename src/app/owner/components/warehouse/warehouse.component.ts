@@ -51,13 +51,12 @@ export class WarehouseComponent {
 	submit() {
 		console.log('form', this.form.invalid);
 		if (!this.form.invalid) {
-
 			this.alertService.fireSmall('error', "Form is invalid");
 			return;
 		}
 		this.save.emit({
 			form: this.form.value,
-			id: this.data?.warehouseId
+			id: this.data?.productSizeId
 		});
 	}
 	closeModal() {

@@ -13,6 +13,7 @@ export class DetailBlogComponent {
   @Input() blog: any = {};
   @Input() modalTitle: string = '';
   @Input() isVisible: boolean = false;
+  @Input() typeForm: any;
   @Output() close = new EventEmitter<void>();
 
 
@@ -35,6 +36,20 @@ export class DetailBlogComponent {
 	) {
 
 	}
+	ngOnChanges(): void {
+		//Called before any other lifecycle hook. Use it to inject dependencies, but avoid any serious work here.
+		//Add '${implements OnChanges}' to the class.
+		this.form.reset();
+		if (!this.isVisible) {
+			this.form.reset();
+			this.form.enable();
+		}
+		
+
+			if (this.typeForm == 2) {
+				this.form.disable();
+			}
+		}
   closeModal() {
     this.close.emit();
   }

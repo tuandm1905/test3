@@ -86,6 +86,6 @@
   </div>
   <app-loading [loading]="loading"></app-loading>
   <app-update-blog *ngIf="openModal" [data]="selected" [modalTitle]="modalTitle" [typeForm]="typeForm"
-	[isVisible]="openModal" [services]="services" [owners]="owners" (save)="saveItem($event)"
+	[isVisible]="openModal" [owners]="this.ownerId" [services]="services"(save)="saveItem($event)"
 	(close)="closeModal()"></app-update-blog>
   
