@@ -33,7 +33,7 @@ export class UpdateBlogComponent implements OnChanges {
 		this.form = new FormGroup({
 			Title: new FormControl('', Validators.required),
 			Content: new FormControl('', Validators.required),
-			Image: new FormControl('', [Validators.required, Validators.min(0.01)]),
+			Image: new FormControl('', Validators.required),
 			ServiceId: new FormControl('', Validators.required),
 			StatusPostId: new FormControl('', Validators.required),
 			OwnerId: new FormControl('', Validators.required),
@@ -87,7 +87,7 @@ export class UpdateBlogComponent implements OnChanges {
         this.http.post(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloud_name}/image/upload`, formData)
             .subscribe((response: any) => {
                 this.image = response.secure_url;
-                this.form.patchValue({ ImageLinks: this.image });
+                this.form.patchValue({ Image: this.image });
                 if (this.data) {
                     this.data.imageLinks = this.image;
                 }
@@ -107,6 +107,7 @@ export class UpdateBlogComponent implements OnChanges {
 	}
 	closeModal() {
 		this.form.reset();
+		this.image = null;
 		this.close.emit();
 	}
 }

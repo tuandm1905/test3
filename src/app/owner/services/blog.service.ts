@@ -22,6 +22,7 @@ export class BlogService {
 
     createOrUpdateData(data: any, id?: any) {
 		const formData = this.baseApiService.setFormData(data);
+        console.log('data API',formData)
         if(id) {
 			formData.append('AdId', id)
             return this.baseApiService.putMethod(`Advertisement/UpdateAdvertisement`, formData);

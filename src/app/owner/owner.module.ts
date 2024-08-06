@@ -258,7 +258,7 @@ const route: Routes = [
 		DashboardAdminPageComponent,
 		ImportproductPageComponent,
 		BrandAdminPageComponent,
-		BlogAdminPageComponent,
+		// BlogAdminPageComponent,
 		ProductAdminPageComponent,
 		OrderAdminPageComponent,
 		VoucherPageComponent,

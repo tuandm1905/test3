@@ -7,50 +7,66 @@
 		<div *ngIf="typeForm != 2">
 			<form [formGroup]="form" (ngSubmit)="submit()">
 				<div class="row">
-					<div class="form-group col-md-6 required mb-3">
-						<label for="Title" class="form-label">Title</label>
-						<input type="text" id="Title" class="form-control" placeholder="Enter value"
-							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
-							formControlName="Title" name="Title"
-							(focusout)="commonService.onTrimFocusOutForm(form, 'Title', $event)" />
+					<div class="col-md-6">
+						<div *ngIf="form.controls['Image'].value" class="text-center">
+							<label class="form-label">Preview Image:</label><br>
+							<img [src]="form.controls['Image'].value" alt="Description Image"
+								class="img-fluid mx-auto d-block">
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="form-group required mb-3">
+							<label for="Title" class="form-label">Title</label>
+							<input type="text" id="Title" class="form-control" placeholder="Enter value"
+								[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Title')}"
+								formControlName="Title" name="Title"
+								(focusout)="commonService.onTrimFocusOutForm(form, 'Title', $event)" />
 
-						<app-form-error [control]="form.controls['Title']" [message]="'Title is required!'"
-							[validation]="'required'"></app-form-error>
-					</div>
+							<app-form-error [control]="form.controls['Title']" [message]="'Title is required!'"
+								[validation]="'required'"></app-form-error>
+						</div>
 
-					<div class="form-group col-md-6 required mb-3">
-						<label for="ServiceId" class="form-label">Service</label>
-						<ng-select [items]="services" bindLabel="name" bindValue="serviceId"
-							placeholder="Choose service" formControlName="ServiceId">
-						</ng-select>
-						<!-- <app-form-error [control]="form.controls['ServiceId']" [message]="'Service is required!'"
-						[validation]="'required'"></app-form-error> -->
+						<div class="form-group required mb-3">
+							<label for="ServiceId" class="form-label">Service</label>
+							<ng-select [items]="services" bindLabel="name" bindValue="serviceId"
+								placeholder="Choose service" formControlName="ServiceId">
+							</ng-select>
+							<app-form-error [control]="form.controls['ServiceId']" [message]="'Service is required!'"
+								[validation]="'required'"></app-form-error>
 
+						</div>
+						<div class="form-group required mb-3">
+							<label for="Image" class="form-label">Image URL</label>
+							<input type="text" id="Image" class="form-control" placeholder="Enter value"
+								[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Image')}"
+								formControlName="Image" name="Image"
+								(focusout)="commonService.onTrimFocusOutForm(form, 'Image', $event)">
+							<app-form-error [control]="form.controls['Image']"
+								[message]="'Image is required!'" [validation]="'required'"></app-form-error>
+						</div>
+						<div class="form-group mb-3">
+							<input type="file" #fileInput (change)="onFileSelected($event)" hidden>
+							<button type="button" class="upload-button" (click)="fileInput.click()">Upload
+								Image</button>
+							<button *ngIf="selectedFile" type="button" class="save-button"
+								(click)="uploadImage('descriptions')">Save Image</button>
+						</div>
+						<div class="form-group col-12 required mb-3">
+							<label for="Content" class="form-label">Content</label>
+							<textarea id="Content" class="form-control" placeholder="Enter value" rows="5"
+								[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Content')}"
+								formControlName="Content" name="Content"
+								(focusout)="commonService.onTrimFocusOutForm(form, 'Content', $event)"></textarea>
+							<app-form-error [control]="form.controls['Content']" [message]="'Content is required!'"
+								[validation]="'required'"></app-form-error>
+						</div>
 					</div>
-					<div class="form-group col-12 required mb-3">
-						<label for="Image" class="form-label">Image URL</label>
-						<input type="text" id="Image" class="form-control" placeholder="Enter value"
-							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Image')}"
-							formControlName="Image" name="Image">
-						<app-form-error [control]="form.controls['Image']" [message]="'Image is required!'"
-							[validation]="'required'"></app-form-error>
+					<div class="d-flex justify-content-center my-3">
+						<button type="button" (click)="closeModal()" class="btn btn-secondary">
+							{{ typeForm === 2 ? 'Close' : 'Cancel' }}
+						</button>
+						<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm !== 2">Save</button>
 					</div>
-					<div class="form-group col-12 required mb-3">
-						<label for="Content" class="form-label">Content</label>
-						<textarea id="Content" class="form-control" placeholder="Enter value" rows="5"
-							[ngClass]="{'is-invalid': commonService.showStatusErrorV2(form, 'Content')}"
-							formControlName="Content" name="Content"
-							(focusout)="commonService.onTrimFocusOutForm(form, 'Content', $event)">
-			</textarea>
-						<app-form-error [control]="form.controls['Content']" [message]="'Content is required!'"
-							[validation]="'required'"></app-form-error>
-					</div>
-				</div>
-				<div class="d-flex justify-content-center my-3">
-					<button type="button" (click)="closeModal()" class="btn btn-secondary">
-						{{ typeForm === 2 ? 'Close' : 'Cancel' }}
-					</button>
-					<button type="submit" class="btn btn-success mx-2" *ngIf="typeForm !== 2">Save</button>
 				</div>
 			</form>
 		</div>

@@ -82,7 +82,7 @@ export class BlogAdminPageComponent implements OnInit {
   }
 
   loadServices() {
-    this.serviceService.getLists({ page: 1, pageSize: 100 }).subscribe((res: any) => {
+    this.serviceService.getLists({ page: 1, pageSize: 50 }).subscribe((res: any) => {
       if (res?.data) {
         this.services = res.data;
       }
@@ -101,7 +101,7 @@ export class BlogAdminPageComponent implements OnInit {
     }).subscribe((res: any) => {
       this.loading = false;
         this.dataListAll = res?.data;
-        console.log('data all',this.dataListAll)
+        // console.log('data all',this.dataListAll)
         if (this.dataListAll?.length > 0) {
           let start = (this.paging?.page - 1) * this.paging.pageSize;
           let end = this.paging?.page * this.paging.pageSize;
@@ -154,8 +154,8 @@ export class BlogAdminPageComponent implements OnInit {
       let dataForm = data?.form;
       delete (dataForm.password);
       // dataForm.AdId = data.id;
-      console.log('data', data.form)
-      console.log('data kakáksaksakksa', dataForm)
+      // console.log('data', data.form)
+      // console.log('data kakáksaksakksa', dataForm)
       this.blogService.createOrUpdateData(dataForm, data.id).subscribe((res: any) => {
         this.loading = false;
         if (res?.data) {

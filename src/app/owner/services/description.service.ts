@@ -22,7 +22,7 @@ export class DescriptionService {
 
     createOrUpdateData(data: any, id?: any) {
         const formData = this.baseApiService.setFormData(data);
-
+        console.log('data API',formData)
         if (id) {
             formData.append('DescriptionId', id)
             return this.baseApiService.putMethod('Description/UpdateDesctiption', formData); 
