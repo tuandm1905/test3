@@ -64,7 +64,7 @@ export class UpdateProductComponent {
 		if (!this.isVisible) {
 			this.form.reset();
 		}
-		console.log("descriptions----->?", this.descriptions);
+		// console.log("descriptions----->?", this.descriptions);
 		if (this.product) {
 			let images = this.product?.images;
 			this.form.patchValue({

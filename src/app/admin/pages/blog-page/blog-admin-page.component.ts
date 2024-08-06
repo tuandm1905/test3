@@ -47,7 +47,7 @@ export class BlogAdminPageComponent {
 	];
 
 	ngOnInit(): void {
-		this.getDataList({ ...this.paging, pageSize: 1000 });
+		this.getDataList({ ...this.paging, pageSize: 100 });
 	}
 
 	dataListAll = [];
@@ -113,7 +113,7 @@ export class BlogAdminPageComponent {
 
 	resetSearchForm() {
 		this.formSearch.reset();
-		this.getDataList({ ...this.paging, pageSize: 1000 });
+		this.getDataList({ ...this.paging, pageSize: 100 });
 	}
 
 	saveItem(data: any) {
@@ -175,7 +175,7 @@ export class BlogAdminPageComponent {
         this.blogService.updateStatus(adId, statusPostId).subscribe((res: any) => {
             if (res?.data) {
                 this.alertService.fireSmall('success', res?.message);
-                this.getDataList({ page: 1, pageSize: 1000 });
+                this.getDataList({ page: 1, pageSize: 100 });
             } else if (res?.errors) {
                 this.alertService.showListError(res?.errors);
             } else {

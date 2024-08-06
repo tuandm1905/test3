@@ -91,9 +91,9 @@ const route: Routes = [
 				title: 'Manage Brand'
 			},
 			{
-				path: 'blog',
+				path: 'advertisements',
 				component: BlogAdminPageComponent,
-				title: 'Manage Blog'
+				title: 'Manage Advertisements'
 			},
 
 			{

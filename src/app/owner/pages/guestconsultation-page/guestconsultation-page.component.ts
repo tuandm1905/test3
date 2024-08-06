@@ -47,16 +47,17 @@ export class GuestconsultationPageComponent {
 
 	typeForm = 0;
 
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Guest Consultation',
-			link: '/owner/guestconsultation'
-		}
-	];
+	// breadCrumb: any = [
+	// 	{
+	// 		label: 'Owner',
+	// 		link: '/'
+	// 	},
+	// 	{
+	// 		label: 'Guest Consultation',
+	// 		link: '/owner/guestconsultation'
+	// 	}
+	// ];
+	breadCrumb: any = [];
 
 	constructor(
 		private alertService: AlertService,
@@ -72,7 +73,16 @@ export class GuestconsultationPageComponent {
 		const user = this.authenService.getUser();
 		this.userType = user?.userType ?? '';
 		this.ownerId = user?.id ?? null;
-
+		this.breadCrumb = [
+			{
+				label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+				link: '/',
+			},
+			{
+				label: 'Guest Consultation',
+				link: '/owner/guestconsultation'
+			},
+		];
 		if (this.userType === 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;

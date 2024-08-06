@@ -57,15 +57,24 @@ export class OrderAdminPageComponent implements OnInit {
 		{ id: 'cancelled', name: 'Cancelled' },
 	];
 
-	breadCrumb: any = [
-		{ label: 'Owner', link: '/' },
-		{ label: 'Order', link: '/owner/order' }
-	];
-
+	// breadCrumb: any = [
+	// 	{ label: 'Owner', link: '/' },
+	// 	{ label: 'Order', link: '/owner/order' }
+	// ];
+	breadCrumb: any = [];
 	ngOnInit(): void {
 		const user = this.authenService.getUser();
 		this.userType = user?.userType ?? '';
 		this.ownerId = user?.id ?? null;
+		this.breadCrumb = [
+			{
+			  label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+			  link: '/',
+			},
+			{
+			 label: 'Order', link: '/owner/order'
+			},
+		  ];
 		if (this.userType == 'Staff') (
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;
@@ -367,8 +376,9 @@ export class OrderAdminPageComponent implements OnInit {
 
 
 	resetSearchForm() {
-		this.formSearch.reset();
-		this.search();
+		this.getDataListAll({ ...this.paging })
+		// this.formSearch.reset();
+		
 	}
 
 	selected: any;

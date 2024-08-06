@@ -15,10 +15,11 @@ import { Subscription, interval } from 'rxjs'; // Import thêm từ RxJS
   styleUrls: ['./notification-page.component.scss']
 })
 export class NotificationPageComponent implements OnInit, OnDestroy {
-  breadCrumb: any = [
-    { label: 'Owner', link: '/' },
-    { label: 'Order', link: '/owner/notification' }
-  ];
+  // breadCrumb: any = [
+  //   { label: 'Owner', link: '/' },
+  //   { label: 'Order', link: '/owner/notification' }
+  // ];
+
   dataList: any = [];
   dataListAll: any = [];
   selectedBrand: any = null;
@@ -37,7 +38,8 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
     id: new FormControl(null),
     name: new FormControl(null)
   });
-  
+
+  breadCrumb: any = [];
   private notificationSubscription: Subscription | null = null; // Subscription để hủy sau này
   private counter: number = 0; // Biến đếm thời gian
 
@@ -54,6 +56,15 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
     const user = this.authenService.getUser();
     this.userType = user?.userType ?? '';
     this.ownerId = user?.id ? Number(user.id) : null;
+    this.breadCrumb = [
+      {
+        label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+        link: '/',
+      },
+      {
+        label: 'Order', link: '/owner/notification'
+      },
+    ];
     console.log('id owner', this.ownerId);
     if (this.userType == 'Staff') {
       this.staffService.show(user?.id ?? null).subscribe((res: any) => {
@@ -64,7 +75,7 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
     } else {
       console.log('UserType là Owner:', this.userType);
       console.log('id owner khi ở Owner', this.ownerId);
-      
+
       this.getDataOrder(Number(this.ownerId));
       this.getDataList({ ...this.paging });
     }
@@ -98,7 +109,7 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
       });
     }
   }
-  
+
   // Các hàm còn lại không thay đổi
 
   getDataOrder(ownerId: number) {
@@ -106,7 +117,7 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
     this.orderService.getData(ownerId).subscribe((res: any) => {
       this.loading = false;
       this.dataOrder = res;
-      console.log('data Order ở hàm getDataOrder:', this.dataOrder);
+      // console.log('data Order ở hàm getDataOrder:', this.dataOrder);
     });
   }
 
@@ -129,7 +140,7 @@ export class NotificationPageComponent implements OnInit, OnDestroy {
         let start = (this.paging?.page - 1) * this.paging.pageSize;
         let end = this.paging?.page * this.paging.pageSize;
         this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end);
-        console.log('dataList trước khi gán giá trị:', this.dataList);
+        // console.log('dataList trước khi gán giá trị:', this.dataList);
       }
       this.paging.total = res?.length || 0;
     });

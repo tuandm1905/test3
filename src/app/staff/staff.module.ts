@@ -69,6 +69,7 @@ import { GuestconsultationPageComponent } from '../owner/pages/guestconsultation
 import { ImportproductPageComponent } from '../owner/pages/importproduct-page/importproduct-page.component';
 import { NotificationPageComponent } from '../owner/pages/notification-page/notification-page.component';
 import { ChatPageComponent } from '../owner/pages/chat-page/chat-page.component';
+import { OwnerSizeComponent } from '../owner/pages/owner-size/owner-size.component';
 
 const route: Routes = [
 	{
@@ -98,15 +99,15 @@ const route: Routes = [
 				component: OrderAdminPageComponent,
 				title: 'Manage Order'
 			},
-			// {
-			// 	path: 'brand',
-			// 	component: BrandAdminPageComponent,
-			// 	title: 'Manage Brand'
-			// },
 			{
-				path: 'blog',
+				path: 'size',
+				component: OwnerSizeComponent,
+				title: 'Manage Size'
+			},
+			{
+				path: 'advertisements',
 				component: BlogAdminPageComponent,
-				title: 'Manage Blog'
+				title: 'Manage Advertisements'
 			},
 			{
 				path: 'voucher',
@@ -139,9 +140,9 @@ const route: Routes = [
 				title: 'Manage Notification'
 			},
 			{
-				path: 'chat',
+				path: 'message',
 				component: ChatPageComponent,
-				title: 'Manage Chat'
+				title: 'Manage Message'
 			}
 
 

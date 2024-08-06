@@ -20,10 +20,11 @@ interface Message {
   styleUrls: ['./chat-page.component.scss']
 })
 export class ChatPageComponent {
-  breadCrumb: any = [
-    { label: 'Owner', link: '/' },
-    { label: 'Order', link: '/owner/chat' }
-  ];
+  // breadCrumb: any = [
+  //   { label: 'Owner', link: '/' },
+  //   { label: 'Message', link: '/owner/chat' }
+  // ];
+  breadCrumb: any = [];
 
   messageContent: string = '';
   dataList: any = [];
@@ -52,6 +53,15 @@ export class ChatPageComponent {
     const user = this.authenService.getUser();
     this.userType = user?.userType ?? '';
     this.ownerId = user?.id ?? null;
+    this.breadCrumb = [
+      {
+        label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+        link: '/',
+      },
+      {
+       label: 'Chat', link: '/owner/chat'
+      },
+    ];
     if (this.userType == 'Staff') {
       this.staffService.show(user?.id ?? null).subscribe((res: any) => {
         this.ownerId = res?.data?.ownerId;

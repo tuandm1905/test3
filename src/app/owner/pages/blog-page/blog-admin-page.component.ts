@@ -37,7 +37,7 @@ export class BlogAdminPageComponent implements OnInit {
   typeForm = 0;
   breadCrumb: any = [
     { label: 'Owner', link: '/' },
-    { label: 'Blog', link: '/owner/blog' }
+    { label: 'Advertisements', link: '/owner/advertisements' }
   ];
   formSearch: FormGroup = new FormGroup({
     id: new FormControl(null),
@@ -58,6 +58,7 @@ export class BlogAdminPageComponent implements OnInit {
     const user = this.authenService.getUser();
     this.userType = user?.userType ?? '';
     this.ownerId = user?.id ?? null;
+    
     if (this.userType === 'Staff') {
       this.staffService.show(user?.id ?? null).subscribe((res: any) => {
         this.ownerId = res?.data?.ownerId;

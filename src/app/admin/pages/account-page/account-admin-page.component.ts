@@ -79,7 +79,7 @@ export class AccountAdminPageComponent {
 					let end = this.paging?.page * this.paging.pageSize;
 					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
 				}
-				this.dataList = this.dataListAll
+				// this.dataList = this.dataListAll
 				this.paging.total = res?.length || 0;
 			});
 		} else {

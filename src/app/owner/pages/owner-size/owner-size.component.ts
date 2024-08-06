@@ -10,6 +10,7 @@ import { DescriptionService } from '../../services/description.service';
 import { CateParentService } from '../../services/cateparent.service';
 import { SizeService } from '../../services/size.service';
 import { AuthenService } from '../../../admin/services/authen.service';
+import { StaffService } from '../../services/staff.service';
 
 @Component({
 	selector: 'app-owner-size',
@@ -33,27 +34,54 @@ export class OwnerSizeComponent {
 		private sizeService: SizeService,
 		private authenService: AuthenService,
 		private ownerService: OwnerService,
+		private staffService: StaffService
 	) {
 
 	}
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Size',
-			link: '/owner/size'
-		}
-	];
+	// breadCrumb: any = [
+	// 	{
+	// 		label: 'Owner',
+	// 		link: '/'
+	// 	},
+	// 	{
+	// 		label: 'Size',
+	// 		link: '/owner/size'
+	// 	}
+	// ];
+	breadCrumb: any = [];
 	ngOnInit(): void {
 		const user = this.authenService.getUser();
-		this.ownerId = user?.id ?? null;
 		this.userType = user?.userType ?? '';
-		if (this.userType === 'Owner') {
-			console.log(this.ownerId);
-
-			// this.getDataList({ ...this.paging, pageSize:10000 })
+		this.ownerId = user?.id ?? null;
+		this.breadCrumb = [
+			{
+				label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+				link: '/',
+			},
+			{
+				label: 'Size',
+				link: '/owner/size'
+			},
+		];
+		if (this.userType == 'Staff') {
+			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
+				this.ownerId = res?.data?.ownerId;
+				console.log('ID của Onwer', this.ownerId)
+				console.log('Lấy ID của Staff xong lấy OwnerId')
+				if (this.userType === 'Owner' || this.userType === 'Staff') {
+					// console.log('id này số mấy', this.ownerId);
+					this.getDataList({
+						searchQuery: null,
+						page: this.paging,
+						pageSize: 10000,
+						ownerId: this.ownerId
+					}
+					);
+				}
+			})
+		}
+		else {
+			// console.log('UserTyle là Owner', this.userType)
 			this.getDataList({
 				searchQuery: null,
 				page: this.paging,
@@ -61,7 +89,7 @@ export class OwnerSizeComponent {
 				ownerId: this.ownerId
 			}
 			);
-		}
+		};
 		this.getOwners()
 	}
 	dataListAll: any;
@@ -75,15 +103,15 @@ export class OwnerSizeComponent {
 		}).subscribe((res: any) => {
 			this.loading = false;
 			if (res?.data?.length > 0) {
-			this.dataListAll = res?.data;
-			console.info("===========[getDataList] ===========[res] : ", this.dataListAll);
-			if (this.dataListAll?.length > 0) {
-				let start = (this.paging?.page - 1) * this.paging.pageSize;
-				let end = this.paging?.page * this.paging.pageSize;
-				this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+				this.dataListAll = res?.data;
+				console.info("===========[getDataList] ===========[res] : ", this.dataListAll);
+				if (this.dataListAll?.length > 0) {
+					let start = (this.paging?.page - 1) * this.paging.pageSize;
+					let end = this.paging?.page * this.paging.pageSize;
+					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+				}
+				this.paging.total = res?.data?.length || 0;
 			}
-			this.paging.total = res?.data?.length || 0;
-		}
 		})
 	}
 	owners = []
@@ -106,8 +134,8 @@ export class OwnerSizeComponent {
 
 	}
 	search() {
-		if (this.userType === 'Owner') {
-			console.log('chay',this.formSearch.value.name);
+		if (this.userType === 'Owner' || this.userType === 'Staff') {
+			console.log('chay', this.formSearch.value.name);
 			this.getDataList({ ...this.paging, page: 1, ...this.formSearch.value });
 		}
 	}
@@ -119,8 +147,8 @@ export class OwnerSizeComponent {
 		if (this.typeForm == 1) {
 			const form = { ...data.form, ownerId: this.ownerId };
 			this.loading = true;
-			console.log('form data',form)
-			console.log('form data 2',data.form)
+			console.log('form data', form)
+			console.log('form data 2', data.form)
 			this.sizeService.create(form).subscribe((res: any) => {
 				this.loading = false;
 				if (res?.data || res?.message?.includes('successfully')) {
@@ -135,12 +163,12 @@ export class OwnerSizeComponent {
 			})
 		} else {
 			this.loading = true;
-			const form = { ...this.selected, ...data.form }; 
+			const form = { ...this.selected, ...data.form };
 			let dataForm = data?.form;
-			console.log('form data 2',form)
+			console.log('form data 2', form)
 			this.sizeService.UpdateData(form).subscribe((res: any) => {
 				this.loading = false;
-				if (res?.data|| res?.message?.includes('successfully')) {
+				if (res?.data || res?.message?.includes('successfully')) {
 					this.alertService.fireSmall('success', res?.message);
 					this.closeModal();
 					this.getDataList({ page: 1, pageSize: 10 })
@@ -155,7 +183,7 @@ export class OwnerSizeComponent {
 	selected: any;
 	viewItem(id: number) {
 		const data = this.dataList.find((c: any) => c.sizeId === id);
-		console.log('view',data);
+		console.log('view', data);
 		this.selected = { ...data };
 		this.modalTitle = 'View Size';
 		this.openModal = true;
@@ -163,7 +191,7 @@ export class OwnerSizeComponent {
 	}
 	editItem(id: number) {
 		const data = this.dataList.find((c: any) => c.sizeId === id);
-		console.log('edit',data);
+		console.log('edit', data);
 		this.selected = { ...data };
 		this.modalTitle = 'Edit Size';
 		this.openModal = true;
@@ -206,7 +234,14 @@ export class OwnerSizeComponent {
 		if (this.dataListAll?.length > 0) {
 			let start = (this.paging?.page - 1) * this.paging.pageSize;
 			let end = this.paging?.page * this.paging.pageSize;
-			this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+			if (this.formSearch.value?.name) {
+				let totalSearch = this.dataListAll?.filter((item: any) => item?.name?.toLowerCase()?.includes(this.formSearch.value?.name?.toLowerCase().trim()));
+				this.paging.total = totalSearch?.length || 0;
+				this.dataList = totalSearch?.filter((item: any, index: number) => index >= start && index < end && item?.name?.toLowerCase()?.includes(this.formSearch.value?.name?.toLowerCase().trim()))
+			} else {
+				this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
+			}
+			// this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end)
 		}
 	}
 }

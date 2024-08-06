@@ -1,7 +1,9 @@
-import { Component, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnChanges, ElementRef, ViewChild } from '@angular/core';
 import { CommonService } from '../../../helpers/common.service';
 import { AlertService } from '../../../helpers/alert.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { cloudinaryConfig } from '../../../../../../cloudinary.config';
 
 @Component({
 	selector: 'app-update-blog',
@@ -17,10 +19,16 @@ export class UpdateBlogComponent implements OnChanges {
 	@Input() isVisible: boolean = false;
 	@Output() save = new EventEmitter<any>();
 	@Output() close = new EventEmitter<void>();
+
 	form: FormGroup;
+    @ViewChild('fileInput') fileInput!: ElementRef;
+    selectedFile: File | null = null;
+    image: string | null = null;
+
 	constructor(
 		public commonService: CommonService,
-		private alertService: AlertService
+		private alertService: AlertService,
+		private http: HttpClient,
 	) {
 		this.form = new FormGroup({
 			Title: new FormControl('', Validators.required),
@@ -54,7 +62,40 @@ export class UpdateBlogComponent implements OnChanges {
 			}
 		}
 	}
+	onFileSelected(event: any): void {
+        const file = event.target.files[0];
+        if (file) {
+            this.selectedFile = file;
+            const reader = new FileReader();
+            reader.onload = (e: any) => {
+                this.image = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        } else {
+            this.selectedFile = null;
+            this.image = null;
+        }
+    }
 
+    uploadImage(folderName: string): void {
+        if (!this.selectedFile) return;
+        const formData = new FormData();
+        formData.append('file', this.selectedFile);
+        formData.append('upload_preset', cloudinaryConfig.upload_preset);
+        formData.append('folder', folderName);
+
+        this.http.post(`https://api.cloudinary.com/v1_1/${cloudinaryConfig.cloud_name}/image/upload`, formData)
+            .subscribe((response: any) => {
+                this.image = response.secure_url;
+                this.form.patchValue({ ImageLinks: this.image });
+                if (this.data) {
+                    this.data.imageLinks = this.image;
+                }
+                this.selectedFile = null;
+            }, error => {
+                this.alertService.fireSmall('error', 'Failed to upload image. Please try again.');
+            });
+    }
 
 	submit() {
 		console.log('Form Value:', this.form.value);
@@ -63,11 +104,7 @@ export class UpdateBlogComponent implements OnChanges {
 			form: this.form.value,
 			id: this.data?.adId
 		});
-
-
 	}
-
-
 	closeModal() {
 		this.form.reset();
 		this.close.emit();

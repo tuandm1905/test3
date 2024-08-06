@@ -112,9 +112,9 @@ const route: Routes = [
 			},
 
 			{
-				path: 'blog',
+				path: 'advertisements',
 				component: BlogAdminPageComponent,
-				title: 'Manage Blog'
+				title: 'Manage Advertisements'
 			},
 			{
 				path: 'account',
@@ -173,13 +173,15 @@ const route: Routes = [
 				title: 'Manage Notification'
 			},
 			{
-				path: 'message',
+				path: 'chat',
 				component: ChatPageComponent,
-				title: 'Manage Message'
+				title: 'Manage Chat'
 			},
-			{ path: 'import-detail/:id', 
-				component: ImportDetailComponent, 
-				title: "Import Detail" },
+			{
+				path: 'import-detail/:id',
+				component: ImportDetailComponent,
+				title: "Import Detail"
+			},
 
 		],
 
@@ -267,7 +269,7 @@ const route: Routes = [
 		DetailDescriptionComponent,
 		UpdateDescriptionComponent,
 		ChatPageComponent,
-  ImportDetailComponent
+		ImportDetailComponent
 	],
 	imports: [
 		FormsModule,

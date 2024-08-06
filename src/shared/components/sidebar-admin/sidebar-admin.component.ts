@@ -36,6 +36,12 @@ export class SidebarAdminComponent implements OnChanges {
 			"route": "/order",
 			"role": ["OWNER", "STAFF"],
 			"name": "Orders"
+		}
+		,
+		{
+			"route": "/advertisements",
+			"role": ["ADMIN","OWNER", "STAFF"],
+			"name": "Advertisements"
 		},
 		{
 			"route": "/category",
@@ -88,10 +94,11 @@ export class SidebarAdminComponent implements OnChanges {
 			"name": "Notification"
 		},
 		{
-			"route": "/message",
+			"route": "/chat",
 			"role": ["OWNER", "STAFF"],
-			"name": "Message"
+			"name": "Chat"
 		}
+		
 	]
 	
 	constructor() {

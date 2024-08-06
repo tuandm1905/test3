@@ -45,7 +45,7 @@ export class AccountAdminPageComponent {
 			link: '/'
 		},
 		{
-			label: 'Staff Account',
+			label: 'Account Staff',
 			link: '/owner/account'
 		}
 	];

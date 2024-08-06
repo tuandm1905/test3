@@ -34,21 +34,32 @@ export class VoucherPageComponent {
 
 	}
 
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Voucher',
-			link: '/owner/voucher'
-		}
-	];
+	// breadCrumb: any = [
+	// 	{
+	// 		label: 'Owner',
+	// 		link: '/'
+	// 	},
+	// 	{
+	// 		label: 'Voucher',
+	// 		link: '/owner/voucher'
+	// 	}
+	// ];
+	breadCrumb: any = [];
 
 	ngOnInit(): void {
 		const user = this.authenService.getUser();
 		this.userType = user?.userType ?? '';
 		this.ownerId = user?.id ?? null;
+		this.breadCrumb = [
+			{
+				label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+				link: '/',
+			},
+			{
+				label: 'Voucher',
+				link: '/owner/voucher'
+			},
+		];
 		if (this.userType == 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;
@@ -98,7 +109,7 @@ export class VoucherPageComponent {
 					let start = (this.paging?.page - 1) * this.paging.pageSize;
 					let end = this.paging?.page * this.paging.pageSize;
 					this.dataList = this.dataListAll?.filter((item: any, index: number) => index >= start && index < end && !item.isdelete)
-					console.log('data',this.dataList)
+					console.log('data', this.dataList)
 				}
 				this.paging.total = res?.data?.length || 0;
 			}
@@ -133,7 +144,7 @@ export class VoucherPageComponent {
 	}
 
 	search() {
-		if (this.userType === 'Owner') {
+		if (this.userType === 'Owner' || this.userType === 'Staff') {
 			this.pageChanged(1);
 		}
 	}
@@ -148,7 +159,7 @@ export class VoucherPageComponent {
 		if (this.typeForm == 1) {
 			this.loading = true;
 			data.form.ownerId = this.ownerId;
-			console.log('data fomr',data.form)
+			console.log('data fomr', data.form)
 			this.service.createOrUpdateData(data?.form).subscribe((res: any) => {
 				this.loading = false;
 				if (res?.data) {

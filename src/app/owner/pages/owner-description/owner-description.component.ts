@@ -44,7 +44,7 @@ export class OwnerDescriptionComponent {
 			link: '/'
 		},
 		{
-			label: 'Product description',
+			label: 'Description',
 			link: '/owner/description'
 		}
 	];

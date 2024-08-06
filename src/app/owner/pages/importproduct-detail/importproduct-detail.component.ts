@@ -143,7 +143,7 @@ export class ImportproductDetailComponent implements OnInit {
           // Get warehouseId before calling the API
           this.warehouseSerivce.getLists(this.ownerId).subscribe((res: any) => {
             this.warehouseId = res?.data?.warehouseId;
-            
+
             if (this.ownerId && this.warehouseId) {
               this.importSerivce.create(this.ownerId, this.warehouseId, dataToSave.origin, dataToSave.importProductDetailDTO).subscribe(
                 (res: any) => {

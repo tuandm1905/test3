@@ -15,16 +15,17 @@ export class DashboardAdminPageComponent implements OnInit {
 
   loading = false;
 
-  breadCrumb: any = [
-    {
-      label: 'Owner',
-      link: '/'
-    },
-    {
-      label: 'Dashboard',
-      link: '/owner/dashboard'
-    }
-  ];
+  // breadCrumb: any = [
+  //   {
+  //     label: 'Owner',
+  //     link: '/'
+  //   },
+  //   {
+  //     label: 'Dashboard',
+  //     link: '/owner/dashboard'
+  //   }
+  // ];
+  breadCrumb: any = [];
 
   dashboardItems = [
     { title: 'Staff', description: 'Total Account Staff', value: 0, formattedValue: '', link: '/owner/account', class: 'box p-3 mb-2' },
@@ -72,6 +73,16 @@ export class DashboardAdminPageComponent implements OnInit {
   ngOnInit(): void {
     const user = this.authenService.getUser();
     this.userType = user?.userType ?? '';
+    this.breadCrumb = [
+      {
+        label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+        link: '/',
+      },
+      {
+        label: 'Dashboard',
+        link: '/owner/dashboard'
+      },
+    ];
     if (this.userType == 'Staff') {
       this.staffService.show(user?.id ?? null).subscribe((res: any) => {
         this.ownerId = res?.data?.ownerId;
@@ -222,7 +233,7 @@ export class DashboardAdminPageComponent implements OnInit {
 
   }
 
- 
+
   formatCurrency(value: number, addCurrency: boolean = false): string {
     if (addCurrency) {
       return `$${value.toLocaleString()}`;

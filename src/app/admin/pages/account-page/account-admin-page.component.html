@@ -57,8 +57,12 @@
 								<td class="text-center align-middle">{{ (paging.page - 1) * paging.pageSize + i + 1 }}
 								</td>
 								<td class="text-center align-middle">
-									<div class="image-container">
+									<div *ngIf="item.image" class="image-container">
 										<img [src]="item.image" alt="{{ item.name }}" class="thumbnail" width="80"
+											height="80" />
+									</div>
+									<div *ngIf="!item.image" class="image-container">
+										<img src="/assets/images/default-avatar.png" alt="{{ item.name }}" class="thumbnail" width="80"
 											height="80" />
 									</div>
 								</td>
@@ -140,8 +144,12 @@
 										height="80" />
 								</td> -->
 								<td class="text-center align-middle">
-									<div class="image-container">
+									<div *ngIf="item.image" class="image-container">
 										<img [src]="item.image" alt="{{ item.name }}" class="thumbnail" width="80"
+											height="80" />
+									</div>
+									<div *ngIf="!item.image" class="image-container">
+										<img src="/assets/images/default-avatar.png" alt="{{ item.name }}" class="thumbnail" width="80"
 											height="80" />
 									</div>
 								</td>

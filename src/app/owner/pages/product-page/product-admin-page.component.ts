@@ -44,24 +44,35 @@ export class ProductAdminPageComponent {
 	) {
 
 	}
+	breadCrumb: any = [];
 
-	breadCrumb: any = [
-		{
-			label: 'Owner',
-			link: '/'
-		},
-		{
-			label: 'Product',
-			link: '/owner/product'
-		}
-	];
+	// breadCrumb: any = [
+	// 	{
+	// 		label: 'Owner',
+	// 		link: '/'
+	// 	},
+	// 	{
+	// 		label: 'Product',
+	// 		link: '/owner/product'
+	// 	}
+	// ];
 
 	ngOnInit(): void {
+		
 
 		const user = this.authenService.getUser();
 		this.userType = user?.userType ?? '';
 		this.ownerId = user?.id ?? null;
-
+		this.breadCrumb = [
+			{
+			  label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+			  link: '/',
+			},
+			{
+			  label: 'Product',
+			  link: '/owner/product',
+			},
+		  ];
 		if (this.userType === 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;

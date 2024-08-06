@@ -33,10 +33,11 @@ export class ImportproductPageComponent {
 	currentPage: number = 1;
 	totalPages: number = 5;
 
-	breadCrumb: any = [
-		{ label: 'Owner', link: '/' },
-		{ label: 'Import Product', link: '/owner/importproduct' }
-	];
+	// breadCrumb: any = [
+	// 	{ label: 'Owner', link: '/' },
+	// 	{ label: 'Import Product', link: '/owner/importproduct' }
+	// ];
+	breadCrumb: any = [];
 	constructor(
 		private alertService: AlertService,
 		private ownerService: OwnerService,
@@ -56,6 +57,15 @@ export class ImportproductPageComponent {
 		const user = this.authenService.getUser();
 		this.ownerId = user?.id ?? null;
 		this.userType = user?.userType ?? '';
+		this.breadCrumb = [
+			{
+				label: this.userType === 'Staff' ? 'Staff' : 'Owner',
+				link: '/',
+			},
+			{
+				label: 'Import Product', link: '/owner/importproduct'
+			},
+		];
 		if (this.userType == 'Staff') {
 			this.staffService.show(user?.id ?? null).subscribe((res: any) => {
 				this.ownerId = res?.data?.ownerId;
