@@ -1,177 +1,184 @@
-@import url('https://fonts.googleapis.com/css?family=Lato:400,700');
-
-$font: 'Lato', sans-serif;
-
-$primary: #79C7C5;
-$secondary: #A1E2D9;
-$white: #F9FBFF;
-$dark: #777777;
-
-html,
-body {
-    height: 100%;
+.card {
+    height: 100vh;
+    /* Full height to cover the viewport */
+    background-color: #f0f0f0;
+    /* Light gray background */
+    border: none;
+    /* Remove border */
+    display: flex;
+    justify-content: center;
+    /* Center horizontally */
+    align-items: center;
+    /* Center vertically */
     margin: 0;
-    font-family: $font;
+    /* Remove default margin */
 }
 
 .chat-container {
     display: flex;
-    margin: 20px auto;
-    width: 90%;
-    max-width: 1000px;
-    height: 600px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex-direction: row;
+    /* Ensure sidebar and chatbox are side by side */
+    width: 80%;
+    /* Fixed width for the container */
+    max-width: 1200px;
+    /* Maximum width */
+    min-width: 800px;
+    /* Minimum width for responsiveness */
+    height: 90vh;
+    /* Height adjusted to fill the viewport properly */
+    background-color: #e0e0e0;
+    /* Light gray background for the container */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Shadow for better aesthetics */
     border-radius: 8px;
     overflow: hidden;
+    margin-bottom: 10%;
+    /* Remove default margin */
 }
 
 .sidebar {
-    flex: 3; // Chiếm 30% của tổng chiều rộng
-    display: flex;
-    flex-direction: column;
-    background-color: $secondary;
-    color: $white;
+    width: 25%;
+    /* Sidebar width */
+    background-color: #d3d3d3;
+    /* Sidebar background color */
     padding: 20px;
+    box-sizing: border-box;
     overflow-y: auto;
+    /* Scrollbar for overflow */
 }
 
 .people {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
     margin: 0;
+    /* Remove default margin */
 }
 
 .person {
-    padding: 10px;
-    border-bottom: 1px solid $white;
+    padding: 15px;
+    margin-bottom: 10px;
+    border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s;
-
-    &:hover,
-    &.focus {
-        background-color: $primary;
-    }
 }
 
-.title {
-    display: block;
+.person:hover,
+.person.focus {
+    background-color: #b0b0b0;
+    /* Hover and active state color */
+}
+
+.person .title {
     font-weight: bold;
 }
 
-.time {
-    float: right;
-    font-size: 0.8em;
-    opacity: 0.7;
-}
-
-.preview {
-    font-size: 0.9em;
-    opacity: 0.8;
-}
-
 .chatbox {
-    flex: 7; // Chiếm 70% của tổng chiều rộng
     display: flex;
     flex-direction: column;
-    background-color: $white;
+    justify-content: space-between; /* Đảm bảo các phần tử phân bố đều */
+    background-color: #f5f5f5;
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .top-bar {
-    background-color: $primary;
-    padding: 10px;
-    color: $white;
     display: flex;
     align-items: center;
+    padding: 10px;
+    background-color: #b0b0b0;
+    border-radius: 8px 8px 0 0;
+    /* Rounded top corners */
 }
 
 .avatar {
-    background-color: $secondary;
+    width: 40px;
+    height: 40px;
+    background-color: #8f8f8f;
     border-radius: 50%;
-    width: 35px;
-    height: 35px;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     margin-right: 10px;
-}
-
-.icons {
-    margin-left: auto;
+    color: white;
+    font-weight: bold;
 }
 
 .middle {
-    flex: 1;
+    overflow-y: auto; /* Cho phép cuộn nếu cần */
+    flex-grow: 1; /* Cho phép khu vực này phát triển để lấp đầy không gian */
     padding: 10px;
-    overflow-y: auto;
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Các tin nhắn sẽ được xếp từ trên xuống */
 }
+
 
 .bubble {
-    background-color: lighten($dark, 23%);
-    color: $white;
-    border-radius: 10px;
+    min-width: 100px; /* Chiều rộng tối thiểu cho tin nhắn */
+    max-width: 70%; /* Chiều rộng tối đa dựa trên chiều rộng của chatbox */
+    word-wrap: break-word; /* Tự động ngắt từ */
+    margin-bottom: 10px;
     padding: 10px;
-    margin: 5px 0;
-    max-width: 60%;
-    word-wrap: break-word; // Ngắt dòng cho tin nhắn dài
-    overflow-wrap: break-word; // Ngắt dòng cho các từ dài không có khoảng trắng
-    white-space: pre-wrap; // Giữ khoảng trắng và ngắt dòng ở nơi cần thiết
+    border-radius: 15px;
+    background-color: #e0e0e0; /* Màu nền mặc định */
 }
 
-.user {
-    align-self: flex-end; // Canh phải cho tin nhắn của user
-
-    .bubble {
-        background-color: $primary;
-        margin-left: auto; // Đẩy bong bóng tin nhắn sang phải
-    }
+.user-message {
+    align-self: flex-start;
+     /* Căn phải cho tin nhắn người dùng */
+    background-color: #d1e8ff; /* Màu nền cho tin nhắn người dùng */
 }
-
-.bot {
-    align-self: flex-start; // Canh trái cho tin nhắn của bot
-
-    .bubble {
-        background-color: $secondary;
-        margin-right: auto; // Đẩy bong bóng tin nhắn sang trái
-    }
+.owner-message {
+    /* Căn trái cho tin nhắn của chủ sở hữu */
+    align-self: flex-end;
+    background-color: #f1f0f0; /* Màu nền cho tin nhắn chủ sở hữu */
+}
+.staff-message {
+    align-self: flex-end;/* Cũng căn trái cho tin nhắn của nhân viên */
+    background-color: #f1f0f0; /* Giống màu tin nhắn chủ sở hữu */
 }
 
 .bottom-bar {
-    padding: 10px;
-    background-color: $primary;
-    display: flex;
-    align-items: center;
+    padding: 5px;
+    background-color: #b0b0b0;
+    width: 100%; /* Đảm bảo chiều rộng toàn bộ */
 }
 
 .chat {
     display: flex;
-    align-items: center;
-    width: 100%; // Đảm bảo rằng chat chiếm toàn bộ chiều rộng
+    width: 100%;
 }
 
-.chat input {
-    flex: 1; // Giúp ô nhập chiếm phần lớn không gian có sẵn
-    border: none;
+.chat input[type="text"] {
+    flex-grow: 1;
     padding: 10px;
-    border-radius: 20px;
-    outline: none;
-    margin-right: 10px; // Tạo khoảng cách giữa input và button
-    box-sizing: border-box; // Đảm bảo rằng padding không làm thay đổi chiều rộng tổng thể
+    border: none;
+    border-radius: 5px;
 }
 
 .chat button {
-    background-color: $secondary;
-    border: none;
-    color: $white;
     padding: 10px 20px;
-    border-radius: 20px;
+    background-color: #8f8f8f;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
 }
 
-.footer {
-    text-align: center;
-    padding: 10px;
-    background-color: $primary;
-    color: $white;
+
+.chat button:hover {
+    background-color: #7d7d7d;
+}
+
+.preview {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 3em;
+    /* Adjust based on line height */
+    line-height: 1.5em;
+    /* Adjust based on design */
 }

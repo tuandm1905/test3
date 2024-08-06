@@ -8,20 +8,12 @@
     <div class="chat-container">
         <div class="sidebar">
             <ul class="people">
-                <li class="person" [class.focus]="selectedPerson === 'Voldemort'" (click)="selectPerson('Voldemort')">
-                    <span class="title">Voldemort</span>
-                    <span class="time">2:50pm</span>
-                    <span class="preview">What are you getting... Oh, oops...</span>
-                </li>
-                <li class="person" [class.focus]="selectedPerson === 'Ron'" (click)="selectPerson('Ron')">
-                    <span class="title">Ron</span>
-                    <span class="time">2:25pm</span>
-                    <span class="preview">Meet me at Hogsmeade and bring...</span>
-                </li>
-                <li class="person" [class.focus]="selectedPerson === 'Hermione'" (click)="selectPerson('Hermione')">
-                    <span class="title">Hermione</span>
-                    <span class="time">2:12pm</span>
-                    <span class="preview">Have you and Ron done your hom...</span>
+                <li class="person" *ngFor="let person of dataListAll" (click)="selectPerson(person.roomId)">
+                    <span class="title">{{ person.accountName }}</span>
+                    <span class="time" style="font-style: italic;">
+                        {{ person.timestamp | date: 'HH:mm, dd.MM.yyyy' }}
+                    </span>
+                    <span class="preview">{{ person.content }}</span>
                 </li>
             </ul>
         </div>
@@ -29,13 +21,17 @@
         <div class="chatbox">
             <div class="top-bar">
                 <div class="avatar">
-                    <p>{{selectedPerson?.charAt(0)}}</p>
+                    <img *ngIf="selectedPerson?.accountImage" [src]="selectedPerson.accountImage" alt="Avatar" />
                 </div>
-                <div class="name">{{selectedPerson}}</div>
+                <div class="name">{{ selectedPerson?.accountName }}</div>
             </div>
-            <div class="middle">
-                <div *ngFor="let message of messages" [ngClass]="message.sender">
-                    <div class="bubble">{{message.content}}</div>
+            <div class="middle" *ngIf="dataListRoom">
+                <div *ngFor="let message of dataListRoom" class="bubble" [ngClass]="{
+                    'user-message': message.senderType === 'User',
+                    'owner-message': message.senderType === 'Owner',
+                    'staff-message': message.senderType === 'Staff'
+                }">
+                    {{ message.content }}
                 </div>
             </div>
             <div class="bottom-bar">
@@ -45,5 +41,6 @@
                 </div>
             </div>
         </div>
+        
     </div>
 </div>

@@ -78,6 +78,11 @@ const route: Routes = [
 
 		children: [
 			{
+				path: '',
+				component: OrderAdminPageComponent,
+				title: 'Order'
+			},
+			{
 				path: 'dashboard',
 				component: DashboardAdminPageComponent,
 				title: 'Dashboard'

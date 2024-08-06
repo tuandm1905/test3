@@ -13,97 +13,87 @@ export class SidebarAdminComponent implements OnChanges {
 
 	siBarsAdminRoute = [
 		{
-			route: "/dashboard",
-			role:['ALL'],
-			name: "Dashboard"
+			"route": "/dashboard",
+			"role": ["ALL"],
+			"name": "Dashboard"
 		},
 		{
-			route: "/account",
-			role:['ADMIN'],
-			name: "Account"
+			"route": "/account",
+			"role": ["ADMIN"],
+			"name": "Account"
 		},
 		{
-			route: "/account",
-			role:['OWNER'],
-			name: "Staff Account"
+			"route": "/account",
+			"role": ["OWNER"],
+			"name": "Staff Account"
 		},
 		{
-			route: "/brand",
-			role:['ADMIN'],
-			name: "Brands"
+			"route": "/product",
+			"role": ["ADMIN", "OWNER", "STAFF"],
+			"name": "Product"
 		},
 		{
-			route: "/blog",
-			role:['ADMIN', 'OWNER', 'STAFF'],
-			name: "Blog"
+			"route": "/order",
+			"role": ["OWNER", "STAFF"],
+			"name": "Orders"
 		},
 		{
-			route: "/category",
-			role:['ADMIN'],
-			name: "Category"
+			"route": "/category",
+			"role": ["ADMIN"],
+			"name": "Category"
 		},
 		{
-			route: "/size",
-			role:['OWNER'],
-			name: "Size"
+			"route": "/cateparent",
+			"role": ["ADMIN"],
+			"name": "CateParent"
 		},
 		{
-			route: "/description",
-			role:['OWNER'],
-			name: "Description"
+			"route": "/size",
+			"role": ["OWNER", "STAFF"],
+			"name": "Size"
 		},
 		{
-			route: "/cateparent",
-			role:['ADMIN'],
-			name: "CateParent"
+			"route": "/description",
+			"role": ["OWNER"],
+			"name": "Description"
 		},
 		{
-			route: "/product",
-			role:['ADMIN', 'OWNER','STAFF'],
-			name: "Product"
+			"route": "/service",
+			"role": ["ADMIN"],
+			"name": "Services"
 		},
 		{
-			route: "/service",
-			role:['ADMIN'],
-			name: "Services"
+			"route": "/warehouse",
+			"role": ["OWNER"],
+			"name": "WareHouses"
 		},
 		{
-			route: "/order",
-			role:['OWNER','STAFF'],
-			name: "Orders"
+			"route": "/importproduct",
+			"role": ["OWNER", "STAFF"],
+			"name": "Import Product"
 		},
 		{
-			route: "/warehouse",
-			role:['OWNER'],
-			name: "WareHouses"
+			"route": "/voucher",
+			"role": ["OWNER", "STAFF"],
+			"name": "Vouchers"
 		},
 		{
-			route: "/voucher",
-			role:['OWNER','STAFF'],
-			name: "Vouchers"
+			"route": "/guestconsultation",
+			"role": ["OWNER", "STAFF"],
+			"name": "Guest Consultation"
 		},
 		{
-			route: "/chat",
-			role:['OWNER','STAFF'],
-			name: "Chat"
+			"route": "/notification",
+			"role": ["OWNER", "STAFF"],
+			"name": "Notification"
 		},
 		{
-			route: "/guestconsultation",
-			role:['OWNER','STAFF'],
-			name: "Guest Consultation"
-		},
-		{
-			route: "/importproduct",
-			role:['OWNER','STAFF'],
-			name: "Import Product"
-		},
-		{
-			route: "/notification",
-			role:['OWNER','STAFF'],
-			name: "Notification"
+			"route": "/chat",
+			"role": ["OWNER", "STAFF"],
+			"name": "Chat"
 		}
-	];
-
+	]
+	
 	constructor() {
 		
 	}
