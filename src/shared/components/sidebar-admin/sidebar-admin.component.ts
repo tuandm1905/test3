@@ -88,9 +88,9 @@ export class SidebarAdminComponent implements OnChanges {
 			"name": "Notification"
 		},
 		{
-			"route": "/chat",
+			"route": "/message",
 			"role": ["OWNER", "STAFF"],
-			"name": "Chat"
+			"name": "Message"
 		}
 	]
 	

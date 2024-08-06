@@ -36,7 +36,7 @@ export class VoucherPageComponent {
 
 	breadCrumb: any = [
 		{
-			label: 'Admin',
+			label: 'Owner',
 			link: '/'
 		},
 		{

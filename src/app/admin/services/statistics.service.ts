@@ -23,6 +23,9 @@ export class StatisticsService {
   product(ownerId: any) {
 		return this.baseApiService.getMethod(`Product/dashboard-owner/${ownerId}`, {});
 	}
+  productadmin(params: any) {
+		return this.baseApiService.getMethod(`Product/dashboard-admin/`, params);
+	}
   productTop5(ownerId: any) {
     return this.baseApiService.getMethod(`Product/top5/${ownerId}`,{});
   }
@@ -39,4 +42,7 @@ export class StatisticsService {
 		const {warehouseId, importId, ownerId } = params;
 		return this.baseApiService.getMethod('ImportProduct/ViewImportProductStatistics', { warehouseId, importId, ownerId });
 	}
+  productTop10(params: any) {
+    return this.baseApiService.getMethod(`Product/top10`,params);
+  }
 }

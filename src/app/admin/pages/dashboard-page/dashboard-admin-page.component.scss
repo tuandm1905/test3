@@ -1,24 +1,32 @@
 .card {
   width: 100%;
-  border: 0;
+  border: 1px solid #000; /* Viền đen nhỏ bao toàn bộ */
+  border-radius: 0.5rem;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .card-body {
   width: 100%;
   padding: 1rem;
 }
-
 .header {
   display: flex;
-  justify-content: space-between;
-  margin-bottom: 1rem;
+  justify-content: space-between; /* Căn chỉnh các phần tử theo chiều ngang */
+  align-items: center; /* Căn chỉnh các phần tử theo chiều dọc */
+  padding: 1rem; /* Khoảng cách bên trong */
+  // border-bottom: 1px solid #e0e0e0; /* Đường viền dưới */
+  background-color: #f8f8f8; /* Màu nền nhạt */
 }
 
 .title {
-  font-size: 1.5rem; /* Kích thước chữ tiêu đề */
-  font-weight: bold;
+  margin: 0; /* Bỏ khoảng cách mặc định của h2 */
 }
-
+.view-all {
+  text-decoration: none; /* Bỏ gạch chân */
+  color: #007bff; /* Màu chữ xanh */
+  font-weight: bold; /* Chữ đậm */
+}
 .grid-container {
   display: grid;
   grid-template-columns: repeat(1, 1fr); /* Đặt số cột thành 1 cột mặc định */
@@ -48,24 +56,33 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  position: relative; /* Để sử dụng `::before` và `::after` */
-}
-
-.item-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của ô lưới */
-  padding: 1rem;
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Đảm bảo tỷ lệ vuông */
   background-color: #ffffff; /* Màu nền trắng */
   border: 1px solid #e0e0e0; /* Đường viền xám nhạt */
   border-radius: 0.5rem; /* Bo tròn các góc */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
-  aspect-ratio: 1 / 1; /* Đảm bảo tỷ lệ vuông cho box */
   overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài ô */
   text-align: center; /* Căn giữa nội dung */
 }
+
+
+// .item-content {
+//   display: flex;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+//   width: 100%; /* Đảm bảo chiếm toàn bộ chiều rộng của ô lưới */
+//   padding: 1rem;
+//   background-color: #ffffff; /* Màu nền trắng */
+//   border: 1px solid #e0e0e0; /* Đường viền xám nhạt */
+//   border-radius: 0.5rem; /* Bo tròn các góc */
+//   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+//   aspect-ratio: 1 / 1; /* Đảm bảo tỷ lệ vuông cho box */
+//   overflow: hidden; /* Đảm bảo nội dung không tràn ra ngoài ô */
+//   text-align: center; /* Căn giữa nội dung */
+// }
 
 /* Item title styling */
 .item-title {
@@ -106,4 +123,31 @@
 .btn-link:hover {
   color: #0056b3; /* Màu tối hơn khi di chuột qua */
   text-decoration: underline;
+}
+
+.avatar {
+  width: 3rem; /* Kích thước nhỏ hơn */
+  height: 3rem;
+  border-radius: 50%;
+  object-fit: cover; /* Đảm bảo hình ảnh được cắt xén hoặc làm đầy */
+}
+
+.container {
+  display: flex;
+  gap: 1rem; /* Khoảng cách giữa hai phần tử */
+}
+
+.top-5-section {
+  flex: 1;
+  max-width: 300px; /* Điều chỉnh kích thước nếu cần */
+  overflow: auto; /* Ẩn nội dung tràn */
+}
+
+.top-5-section ul {
+  max-height: calc(5 * 4rem); /* Chiều cao tối đa của 5 mục (kích thước mục * 5) */
+  // overflow-y: auto; /* Hiển thị thanh cuộn dọc nếu nội dung vượt quá chiều cao tối đa */
+}
+.dashboard-section {
+  flex: 2; /* Chiếm nhiều không gian hơn */
+  margin-left: 1rem;
 }

@@ -17,7 +17,7 @@ export class DashboardAdminPageComponent implements OnInit {
 
   breadCrumb: any = [
     {
-      label: 'Admin',
+      label: 'Owner',
       link: '/'
     },
     {

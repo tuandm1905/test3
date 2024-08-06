@@ -46,7 +46,7 @@ export class WarehousePageComponent {
 
 	breadCrumb: any = [
 		{
-			label: 'Warehouse',
+			label: 'Owner',
 			link: '/'
 		},
 		{

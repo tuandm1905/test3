@@ -173,9 +173,9 @@ const route: Routes = [
 				title: 'Manage Notification'
 			},
 			{
-				path: 'chat',
+				path: 'message',
 				component: ChatPageComponent,
-				title: 'Manage Chat'
+				title: 'Manage Message'
 			},
 			{ path: 'import-detail/:id', 
 				component: ImportDetailComponent, 

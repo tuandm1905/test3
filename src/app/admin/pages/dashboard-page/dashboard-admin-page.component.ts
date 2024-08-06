@@ -32,13 +32,15 @@ export class DashboardAdminPageComponent implements OnInit {
     { title: 'Order', description: 'Success Full Orders', value: 0, link: '/admin/dashboard', class: 'box p-3 mb-2' },
     { title: 'Order', description: 'Failed Orders', value: 0, link: '/admin/dashboard', class: 'box p-3 mb-2' },
     { title: 'Order', description: 'Canceled Orders', value: 0, link: '/admin/dashboard', class: 'box p-3 mb-2' },
-    { title: 'Order', description: 'Total Revenue', value: 0, link: '/admin/dashboard', class: 'box p-3 mb-2' },
+    { title: 'Order', description: 'Total Revenue', value: 0, formattedValue: '',link: '/admin/dashboard', class: 'box p-3 mb-2' },
     // { title: 'Doanh thu', description: 'Tổng doanh thu tháng này', value: 0, link: '/admin/dashboard', class: 'box p-3 mb-2' }
   ];
 
   accountUser: any;
   blogStatistics: any;
   orderStatistics: any
+  top10Statistics: any;
+  productadminStatistics:any;
 
   constructor(private statisticsService: StatisticsService) {}
 
@@ -83,6 +85,40 @@ export class DashboardAdminPageComponent implements OnInit {
         this.loading = false;
       }
     );
+    this.statisticsService.productadmin({}).subscribe(
+      (res: any) => {
+        this.productadminStatistics = res.length;
+        console.log('data product admin',this.productadminStatistics)
+        this.updateDashboardItems(); // Update dashboard items after blog data is received
+      },
+      (error) => {
+        console.error('Error fetching blog statistics', error);
+        this.loading = false;
+      }
+    );
+    this.statisticsService.productTop10({}).subscribe(
+      (data: any) => {
+        if (data && data.length > 0) {
+          this.top10Statistics = data.map((item: any) => ({
+            name: item.name,
+            image: item.images && item.images[0] ? item.images[0].linkImage : 'default-image-url' // Đảm bảo rằng hình ảnh tồn tại
+            
+          }));
+        } else {
+          console.log('No top 5 products found.');
+        }
+        console.log('data top 10',this.top10Statistics);
+      },
+      (error: any) => {
+        console.error('Error fetching top 5 products:', error);
+      }
+    );
+  }
+  formatCurrency(value: number, addCurrency: boolean = false): string {
+    if (addCurrency) {
+      return `$${value.toLocaleString()}`;
+    }
+    return value.toLocaleString();
   }
 
   updateDashboardItems(): void {
@@ -92,11 +128,12 @@ export class DashboardAdminPageComponent implements OnInit {
       this.dashboardItems[2].value = this.accountUser.totalOwner;
       this.dashboardItems[3].value = this.accountUser.totalOwnerBanned;
       this.dashboardItems[4].value = this.blogStatistics.totalAdversisement;
+      this.dashboardItems[5].value = this.productadminStatistics;
       this.dashboardItems[6].value = this.orderStatistics.totalOrders;
       this.dashboardItems[7].value = this.orderStatistics.successfulOrders;
       this.dashboardItems[8].value = this.orderStatistics.failedOrders;
       this.dashboardItems[9].value = this.orderStatistics.canceledOrders;
-      this.dashboardItems[10].value = this.orderStatistics.totalRevenue;
+      this.dashboardItems[10].formattedValue = this.formatCurrency(this.orderStatistics.totalRevenue,true);
       // this.dashboardItems[11].value = this.orderStatistics.totalMonthlyRevenue;
 
       this.loading = false; // Set loading to false after updating dashboard
